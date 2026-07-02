@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Projects | Delta Companies: Construction — Remodeling &amp; Renovation Memphis TN</title>
+  <meta name="description" content="Before-and-after projects from Delta Companies: Construction — kitchen renovations, interior restorations, and remodeling across Memphis, TN. See the Delta difference." />
+  <meta property="og:title" content="Our Projects | Delta Companies: Construction Memphis" />
+  <meta property="og:description" content="A Showcase of Delta's Change — before-and-after renovation and restoration projects across Memphis, TN." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <link rel="icon" href="assets/logo/favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Sticky nav -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="index.html" aria-label="Delta Companies: Construction home">
+        <img src="assets/logo/delta-logo.png" alt="Delta Companies: Construction logo" />
+        <span>DELTA</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links-wrap">
+        <ul class="nav-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="projects.html" aria-current="page">Projects</a></li>
+          <li><a href="keep-up.html">Keep Up with Delta</a></li>
+        </ul>
+        <a class="btn btn-primary nav-cta" href="contact.html">Get a Quote</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <section>
+      <div class="container">
+        <span class="eyebrow">Our Projects</span>
+        <h1>A Showcase of Delta's Change</h1>
+        <p class="lead">Drag a card's slider to see the transformation, then click through for the full room-by-room story. Every project tells the same story: organized planning, honest communication, and craftsmanship that lasts.</p>
+
+        <div class="projects-grid">
+
+          <!-- Project 1: Full Interior Transformation (Quince House) -->
+          <article class="project-card" data-project="full-interior-transformation">
+            <h3 class="project-card-title">Full Interior Transformation</h3>
+            <div class="project-card-media">
+              <div class="ba-slider" data-ba-slider role="slider" tabindex="0" aria-label="Full Interior Transformation bathroom before and after slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+                <div class="ba-slider-after"><img src="assets/quince-house/bathroom-after.jpg" alt="Renovated bathroom after remodel by Delta Companies: Construction in Memphis, TN" loading="lazy" draggable="false" /></div>
+                <div class="ba-slider-before"><img src="assets/quince-house/bathroom-before.jpg" alt="Bathroom before renovation in Memphis, TN" loading="lazy" draggable="false" /></div>
+                <div class="ba-slider-handle"><span class="ba-slider-handle-btn">&#8596;</span></div>
+                <span class="ba-tag ba-tag-before">Before</span>
+                <span class="ba-tag ba-tag-after">After</span>
+              </div>
+            </div>
+            <p class="project-card-sub">Quince House, Memphis, TN — a full interior renovation, room by room, from the kitchen to the hallway.</p>
+            <a class="project-card-open" href="#full-interior-transformation" data-open-project="full-interior-transformation">View Full Project &rarr;</a>
+          </article>
+
+          <!-- Project 2: Destroyed Property, Restored! (Dorado House) -->
+          <article class="project-card" data-project="destroyed-property-restored">
+            <h3 class="project-card-title">Destroyed Property, Restored!</h3>
+            <div class="project-card-media">
+              <div class="ba-slider" data-ba-slider role="slider" tabindex="0" aria-label="Destroyed Property, Restored! kitchen before and after slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+                <div class="ba-slider-after"><img src="assets/dorado-house/kitchen-a.jpg" alt="Renovated kitchen at 3701 Dorado by Delta Companies: Construction in Memphis, TN" loading="lazy" draggable="false" /></div>
+                <div class="ba-slider-before"><img src="assets/dorado-house/kitchen-b.jpg" alt="Fire and water damaged kitchen at 3701 Dorado before renovation in Memphis, TN" loading="lazy" draggable="false" /></div>
+                <div class="ba-slider-handle"><span class="ba-slider-handle-btn">&#8596;</span></div>
+                <span class="ba-tag ba-tag-before">Before</span>
+                <span class="ba-tag ba-tag-after">After</span>
+              </div>
+            </div>
+            <p class="project-card-sub">3701 Dorado, Memphis, TN — from fire and water damage to a move-in ready home.</p>
+            <a class="project-card-open" href="#destroyed-property-restored" data-open-project="destroyed-property-restored">View Full Project &rarr;</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Project detail modal -->
+    <div class="project-modal" data-project-modal aria-hidden="true">
+      <div class="project-modal-backdrop" data-modal-close></div>
+      <div class="project-modal-panel" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
+        <button class="project-modal-close" type="button" data-modal-close aria-label="Close project details">&times;</button>
+        <div class="project-modal-body"></div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <section class="section-mint">
+      <div class="container">
+        <h2>Ready to See the Difference on Your Project?</h2>
+        <a class="btn btn-primary" href="contact.html">Get a Quote</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-lockup">
+          <img src="assets/logo/delta-logo-white.png" alt="Delta Companies: Construction logo" />
+          <span class="footer-wordmark">DELTA COMPANIES<small>Construction</small></span>
+        </div>
+        <div>
+          <p>Phone: <a href="tel:9015684128">901-568-4128</a></p>
+          <p>For any inquiries, questions or commendations, please call: <a href="tel:9015684128">901-568-4128</a></p>
+          <!-- TODO: real Facebook URL -->
+          <a class="social-link" href="#" aria-label="Delta Companies: Construction on Facebook">
+            <svg viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5H17V3.9c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V10H8v3h2.8v8h2.7z"/></svg>
+            Facebook
+          </a>
+        </div>
+      </div>
+      <div class="footer-meta">
+        <span>© <span class="js-year">2026</span> Delta Companies.</span>
+        <span>Memphis, TN</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
