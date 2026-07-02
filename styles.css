@@ -1481,18 +1481,10 @@ body.modal-open {
   text-decoration: none;
 }
 
-/* ---------- Service area map ---------- */
+/* ---------- Service area map (opens in a modal from Contact page) ---------- */
 
-.service-map-section {
-  margin-top: 2.5rem;
-  padding: 2.25rem;
-  background: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-
-.service-map-section h2 {
-  margin-bottom: 0.5rem;
+.service-area-cta {
+  margin: 0 0 1.75rem;
 }
 
 .service-map-lead {
@@ -1512,7 +1504,7 @@ body.modal-open {
 .service-map-frame {
   border-radius: var(--radius-sm);
   overflow: hidden;
-  background: var(--offwhite);
+  background: var(--white);
   border: 1px solid rgba(7, 48, 68, 0.08);
 }
 
@@ -1538,12 +1530,6 @@ body.modal-open {
   border-radius: 50%;
   background: radial-gradient(circle, rgba(13, 69, 96, 0.55) 0%, rgba(13, 69, 96, 0.12) 100%);
   flex-shrink: 0;
-}
-
-@media (max-width: 640px) {
-  .service-map-section {
-    padding: 1.5rem;
-  }
 }
 
 .hours-table {

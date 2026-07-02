@@ -401,6 +401,61 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Service area modal (Contact page) — reuses the same .project-modal
+  // visual pattern as the project detail views, wired up independently.
+  const serviceModal = document.querySelector("[data-service-modal]");
+  if (serviceModal) {
+    const serviceTrigger = document.querySelector("[data-open-service-modal]");
+    let serviceLastFocused = null;
+
+    const openServiceModal = () => {
+      serviceLastFocused = document.activeElement;
+      serviceModal.classList.add("is-open");
+      serviceModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      const closeBtn = serviceModal.querySelector(".project-modal-close");
+      if (closeBtn) closeBtn.focus();
+    };
+
+    const closeServiceModal = () => {
+      if (!serviceModal.classList.contains("is-open")) return;
+      serviceModal.classList.remove("is-open");
+      serviceModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+      if (serviceLastFocused && typeof serviceLastFocused.focus === "function") {
+        serviceLastFocused.focus();
+      }
+    };
+
+    if (serviceTrigger) {
+      serviceTrigger.addEventListener("click", openServiceModal);
+    }
+
+    serviceModal.querySelectorAll("[data-service-modal-close]").forEach((el) => {
+      el.addEventListener("click", closeServiceModal);
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeServiceModal();
+    });
+
+    const quoteLink = serviceModal.querySelector("[data-service-modal-quote-link]");
+    if (quoteLink) {
+      quoteLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        closeServiceModal();
+        const target = document.getElementById("quote-form");
+        if (target) {
+          setTimeout(() => {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+            const firstField = target.querySelector("input, textarea, select");
+            if (firstField) firstField.focus({ preventScroll: true });
+          }, 50);
+        }
+      });
+    }
+  }
+
   // Form submission via static form service (Formspree-style POST)
   //
   // TODO: Replace FORM_ENDPOINT with your real endpoint, e.g.:

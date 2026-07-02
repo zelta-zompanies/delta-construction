@@ -46,70 +46,6 @@
         <h1>Contact Information</h1>
         <p class="lead">Delta means change — and that change starts with a conversation. Reach out to Delta Companies: Construction to discuss your project, ask questions, or schedule a consultation. We're happy to help you plan the next step.</p>
 
-        <!-- Service area map -->
-        <div class="service-map-section">
-          <h2>Our Service Area</h2>
-          <p class="service-map-lead">Serving Greater Memphis and the surrounding metro — not sure if we reach you? <a href="#quote-form">Just ask.</a></p>
-
-          <div class="service-map-frame">
-            <svg viewBox="0 0 600 420" role="img" aria-label="Stylized map of the Greater Memphis metro area showing Delta Companies: Construction's service coverage zone, with Downtown Memphis, Midtown, East Memphis, Germantown, Collierville, Bartlett, and Cordova marked">
-              <defs>
-                <radialGradient id="coverageGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#0d4560" stop-opacity="0.32" />
-                  <stop offset="65%" stop-color="#0d4560" stop-opacity="0.14" />
-                  <stop offset="100%" stop-color="#0d4560" stop-opacity="0" />
-                </radialGradient>
-              </defs>
-
-              <!-- Mississippi River (stylized) -->
-              <path d="M105,0 C80,55 118,95 92,155 C68,210 105,255 82,315 C62,365 98,395 88,420 L138,420 C148,392 116,360 140,310 C162,262 128,208 148,158 C166,110 134,58 146,0 Z" fill="#c3d8db" opacity="0.7" />
-              <text x="70" y="210" font-size="11" font-weight="600" fill="#5b7a80" transform="rotate(-78 70 210)" letter-spacing="0.5">MISSISSIPPI RIVER</text>
-
-              <!-- Shelby County / metro outline (approximate, stylized) -->
-              <path d="M110,50 C220,20 380,25 460,70 C530,110 545,200 510,290 C470,370 350,400 220,385 C110,372 55,300 50,200 C47,130 60,75 110,50 Z" fill="#E4EFEF" stroke="#073044" stroke-width="2" stroke-dasharray="6 5" opacity="0.9" />
-
-              <!-- Coverage zone glow -->
-              <ellipse cx="305" cy="215" rx="255" ry="215" fill="url(#coverageGlow)" />
-
-              <!-- Markers -->
-              <g font-family="inherit" font-weight="700" fill="#073044">
-                <!-- Downtown Memphis (hub) -->
-                <circle cx="150" cy="235" r="8" fill="#073044" stroke="#FAFBFC" stroke-width="2.5" />
-                <text x="150" y="260" font-size="14" text-anchor="middle">Downtown Memphis</text>
-
-                <!-- Midtown -->
-                <circle cx="215" cy="205" r="6" fill="#073044" stroke="#FAFBFC" stroke-width="2" />
-                <text x="225" y="196" font-size="13">Midtown</text>
-
-                <!-- East Memphis -->
-                <circle cx="325" cy="188" r="6" fill="#073044" stroke="#FAFBFC" stroke-width="2" />
-                <text x="335" y="180" font-size="13">East Memphis</text>
-
-                <!-- Bartlett -->
-                <circle cx="338" cy="92" r="6" fill="#073044" stroke="#FAFBFC" stroke-width="2" />
-                <text x="348" y="88" font-size="13">Bartlett</text>
-
-                <!-- Cordova -->
-                <circle cx="404" cy="153" r="6" fill="#073044" stroke="#FAFBFC" stroke-width="2" />
-                <text x="414" y="149" font-size="13">Cordova</text>
-
-                <!-- Germantown -->
-                <circle cx="418" cy="232" r="6" fill="#073044" stroke="#FAFBFC" stroke-width="2" />
-                <text x="428" y="228" font-size="13">Germantown</text>
-
-                <!-- Collierville -->
-                <circle cx="472" cy="300" r="6" fill="#073044" stroke="#FAFBFC" stroke-width="2" />
-                <text x="450" y="322" font-size="13">Collierville</text>
-              </g>
-            </svg>
-          </div>
-
-          <p class="service-map-legend">
-            <span class="service-map-legend-swatch" aria-hidden="true"></span>
-            Highlighted zone shows Delta's typical service coverage — this map is illustrative, not to exact scale.
-          </p>
-        </div>
-
         <div class="contact-grid" style="margin-top: 2.5rem;">
 
           <!-- Business info card
@@ -124,6 +60,14 @@
                 <a href="tel:9015684128">901-568-4128</a>
               </div>
             </div>
+
+            <div class="service-area-cta">
+              <button type="button" class="btn btn-outline" data-open-service-modal>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Not sure if we cover you?
+              </button>
+            </div>
+
             <h3 class="info-card-heading">
               <svg viewBox="0 0 24 24" fill="none" stroke="#073044" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
               Hours
@@ -192,6 +136,76 @@
         </div>
       </div>
     </section>
+
+    <!-- Service area modal (reuses the same modal pattern as the project detail views) -->
+    <div class="project-modal" data-service-modal aria-hidden="true">
+      <div class="project-modal-backdrop" data-service-modal-close></div>
+      <div class="project-modal-panel" role="dialog" aria-modal="true" aria-labelledby="service-modal-title">
+        <button class="project-modal-close" type="button" data-service-modal-close aria-label="Close service area map">&times;</button>
+        <div class="project-modal-body">
+          <h2 id="service-modal-title">Our Service Area</h2>
+          <p class="service-map-lead">Serving Greater Memphis and the surrounding metro — not sure if we reach you? <a href="#quote-form" data-service-modal-quote-link>Just ask.</a></p>
+
+          <div class="service-map-frame">
+            <svg viewBox="0 0 600 420" role="img" aria-label="Stylized map of the Greater Memphis metro area showing Delta Companies: Construction's service coverage zone, with Downtown Memphis, Midtown, East Memphis, Germantown, Collierville, Bartlett, and Cordova marked">
+              <defs>
+                <radialGradient id="coverageGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#0d4560" stop-opacity="0.32" />
+                  <stop offset="65%" stop-color="#0d4560" stop-opacity="0.14" />
+                  <stop offset="100%" stop-color="#0d4560" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+
+              <!-- Mississippi River (stylized) -->
+              <path d="M105,0 C80,55 118,95 92,155 C68,210 105,255 82,315 C62,365 98,395 88,420 L138,420 C148,392 116,360 140,310 C162,262 128,208 148,158 C166,110 134,58 146,0 Z" fill="#c3d8db" opacity="0.7" />
+              <text x="70" y="210" font-size="11" font-weight="600" fill="#5b7a80" transform="rotate(-78 70 210)" letter-spacing="0.5">MISSISSIPPI RIVER</text>
+
+              <!-- Shelby County / metro outline (approximate, stylized) -->
+              <path d="M110,50 C220,20 380,25 460,70 C530,110 545,200 510,290 C470,370 350,400 220,385 C110,372 55,300 50,200 C47,130 60,75 110,50 Z" fill="#E4EFEF" stroke="#073044" stroke-width="2" stroke-dasharray="6 5" opacity="0.9" />
+
+              <!-- Coverage zone glow -->
+              <ellipse cx="305" cy="215" rx="255" ry="215" fill="url(#coverageGlow)" />
+
+              <!-- Markers -->
+              <g font-family="inherit" font-weight="700" fill="#073044">
+                <!-- Downtown Memphis (hub) -->
+                <circle cx="150" cy="235" r="8" fill="#073044" stroke="#FAFBFC" stroke-width="2.5" />
+                <text x="150" y="260" font-size="14" text-anchor="middle">Downtown Memphis</text>
+
+                <!-- Midtown -->
+                <circle cx="215" cy="205" r="6" fill="#073044" stroke="#FAFBFC" stroke-width="2" />
+                <text x="225" y="196" font-size="13">Midtown</text>
+
+                <!-- East Memphis -->
+                <circle cx="325" cy="188" r="6" fill="#073044" stroke="#FAFBFC" stroke-width="2" />
+                <text x="335" y="180" font-size="13">East Memphis</text>
+
+                <!-- Bartlett -->
+                <circle cx="338" cy="92" r="6" fill="#073044" stroke="#FAFBFC" stroke-width="2" />
+                <text x="348" y="88" font-size="13">Bartlett</text>
+
+                <!-- Cordova -->
+                <circle cx="404" cy="153" r="6" fill="#073044" stroke="#FAFBFC" stroke-width="2" />
+                <text x="414" y="149" font-size="13">Cordova</text>
+
+                <!-- Germantown -->
+                <circle cx="418" cy="232" r="6" fill="#073044" stroke="#FAFBFC" stroke-width="2" />
+                <text x="428" y="228" font-size="13">Germantown</text>
+
+                <!-- Collierville -->
+                <circle cx="472" cy="300" r="6" fill="#073044" stroke="#FAFBFC" stroke-width="2" />
+                <text x="450" y="322" font-size="13">Collierville</text>
+              </g>
+            </svg>
+          </div>
+
+          <p class="service-map-legend">
+            <span class="service-map-legend-swatch" aria-hidden="true"></span>
+            Highlighted zone shows Delta's typical service coverage — this map is illustrative, not to exact scale.
+          </p>
+        </div>
+      </div>
+    </div>
 
   </main>
 
