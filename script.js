@@ -1,48 +1,14 @@
 /* Delta Companies: Construction — shared site JS */
 
-// Project data (Projects page grid + detail modal)
-// Note: "Full Interior Transformation" (Quince House) now has a dedicated
-// case-study page — full-interior-transformation.html — instead of a modal.
-const PROJECTS = {
-  "destroyed-property-restored": {
-    title: "Destroyed Property, Restored!",
-    subtitle: "Dorado House — 3701 Dorado, Memphis, TN",
-    description:
-      "3701 Dorado was left gutted by fire and water damage. We took it down to the studs and rebuilt it into a move-in-ready home from the ground up.",
-    cover: "assets/dorado-house/kitchen-a.jpg",
-    coverDesc:
-      "The kitchen tells the story of this entire renovation — from fire and water damage to a bright, fully rebuilt space. Every room throughout 3701 Dorado received the same level of care.",
-    rooms: [
-      {
-        name: "Kitchen",
-        type: "slider",
-        before: "assets/dorado-house/kitchen-b.jpg",
-        after: "assets/dorado-house/kitchen-a.jpg",
-        desc: "Fire and water damage left this kitchen gutted — a bowed, water-stained ceiling, a cabinet barely hanging on, and blackened countertops made it unsalvageable as-is. Delta rebuilt the space from the studs out: new upper and lower cabinetry, updated countertops, a tile backsplash, and durable plank flooring replaced everything that was lost. What was once a total loss is now a bright, move-in-ready kitchen built to last.",
-      },
-      {
-        name: "Bedroom",
-        type: "slider",
-        before: "assets/dorado-house/bedroom2.jpg",
-        after: "assets/dorado-house/bedroom1.jpg",
-        desc: "This bedroom's windows were boarded over and its flooring damaged beyond repair, leaving the room dark, closed off, and unusable. We removed the boards and restored the windows, replaced the flooring, and repainted the walls to bring natural light and a clean, neutral finish back into the space. It's a straightforward, thorough rebuild that turned a shuttered room back into a livable bedroom.",
-      },
-      {
-        name: "Hallway",
-        type: "slider",
-        before: "assets/dorado-house/hallway-b.jpg",
-        after: "assets/dorado-house/hallway-a.jpg",
-        desc: "The hallway connecting the home's rooms had a hole punched through the drywall, dated wall decor, and flooring well past salvageable. Our team repaired the wall, replaced the flooring throughout, repainted top to bottom, and updated the lighting to connect cleanly with the kitchen at the end of the hall. It's a small stretch of the house, but it now reflects the same quality as everywhere else we touched.",
-      },
-    ],
-  },
-};
-
 document.addEventListener("DOMContentLoaded", () => {
-  // Legacy deep link — the Quince project used to open in the Projects
-  // modal via this hash; it now lives on its own case-study page.
+  // Legacy deep links — both projects used to open in the Projects page
+  // modal via these hashes; each now lives on its own case-study page.
   if (location.hash === "#full-interior-transformation") {
     location.replace("full-interior-transformation.html");
+    return;
+  }
+  if (location.hash === "#destroyed-property-restored") {
+    location.replace("destroyed-property-restored.html");
     return;
   }
 
@@ -252,122 +218,6 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = card.getAttribute("data-project-href");
     });
   });
-
-  // Project detail modal (Projects page grid -> full room-by-room view)
-  const modal = document.querySelector("[data-project-modal]");
-  if (modal) {
-    const modalBody = modal.querySelector(".project-modal-body");
-    let lastFocused = null;
-
-    const roomMarkup = (room) => {
-      const afterAlt = `${room.name} after renovation by Delta Companies: Construction in Memphis, TN`;
-      const beforeAlt = `${room.name} before renovation in Memphis, TN`;
-      if (room.type === "slider") {
-        return `
-          <div class="project-modal-room">
-            <p class="room-heading">${room.name}</p>
-            <div class="room-slider-wrap">
-              <div class="ba-slider" data-ba-slider role="slider" tabindex="0" aria-label="${room.name} before and after slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
-                <div class="ba-slider-after"><img src="${room.after}" alt="${afterAlt}" loading="lazy" draggable="false" /></div>
-                <div class="ba-slider-before"><img src="${room.before}" alt="${beforeAlt}" loading="lazy" draggable="false" /></div>
-                <div class="ba-slider-handle"><span class="ba-slider-handle-btn">&#8596;</span></div>
-                <span class="ba-tag ba-tag-before">Before</span>
-                <span class="ba-tag ba-tag-after">After</span>
-              </div>
-            </div>
-            <p class="room-desc">${room.desc}</p>
-          </div>`;
-      }
-      return `
-        <div class="project-modal-room">
-          <p class="room-heading">${room.name}</p>
-          <div class="before-after">
-            <div class="ba-pane">
-              <p class="ba-label">Before</p>
-              <img src="${room.before}" alt="${beforeAlt}" loading="lazy" />
-            </div>
-            <div class="ba-pane">
-              <p class="ba-label">After</p>
-              <img src="${room.after}" alt="${afterAlt}" loading="lazy" />
-            </div>
-          </div>
-          <p class="room-desc">${room.desc}</p>
-        </div>`;
-    };
-
-    const openProject = (id, opener) => {
-      const project = PROJECTS[id];
-      if (!project) return;
-      lastFocused = opener || document.activeElement;
-
-      modalBody.innerHTML = `
-        <span class="eyebrow">${project.subtitle}</span>
-        <h2 id="project-modal-title">${project.title}</h2>
-        <p class="lead">${project.description}</p>
-        ${
-          project.cover
-            ? `<img class="project-modal-cover" src="${project.cover}" alt="${project.title} — ${project.subtitle}" loading="lazy" />
-               ${project.coverDesc ? `<p class="cover-desc">${project.coverDesc}</p>` : ""}`
-            : ""
-        }
-        <div class="project-modal-rooms">
-          ${project.rooms.map(roomMarkup).join("")}
-        </div>
-      `;
-
-      modal.classList.add("is-open");
-      modal.setAttribute("aria-hidden", "false");
-      document.body.classList.add("modal-open");
-      initBaSliders(modalBody);
-
-      const closeBtn = modal.querySelector(".project-modal-close");
-      if (closeBtn) closeBtn.focus();
-
-      if (history.replaceState) history.replaceState(null, "", `#${id}`);
-    };
-
-    const closeProject = () => {
-      if (!modal.classList.contains("is-open")) return;
-      modal.classList.remove("is-open");
-      modal.setAttribute("aria-hidden", "true");
-      document.body.classList.remove("modal-open");
-      modalBody.innerHTML = "";
-      if (lastFocused && typeof lastFocused.focus === "function") {
-        lastFocused.focus();
-      }
-      if (history.replaceState) {
-        history.replaceState(null, "", location.pathname + location.search);
-      }
-    };
-
-    modal.querySelectorAll("[data-modal-close]").forEach((el) => {
-      el.addEventListener("click", closeProject);
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeProject();
-    });
-
-    document.querySelectorAll("[data-open-project]").forEach((trigger) => {
-      trigger.addEventListener("click", (e) => {
-        e.preventDefault();
-        openProject(trigger.getAttribute("data-open-project"), trigger);
-      });
-    });
-
-    document.querySelectorAll(".project-card, .ba-tile[data-project]").forEach((card) => {
-      card.addEventListener("click", (e) => {
-        if (e.target.closest("[data-ba-slider]")) return;
-        if (e.target.closest("[data-open-project]")) return;
-        openProject(card.getAttribute("data-project"), card);
-      });
-    });
-
-    const hashId = location.hash.replace("#", "");
-    if (hashId && PROJECTS[hashId]) {
-      openProject(hashId, document.querySelector(`[data-project="${hashId}"]`));
-    }
-  }
 
   // Service area modal (Contact page) — reuses the same .project-modal
   // visual pattern as the project detail views, wired up independently.

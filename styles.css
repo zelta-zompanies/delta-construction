@@ -419,7 +419,14 @@ section {
 
 @media (max-width: 560px) {
   .trust-line {
+    flex-direction: column;
+    gap: 0.35rem;
     font-size: 0.82rem;
+  }
+
+  .license-line-text {
+    align-items: center;
+    text-align: center;
   }
 }
 
@@ -474,7 +481,7 @@ section {
 
 @media (max-width: 760px) {
   body {
-    padding-bottom: 60px;
+    padding-bottom: calc(54px + env(safe-area-inset-bottom, 0px));
   }
 
   .mobile-call-bar {
@@ -483,8 +490,8 @@ section {
     justify-content: center;
     gap: 0.6rem;
     position: fixed;
-    left: 0;
-    right: 0;
+    left: 12px;
+    right: 12px;
     bottom: 0;
     z-index: 400;
     background: var(--accent);
@@ -493,7 +500,8 @@ section {
     font-weight: 700;
     font-size: 0.95rem;
     padding: 0.9rem 1rem;
-    padding-bottom: max(0.9rem, env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(0.9rem + env(safe-area-inset-bottom, 0px));
+    border-radius: 14px 14px 0 0;
     box-shadow: 0 -4px 16px rgba(7, 48, 68, 0.18);
   }
 
@@ -859,6 +867,8 @@ section {
 
 .ba-tag-after {
   right: 0.7rem;
+  background: var(--accent);
+  color: var(--white);
 }
 
 /* First-slider drag hint — nudges the handle on first view, then fades */
@@ -1084,6 +1094,48 @@ select {
 .form-status.error {
   display: block;
   color: #a33030;
+}
+
+/* Quote request form (Contact page) — lean into the accent green */
+#quote-form {
+  border-top: 4px solid var(--accent);
+}
+
+#quote-form h3 {
+  position: relative;
+  padding-bottom: 0.85rem;
+  margin-bottom: 1.4rem;
+}
+
+#quote-form h3::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 42px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+#quote-form .form-grid > div:focus-within label {
+  color: var(--accent);
+}
+
+#quote-form select {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230f7a5c' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");
+}
+
+#quote-form .btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px rgba(15, 122, 92, 0.28);
+}
+
+#quote-form .btn-primary:hover {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  box-shadow: 0 10px 24px rgba(15, 122, 92, 0.32);
 }
 
 /* ---------- Cards ---------- */
@@ -1688,11 +1740,15 @@ body.modal-open {
 /* ---------- Case study page (full-interior-transformation.html) ---------- */
 
 .cs-hero {
-  padding: 4.5rem 0 4rem;
+  padding: 2.75rem 0 2.25rem;
+}
+
+.cs-hero h1 {
+  font-size: clamp(1.9rem, 3.6vw, 2.75rem);
 }
 
 .cs-breadcrumb {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .cs-breadcrumb a {
@@ -1708,24 +1764,24 @@ body.modal-open {
 }
 
 .cs-hero-lead {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   max-width: 46em;
 }
 
 .cs-hero-media {
-  margin: 2.5rem 0 0;
+  margin: 1.5rem 0 0;
 }
 
 .cs-hero-media img {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: clamp(160px, 22vw, 280px);
   object-fit: cover;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
 }
 
 .cs-hero-media figcaption {
-  margin-top: 0.75rem;
+  margin-top: 0.6rem;
   font-size: 0.85rem;
   color: var(--text-muted);
   font-style: italic;
@@ -1788,25 +1844,6 @@ body.modal-open {
   .cs-glance-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-}
-
-.cs-placeholder-flag {
-  display: inline-block;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: #a36a1f;
-  background: rgba(214, 158, 46, 0.14);
-  border-radius: 4px;
-  padding: 0.1rem 0.4rem;
-  vertical-align: middle;
-}
-
-.cs-placeholder-note {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-style: italic;
-  margin: 1.5rem 0 0;
 }
 
 /* Narrative sections */
@@ -2014,7 +2051,7 @@ body.modal-open {
   margin: 2.5rem 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
   counter-reset: phase;
   position: relative;
@@ -2070,7 +2107,17 @@ body.modal-open {
   margin: 0;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
+  .cs-timeline {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cs-timeline-phase + .cs-timeline-phase::before {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
   .cs-timeline {
     grid-template-columns: 1fr;
   }
@@ -2079,6 +2126,7 @@ body.modal-open {
     content: "\2193";
     left: 1.75rem;
     top: -1.55rem;
+    display: block;
   }
 }
 
