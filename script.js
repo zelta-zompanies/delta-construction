@@ -1,59 +1,9 @@
 /* Delta Companies: Construction — shared site JS */
 
 // Project data (Projects page grid + detail modal)
+// Note: "Full Interior Transformation" (Quince House) now has a dedicated
+// case-study page — full-interior-transformation.html — instead of a modal.
 const PROJECTS = {
-  "full-interior-transformation": {
-    title: "Full Interior Transformation",
-    subtitle: "Quince House — Memphis, TN",
-    description:
-      "Quince House needed new life in every room. From the kitchen to the hallway, our team rebuilt it from the studs out into a home buyers are proud to walk into.",
-    cover: null,
-    coverDesc: null,
-    rooms: [
-      {
-        name: "Kitchen",
-        type: "slider",
-        before: "assets/quince-house/kitchen-before.jpg",
-        after: "assets/quince-house/kitchen-after.jpg",
-        desc: "This kitchen was showing its age and then some — worn linoleum flooring, dated cabinetry, cluttered counters, and visible water staining along the ceiling line pointed to years of deferred maintenance. Our team gutted the space where needed and installed new cabinetry, a subway tile backsplash, and durable wood-look plank flooring throughout. Updated countertops, a new sink and fixtures, and fresh lighting round out a kitchen that's as functional as it is inviting.",
-      },
-      {
-        name: "Bathroom",
-        type: "slider",
-        before: "assets/quince-house/bathroom-before.jpg",
-        after: "assets/quince-house/bathroom-after.jpg",
-        desc: "The original bathroom's tile floor and tub surround were original to the home, worn down, and overdue for a full refresh. We replaced the tub surround and flooring with clean, large-format tile, installed a new vanity, toilet, and mirror, and updated the lighting and fixtures throughout. The result is a bright, modern bathroom that makes the most of a compact footprint.",
-      },
-      {
-        name: "Bedroom",
-        type: "slider",
-        before: "assets/quince-house/bedroom-before.jpg",
-        after: "assets/quince-house/bedroom-after.jpg",
-        desc: "This bedroom needed the basics done right — the finishes were tired and plain, and the space lacked the clean, cohesive feel the rest of the home now has. Delta refinished the flooring, repainted throughout, and updated the closet doors and hardware to match the home's new standard. It's a simple, confident refresh that makes the room feel new again.",
-      },
-      {
-        name: "Master Bedroom",
-        type: "slider",
-        before: "assets/quince-house/master-before.jpg",
-        after: "assets/quince-house/master-after.jpg",
-        desc: "The primary bedroom had taken on serious water damage — a stained, sagging ceiling, ruined carpet, and debris throughout left it unusable in its original state. We repaired the ceiling and structure, installed new flooring, and repainted top to bottom. Fresh trim, updated lighting, and clean, neutral finishes turned a total loss into one of the best rooms in the house.",
-      },
-      {
-        name: "Entry",
-        type: "slider",
-        before: "assets/quince-house/entry-before.jpg",
-        after: "assets/quince-house/entry-after.jpg",
-        desc: "The main living area was cluttered and worn, with visible damage along the paneled walls and carpet — not the first impression a home should make. Our team removed the damaged materials, installed new wood-look flooring throughout, repainted the walls and trim, and refreshed the doors connecting to the kitchen and hallway. It's now an open, light-filled space that sets the tone for the rest of the home.",
-      },
-      {
-        name: "Hallway",
-        type: "slider",
-        before: "assets/quince-house/hallway-before.jpg",
-        after: "assets/quince-house/hallway-after.jpg",
-        desc: "A dark, narrow hallway with dated wood paneling and worn flooring connected the home's bedrooms, but it did the space no favors. We replaced the flooring, repainted the walls, and updated the lighting fixture to brighten what used to be one of the darkest parts of the house. Small space, same level of care — it now feels like a natural extension of the rest of the renovation.",
-      },
-    ],
-  },
   "destroyed-property-restored": {
     title: "Destroyed Property, Restored!",
     subtitle: "Dorado House — 3701 Dorado, Memphis, TN",
@@ -89,6 +39,13 @@ const PROJECTS = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Legacy deep link — the Quince project used to open in the Projects
+  // modal via this hash; it now lives on its own case-study page.
+  if (location.hash === "#full-interior-transformation") {
+    location.replace("full-interior-transformation.html");
+    return;
+  }
+
   // Dynamic copyright year (never goes stale)
   document.querySelectorAll(".js-year").forEach((el) => {
     el.textContent = new Date().getFullYear();
@@ -284,6 +241,17 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     hintObserver.observe(hintSlider);
   }
+
+  // Cards that link out to a dedicated case-study page instead of the
+  // modal — the whole card is clickable, except the drag slider and any
+  // real links inside it.
+  document.querySelectorAll("[data-project-href]").forEach((card) => {
+    card.addEventListener("click", (e) => {
+      if (e.target.closest("[data-ba-slider]")) return;
+      if (e.target.closest("a")) return;
+      window.location.href = card.getAttribute("data-project-href");
+    });
+  });
 
   // Project detail modal (Projects page grid -> full room-by-room view)
   const modal = document.querySelector("[data-project-modal]");

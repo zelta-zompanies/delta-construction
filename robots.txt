@@ -1,0 +1,7 @@
+# Delta Companies: Construction — robots.txt
+# TODO: replace https://REPLACE-WITH-DOMAIN with the live production domain once the site is live.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://REPLACE-WITH-DOMAIN/sitemap.xml

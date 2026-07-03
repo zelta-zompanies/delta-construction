@@ -4,8 +4,9 @@
     {
       "name": "delta-site",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["--yes", "serve", "-l", "5500", "."],
-      "port": 5500
+      "runtimeArgs": ["--yes", "serve", "."],
+      "port": 5500,
+      "autoPort": true
     }
   ]
 }

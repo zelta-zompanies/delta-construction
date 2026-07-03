@@ -6,6 +6,8 @@
 :root {
   --navy: #073044;
   --navy-soft: #0d4560;
+  --accent: #0f7a5c;
+  --accent-dark: #0b5f47;
   --mint: #E4EFEF;
   --offwhite: #FAFBFC;
   --white: #ffffff;
@@ -18,7 +20,7 @@
   --shadow: 0 2px 12px rgba(7, 48, 68, 0.08);
   --shadow-md: 0 6px 20px rgba(7, 48, 68, 0.1);
   --shadow-lg: 0 8px 30px rgba(7, 48, 68, 0.12);
-  --shadow-focus: 0 0 0 4px rgba(7, 48, 68, 0.14);
+  --shadow-focus-accent: 0 0 0 4px rgba(15, 122, 92, 0.18);
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
   --max-w: 1120px;
 }
@@ -100,7 +102,7 @@ p {
   letter-spacing: 0.14em;
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--navy-soft);
+  color: var(--accent);
   margin-bottom: 0.75rem;
 }
 
@@ -183,19 +185,18 @@ section {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(250, 251, 252, 0.7);
-  backdrop-filter: blur(14px) saturate(1.4);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  border-bottom: 1px solid rgba(7, 48, 68, 0.06);
-  box-shadow: 0 0 0 rgba(7, 48, 68, 0);
-  transition: background-color 0.35s var(--ease), box-shadow 0.35s var(--ease),
-    border-color 0.35s var(--ease);
+  background: var(--navy);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  transition: box-shadow 0.35s var(--ease), padding 0.35s var(--ease);
 }
 
 .site-nav.is-scrolled {
-  background: rgba(250, 251, 252, 0.92);
-  box-shadow: 0 8px 24px rgba(7, 48, 68, 0.08);
-  border-bottom-color: rgba(7, 48, 68, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.site-nav :focus-visible {
+  outline-color: var(--white);
 }
 
 .nav-inner {
@@ -218,7 +219,7 @@ section {
   align-items: center;
   gap: 0.65rem;
   text-decoration: none;
-  color: var(--navy);
+  color: var(--white);
   font-weight: 800;
   letter-spacing: 0.06em;
   font-size: 0.95rem;
@@ -258,7 +259,7 @@ section {
   text-decoration: none;
   font-weight: 600;
   font-size: 0.93rem;
-  color: var(--navy);
+  color: var(--white);
   padding: 0.4rem 0.1rem;
 }
 
@@ -269,7 +270,7 @@ section {
   right: 100%;
   bottom: 0;
   height: 2px;
-  background: var(--navy);
+  background: var(--accent);
   border-radius: 2px;
   transition: right 0.28s var(--ease);
 }
@@ -283,6 +284,14 @@ section {
 .nav-cta {
   padding: 0.6rem 1.4rem;
   font-size: 0.88rem;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--white);
+}
+
+.nav-cta:hover {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
 }
 
 /* Mobile nav toggle */
@@ -298,7 +307,7 @@ section {
   display: block;
   width: 22px;
   height: 2px;
-  background: var(--navy);
+  background: var(--white);
   margin: 5px 0;
   border-radius: 2px;
   transition: transform 0.25s var(--ease), opacity 0.25s var(--ease);
@@ -330,8 +339,8 @@ section {
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    background: var(--offwhite);
-    border-bottom: 1px solid rgba(7, 48, 68, 0.1);
+    background: var(--navy);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: var(--shadow-md);
     display: none;
     padding: 0.5rem 1.25rem 1.25rem;
@@ -350,7 +359,7 @@ section {
   .nav-links a {
     display: block;
     padding: 0.9rem 0.25rem;
-    border-bottom: 1px solid rgba(7, 48, 68, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .nav-links a::after {
@@ -398,7 +407,7 @@ section {
   text-align: center;
   font-size: 0.92rem;
   font-weight: 700;
-  color: var(--navy-soft);
+  color: var(--accent);
   letter-spacing: 0.01em;
 }
 
@@ -411,6 +420,91 @@ section {
 @media (max-width: 560px) {
   .trust-line {
     font-size: 0.82rem;
+  }
+}
+
+/* Trust block — groups the credibility line with the licensed/insured
+   line under one shared divider instead of stacking two separate rules */
+.trust-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 2.5rem 0 0;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(7, 48, 68, 0.14);
+}
+
+.trust-block .trust-line {
+  margin: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.license-line {
+  color: var(--navy-soft);
+}
+
+.license-line-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.35;
+  letter-spacing: normal;
+}
+
+.license-line-sub {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Standalone use (e.g. About page, with no preceding trust-line) */
+.license-line--standalone {
+  margin: 2.5rem 0 0;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(7, 48, 68, 0.14);
+}
+
+/* ---------- Sticky mobile click-to-call ---------- */
+
+.mobile-call-bar {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  body {
+    padding-bottom: 60px;
+  }
+
+  .mobile-call-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 400;
+    background: var(--accent);
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.9rem 1rem;
+    padding-bottom: max(0.9rem, env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -4px 16px rgba(7, 48, 68, 0.18);
+  }
+
+  .mobile-call-bar svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .mobile-call-bar:active {
+    background: var(--accent-dark);
   }
 }
 
@@ -478,7 +572,8 @@ section {
 }
 
 .carousel-btn:hover {
-  background: var(--navy);
+  background: var(--accent);
+  border-color: var(--accent);
   color: var(--white);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
@@ -546,6 +641,12 @@ section {
   text-decoration: none;
   border-bottom: 2px solid var(--navy);
   padding-bottom: 1px;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.ba-tile:hover .ba-tile-link {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
 /* Flush CTA bar — attached directly under a slider-only tile's image,
@@ -566,7 +667,7 @@ section {
 }
 
 .ba-tile-cta-bar:hover {
-  background: var(--navy-soft);
+  background: var(--accent);
 }
 
 .ba-tile-cta-bar span {
@@ -629,8 +730,8 @@ section {
 
 .portfolio-scope-tag {
   display: inline-block;
-  background: var(--mint);
-  color: var(--navy-soft);
+  background: rgba(15, 122, 92, 0.12);
+  color: var(--accent);
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -727,7 +828,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--navy);
+  color: var(--accent);
   font-size: 1.1rem;
   transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
@@ -864,7 +965,7 @@ section {
 }
 
 .testimonial-stars {
-  color: var(--navy);
+  color: var(--accent);
   font-size: 1.05rem;
   letter-spacing: 0.2em;
 }
@@ -949,8 +1050,8 @@ input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: var(--navy);
-  box-shadow: var(--shadow-focus);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-focus-accent);
 }
 
 textarea {
@@ -1417,7 +1518,7 @@ body.modal-open {
   height: 42px;
   border-radius: 50%;
   background: var(--mint);
-  color: var(--navy);
+  color: var(--accent);
   font-weight: 800;
   font-size: 1.15rem;
   margin-bottom: 1rem;
@@ -1484,7 +1585,36 @@ body.modal-open {
 /* ---------- Service area map (opens in a modal from Contact page) ---------- */
 
 .service-area-cta {
-  margin: 0 0 1.75rem;
+  margin: 0.25rem 0 1.75rem;
+}
+
+.service-area-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--navy);
+  text-decoration: none;
+  border-bottom: 2px solid var(--navy);
+  padding-bottom: 2px;
+  cursor: pointer;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.service-area-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.service-area-link svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 .service-map-lead {
@@ -1499,6 +1629,12 @@ body.modal-open {
   text-decoration: none;
   border-bottom: 2px solid var(--navy);
   padding-bottom: 1px;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.service-map-lead a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
 .service-map-frame {
@@ -1547,6 +1683,501 @@ body.modal-open {
   text-align: right;
   font-weight: 600;
   color: var(--navy);
+}
+
+/* ---------- Case study page (full-interior-transformation.html) ---------- */
+
+.cs-hero {
+  padding: 4.5rem 0 4rem;
+}
+
+.cs-breadcrumb {
+  margin-bottom: 1.5rem;
+}
+
+.cs-breadcrumb a {
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  color: var(--navy-soft);
+  transition: color 0.2s var(--ease);
+}
+
+.cs-breadcrumb a:hover {
+  color: var(--accent);
+}
+
+.cs-hero-lead {
+  font-size: 1.2rem;
+  max-width: 46em;
+}
+
+.cs-hero-media {
+  margin: 2.5rem 0 0;
+}
+
+.cs-hero-media img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.cs-hero-media figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* At a Glance stat card */
+.cs-glance-section {
+  padding: 3.5rem 0;
+}
+
+.cs-glance {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem 2rem 1.5rem;
+}
+
+.cs-glance-title {
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+}
+
+.cs-glance-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin: 0;
+}
+
+.cs-glance-item dt {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.cs-glance-item dd {
+  margin: 0;
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+.cs-glance-item--wide {
+  grid-column: 1 / -1;
+}
+
+.cs-glance-item--wide dd {
+  font-size: 0.97rem;
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .cs-glance-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cs-placeholder-flag {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #a36a1f;
+  background: rgba(214, 158, 46, 0.14);
+  border-radius: 4px;
+  padding: 0.1rem 0.4rem;
+  vertical-align: middle;
+}
+
+.cs-placeholder-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 1.5rem 0 0;
+}
+
+/* Narrative sections */
+.cs-narrative .prose p {
+  max-width: 46em;
+}
+
+/* Story section — sticky "In This Story" nav + challenge + room-by-room */
+.cs-story-grid {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 3.5rem;
+  align-items: start;
+}
+
+.cs-story-nav {
+  position: sticky;
+  top: 6rem;
+}
+
+.cs-story-nav-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 0.9rem;
+}
+
+.cs-story-nav-list {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  border-left: 2px solid rgba(7, 48, 68, 0.1);
+}
+
+.cs-story-nav-list a {
+  display: block;
+  padding: 0.4rem 0 0.4rem 1rem;
+  margin-left: -2px;
+  border-left: 2px solid transparent;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.cs-story-nav-list a:hover,
+.cs-story-nav-list a:focus-visible {
+  color: var(--navy);
+  border-left-color: var(--accent);
+}
+
+.cs-story-nav-cta {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.cs-story-nav-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin: 0.6rem 0 0;
+}
+
+@media (max-width: 900px) {
+  .cs-story-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-story-nav {
+    position: static;
+    margin-bottom: 2.5rem;
+  }
+
+  .cs-story-nav-list {
+    columns: 2;
+  }
+}
+
+/* Inline stat row (replaces a separate full-width band) */
+.cs-story-stats {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid rgba(7, 48, 68, 0.12);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cs-story-stats li {
+  padding: 0 2rem;
+  border-left: 1px solid rgba(7, 48, 68, 0.12);
+}
+
+.cs-story-stats li:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.cs-story-stats strong {
+  display: block;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.cs-story-stats span {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+@media (max-width: 560px) {
+  .cs-story-stats {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .cs-story-stats li {
+    padding: 0;
+    border: 0;
+  }
+}
+
+.cs-story-work-eyebrow {
+  margin-top: 3rem;
+}
+
+/* Room-by-room list */
+.cs-rooms {
+  display: grid;
+  gap: 3.5rem;
+  margin-top: 2.5rem;
+}
+
+.cs-room .room-heading {
+  margin-top: 0;
+}
+
+.room-num {
+  color: var(--accent);
+  margin-right: 0.6em;
+}
+
+/* Scope of work grid */
+.cs-scope-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+@media (max-width: 860px) {
+  .cs-scope-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .cs-scope-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cs-scope-item {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.75rem 1.5rem;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.cs-scope-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.cs-scope-item svg {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0.9rem;
+}
+
+.cs-scope-item h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+
+.cs-scope-item p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Timeline */
+.cs-timeline {
+  list-style: none;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  counter-reset: phase;
+  position: relative;
+}
+
+.cs-timeline-phase {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(7, 48, 68, 0.06);
+  padding: 1.9rem 1.75rem;
+  position: relative;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.cs-timeline-phase:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Connector arrows between phases (desktop) */
+.cs-timeline-phase + .cs-timeline-phase::before {
+  content: "\2192";
+  position: absolute;
+  left: -1.32rem;
+  top: 2.2rem;
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.cs-timeline-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--mint);
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 1.15rem;
+  margin-bottom: 1rem;
+}
+
+.cs-timeline-phase h3 {
+  margin-bottom: 0.4rem;
+}
+
+.cs-timeline-phase p {
+  color: var(--text-muted);
+  font-size: 0.93rem;
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .cs-timeline {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-timeline-phase + .cs-timeline-phase::before {
+    content: "\2193";
+    left: 1.75rem;
+    top: -1.55rem;
+  }
+}
+
+.cs-timeline-link {
+  margin: 2rem 0 0;
+  font-size: 0.95rem;
+}
+
+.cs-timeline-link a {
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid var(--navy);
+  padding-bottom: 1px;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.cs-timeline-link a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Editorial pull quote */
+.cs-quote-section {
+  background: var(--mint);
+  padding: 4rem 0;
+}
+
+.cs-quote {
+  margin: 0 auto;
+  max-width: 720px;
+  text-align: center;
+  border: 0;
+  padding: 0;
+}
+
+.cs-quote p {
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.cs-quote cite {
+  display: block;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+/* Inline insight callouts — interspersed between rooms in "The Work" */
+.cs-insight-callout {
+  margin-top: 1.5rem;
+  background: rgba(15, 122, 92, 0.07);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 1.4rem 1.5rem;
+}
+
+.cs-insight-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+
+.cs-insight-label svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.cs-insight-callout h3 {
+  font-size: 1.02rem;
+  margin-bottom: 0.4rem;
+}
+
+.cs-insight-callout p:last-child {
+  color: var(--text-muted);
+  font-size: 0.93rem;
+  margin: 0;
+}
+
+/* Closing CTA */
+.cs-cta {
+  text-align: center;
+}
+
+.cs-cta .lead {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.75rem;
 }
 
 /* ---------- Footer ---------- */
