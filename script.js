@@ -219,6 +219,98 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Case-study "In This Story" scroll-spy — the sticky TOC "ticks down" as
+  // the reader scrolls: the section currently in view becomes the active,
+  // accent-highlighted item, and an accent progress fill descends the track
+  // to match. IntersectionObserver-driven (no scroll-jank). Clicks keep the
+  // native smooth-scroll and re-sync the active state. Shared by both
+  // case-study pages via this file; no-ops on pages without the TOC.
+  const storyNavList = document.querySelector(".cs-story-nav-list");
+  if (storyNavList) {
+    const links = Array.from(storyNavList.querySelectorAll('a[href^="#"]'));
+    const linkForSection = new Map();
+    links.forEach((link) => {
+      const id = decodeURIComponent(link.getAttribute("href").slice(1));
+      const section = id && document.getElementById(id);
+      if (section) linkForSection.set(section, link);
+    });
+    const sections = Array.from(linkForSection.keys());
+
+    if (sections.length) {
+      const updateProgressFill = (link) => {
+        // Fill from the top of the track down to the bottom of the active
+        // item, so the accent marker lines up with the ticked entry.
+        const li = link.parentElement;
+        const fill = li.offsetTop + li.offsetHeight;
+        storyNavList.style.setProperty("--toc-progress", `${fill}px`);
+      };
+
+      const setActive = (link) => {
+        if (!link) return;
+        if (!link.classList.contains("is-active")) {
+          links.forEach((l) => {
+            l.classList.remove("is-active");
+            l.removeAttribute("aria-current");
+          });
+          link.classList.add("is-active");
+          link.setAttribute("aria-current", "true");
+        }
+        updateProgressFill(link);
+      };
+
+      const visible = new Set();
+      const pickActive = () => {
+        let active = null;
+        if (visible.size) {
+          // Topmost section currently within the trigger band.
+          active = sections
+            .filter((s) => visible.has(s))
+            .sort(
+              (a, b) =>
+                a.getBoundingClientRect().top - b.getBoundingClientRect().top
+            )[0];
+        } else {
+          // Between bands — fall back to the last section above the line.
+          const line = window.innerHeight * 0.28;
+          sections.forEach((s) => {
+            if (s.getBoundingClientRect().top <= line) active = s;
+          });
+        }
+        if (active) setActive(linkForSection.get(active));
+      };
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) visible.add(entry.target);
+            else visible.delete(entry.target);
+          });
+          pickActive();
+        },
+        { rootMargin: "-22% 0px -70% 0px", threshold: 0 }
+      );
+      sections.forEach((s) => observer.observe(s));
+
+      // Instant feedback on click; the observer then keeps it in sync as the
+      // smooth-scroll settles.
+      links.forEach((link) => {
+        link.addEventListener("click", () => setActive(link));
+      });
+
+      // Keep the fill aligned if the list reflows.
+      window.addEventListener(
+        "resize",
+        () => {
+          const current = storyNavList.querySelector("a.is-active");
+          if (current) updateProgressFill(current);
+        },
+        { passive: true }
+      );
+
+      pickActive();
+    }
+  }
+
   // Service area modal (Contact page) — reuses the same .project-modal
   // visual pattern as the project detail views, wired up independently.
   const serviceModal = document.querySelector("[data-service-modal]");

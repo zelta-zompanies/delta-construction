@@ -26,6 +26,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* "Get a Quote" CTAs: accent green to match the nav/hero CTA */
+    .btn-quote { background: var(--accent); border-color: var(--accent); color: var(--white); }
+    .btn-quote:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: var(--white); }
+  </style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -106,13 +111,17 @@
         <nav class="cs-breadcrumb" aria-label="Breadcrumb">
           <a href="projects.html">&larr; All Projects</a>
         </nav>
-        <span class="eyebrow">Case Study &middot; Memphis, TN</span>
-        <h1>Destroyed Property, Restored!</h1>
-        <p class="lead cs-hero-lead">How a fire- and water-damaged Memphis property went from boarded-up and written off to a bright, move-in-ready home.</p>
-        <figure class="cs-hero-media">
-          <img src="assets/dorado-house/kitchen-a.jpg" width="1400" height="1050" alt="Rebuilt kitchen after fire and water damage restoration by Delta Companies: Construction in Memphis, TN — new two-tone cabinetry, granite counters, subway tile backsplash, and plank flooring" />
-          <figcaption>The rebuilt kitchen &mdash; the room that took the worst of the damage, and now leads the recovery.</figcaption>
-        </figure>
+        <div class="cs-hero-grid">
+          <div class="cs-hero-text">
+            <span class="eyebrow">Case Study &middot; Memphis, TN</span>
+            <h1>Destroyed Property, Restored!</h1>
+            <p class="lead cs-hero-lead">How a fire- and water-damaged Memphis property went from boarded-up and written off to a bright, move-in-ready home.</p>
+          </div>
+          <figure class="cs-hero-media">
+            <img src="assets/dorado-house/kitchen-a.jpg" width="1400" height="1050" alt="Rebuilt kitchen after fire and water damage restoration by Delta Companies: Construction in Memphis, TN — new two-tone cabinetry, granite counters, subway tile backsplash, and plank flooring" />
+            <figcaption>The rebuilt kitchen &mdash; the room that took the worst of the damage, and now leads the recovery.</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
@@ -167,7 +176,7 @@
               <li><a href="#room-hallway">03&nbsp; Hallway</a></li>
               <li><a href="#the-result">The Result</a></li>
             </ul>
-            <a class="btn btn-primary btn-sm cs-story-nav-cta" href="contact.html">Get a Quote</a>
+            <a class="btn btn-primary btn-sm cs-story-nav-cta btn-quote" href="contact.html">Get a Quote</a>
             <p class="cs-story-nav-note">Free walkthrough &amp; honest estimate</p>
           </aside>
 
@@ -385,7 +394,7 @@
       <div class="container">
         <h2>Want Results Like This?</h2>
         <p class="lead">In math, delta means change. That's exactly what we deliver &mdash; a clear, honest estimate and a property transformed no matter how rough its starting point. Let's make the difference on yours.</p>
-        <a class="btn btn-primary" href="contact.html">Get a Quote</a>
+        <a class="btn btn-primary btn-quote" href="contact.html">Get a Quote</a>
       </div>
     </section>
 
@@ -401,7 +410,7 @@
         </div>
         <div>
           <p>Phone: <a href="tel:9015684128">901-568-4128</a></p>
-          <p>For any inquiries, questions or commendations, please call: <a href="tel:9015684128">901-568-4128</a></p>
+          <p>Email: <a href="mailto:zach@901deltacompanies.com">zach@901deltacompanies.com</a></p>
           <!-- TODO: real Facebook URL -->
           <a class="social-link" href="#" aria-label="Delta Companies: Construction on Facebook">
             <svg viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5H17V3.9c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V10H8v3h2.8v8h2.7z"/></svg>
@@ -410,7 +419,7 @@
         </div>
       </div>
       <div class="footer-meta">
-        <span>© <span class="js-year">2026</span> Delta Companies.</span>
+        <span>© <span class="js-year">2026</span> Delta Companies</span>
         <span>Memphis, TN</span>
       </div>
     </div>
