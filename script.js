@@ -404,4 +404,23 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
+
+  // Keep Up with Delta: Facebook Page Plugin fallback.
+  // The plugin renders an <iframe> inside .fb-page. If it's blocked (privacy
+  // extensions, no network to facebook.com, etc.) no iframe appears, leaving an
+  // empty gap. If nothing renders within the timeout, reveal the in-frame
+  // fallback message so the section still looks intentional.
+  const fbEmbed = document.querySelector(".fb-feed-embed");
+  if (fbEmbed) {
+    const fbPage = fbEmbed.querySelector(".fb-page");
+    const fbFallback = fbEmbed.querySelector(".fb-feed-fallback");
+    if (fbPage && fbFallback) {
+      window.setTimeout(() => {
+        if (!fbPage.querySelector("iframe")) {
+          fbFallback.hidden = false;
+          fbPage.setAttribute("hidden", "");
+        }
+      }, 4000);
+    }
+  }
 });

@@ -104,28 +104,60 @@
       <div class="container">
         <span class="eyebrow">Stay Connected</span>
         <h1>Keep Up with Delta</h1>
+        <p class="fb-intro">
+          See our latest projects, progress photos, and news straight from Delta
+          Construction's Facebook page. Give us a follow to catch every update.
+        </p>
 
-        <div class="fb-feed-frame">
-          <!--
-            FACEBOOK FEED WIDGET — placeholder.
-            Once Zach provides the Delta Construction Facebook Page
-            URL and a widget provider is chosen (e.g. Meta's native Page
-            Plugin, Elfsight, SociableKIT), paste the embed script/markup here
-            in place of .fb-feed-placeholder below.
+        <!--
+          FACEBOOK PAGE PLUGIN (Meta's official Social Plugin — Page Plugin).
+          Renders the live "timeline" tab (most recent posts) for the Delta
+          Companies: Construction Facebook Page (numeric Page ID 61591420268349).
+          No login/token needed for public Page content. The SDK loads from
+          facebook.com; this external dependency is required for a live feed.
+          If a visitor's browser blocks Facebook third-party content, the plugin
+          won't render — the permanent "Follow us on Facebook" card beside it and
+          the in-frame fallback (revealed by script.js) keep the section intentional.
+        -->
+        <div class="fb-feed-layout">
 
-            Example using Meta's Page Plugin:
-              <div id="fb-root"></div>
-              <script async defer crossorigin="anonymous"
-                src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0"></script>
-              <div class="fb-page"
-                data-href="PASTE_FACEBOOK_PAGE_URL_HERE"
-                data-tabs="timeline" data-width="500" data-height="700"></div>
-          -->
-          <div class="fb-feed-placeholder">
-            <svg viewBox="0 0 24 24" fill="#073044" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5H17V3.9c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V10H8v3h2.8v8h2.7z"/></svg>
-            <h3>Facebook Feed Coming Soon</h3>
-            <p>Once we have the Delta Construction Facebook page connected, live posts will appear right here.</p>
+          <!-- Live feed column -->
+          <div class="fb-feed-embed">
+            <div id="fb-root"></div>
+            <script async defer crossorigin="anonymous"
+              src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v21.0"></script>
+            <div class="fb-page"
+              data-href="https://www.facebook.com/profile.php?id=61591420268349"
+              data-tabs="timeline"
+              data-width="500"
+              data-height="720"
+              data-small-header="false"
+              data-adapt-container-width="true"
+              data-hide-cover="false"
+              data-show-facepile="true">
+              <blockquote cite="https://www.facebook.com/profile.php?id=61591420268349" class="fb-xfbml-parse-ignore">
+                <a href="https://www.facebook.com/profile.php?id=61591420268349">Delta Companies: Construction</a>
+              </blockquote>
+            </div>
+            <!-- Fallback shown by script.js only if the plugin fails to render (e.g. blocked) -->
+            <div class="fb-feed-fallback" hidden>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5H17V3.9c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V10H8v3h2.8v8h2.7z"/></svg>
+              <p>The live feed couldn't load — it may be blocked by your browser's privacy settings. You can still see all our latest posts on Facebook.</p>
+              <a class="btn btn-primary" href="https://www.facebook.com/profile.php?id=61591420268349" target="_blank" rel="noopener">Open our Facebook page</a>
+            </div>
           </div>
+
+          <!-- Permanent Follow CTA card (always visible, no external dependency) -->
+          <aside class="fb-follow-card">
+            <svg class="fb-follow-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5H17V3.9c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V10H8v3h2.8v8h2.7z"/></svg>
+            <h2>Follow us on Facebook</h2>
+            <p>Delta Companies: Construction posts fresh project photos and updates from around Memphis. Follow along for the latest.</p>
+            <a class="btn btn-primary" href="https://www.facebook.com/profile.php?id=61591420268349" target="_blank" rel="noopener" aria-label="Follow Delta Companies: Construction on Facebook (opens in a new tab)">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5H17V3.9c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V10H8v3h2.8v8h2.7z"/></svg>
+              Follow on Facebook
+            </a>
+          </aside>
+
         </div>
       </div>
     </section>
@@ -143,8 +175,7 @@
         <div>
           <p>Phone: <a href="tel:9015684128">901-568-4128</a></p>
           <p>Email: <a href="mailto:zach@901deltacompanies.com">zach@901deltacompanies.com</a></p>
-          <!-- TODO: real Facebook URL -->
-          <a class="social-link" href="#" aria-label="Delta Construction on Facebook">
+          <a class="social-link" href="https://www.facebook.com/profile.php?id=61591420268349" target="_blank" rel="noopener" aria-label="Delta Construction on Facebook (opens in a new tab)">
             <svg viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5H17V3.9c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V10H8v3h2.8v8h2.7z"/></svg>
             Facebook
           </a>
