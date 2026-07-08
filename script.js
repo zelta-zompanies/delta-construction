@@ -1,4 +1,4 @@
-/* Delta Companies: Construction — shared site JS */
+/* Delta Construction — shared site JS */
 
 document.addEventListener("DOMContentLoaded", () => {
   // Legacy deep links — both projects used to open in the Projects page
@@ -366,14 +366,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Form submission via static form service (Formspree-style POST)
+  // Form submission via Netlify Forms.
   //
-  // TODO: Replace FORM_ENDPOINT with your real endpoint, e.g.:
-  //   https://formspree.io/f/YOUR_FORM_ID
-  // Sign up at https://formspree.io (or Basin, Getform, Netlify Forms, etc.)
-  // and paste the endpoint URL below. Nothing else needs to change.
-  const FORM_ENDPOINT = "https://formspree.io/f/PLACEHOLDER_FORM_ID";
-
+  // Netlify detects forms marked data-netlify="true" at deploy time and
+  // accepts AJAX submissions as a URL-encoded POST to any path on the site
+  // (the hidden form-name field routes it to the right form). Submissions
+  // only work on the deployed Netlify site, not on a local dev server.
   document.querySelectorAll("form[data-delta-form]").forEach((form) => {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -383,10 +381,10 @@ document.addEventListener("DOMContentLoaded", () => {
       button.textContent = "Sending…";
 
       try {
-        const res = await fetch(FORM_ENDPOINT, {
+        const res = await fetch("/", {
           method: "POST",
-          body: new FormData(form),
-          headers: { Accept: "application/json" },
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(new FormData(form)).toString(),
         });
         if (res.ok) {
           form.reset();

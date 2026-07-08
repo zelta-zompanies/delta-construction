@@ -21,3 +21,6 @@ npm-debug.log*
 # Preview/dev server temp files
 .cache/
 .tmp/
+
+# AI image creator cost/usage tracking (local only)
+.ai-image-creator/

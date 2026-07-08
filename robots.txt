@@ -1,4 +1,4 @@
-# Delta Companies: Construction — robots.txt
+# Delta Construction — robots.txt
 # TODO: replace https://REPLACE-WITH-DOMAIN with the live production domain once the site is live.
 
 User-agent: *
