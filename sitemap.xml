@@ -1,38 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- TODO: replace https://REPLACE-WITH-DOMAIN with the live production domain once the site is live. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://REPLACE-WITH-DOMAIN/</loc>
+    <loc>https://901deltaconstruction.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-DOMAIN/about.html</loc>
+    <loc>https://901deltaconstruction.com/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-DOMAIN/projects.html</loc>
+    <loc>https://901deltaconstruction.com/projects.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-DOMAIN/full-interior-transformation.html</loc>
+    <loc>https://901deltaconstruction.com/full-interior-transformation.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-DOMAIN/destroyed-property-restored.html</loc>
+    <loc>https://901deltaconstruction.com/destroyed-property-restored.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-DOMAIN/contact.html</loc>
+    <loc>https://901deltaconstruction.com/contact.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-DOMAIN/keep-up.html</loc>
+    <loc>https://901deltaconstruction.com/keep-up.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
