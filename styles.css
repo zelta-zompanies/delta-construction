@@ -985,17 +985,27 @@ section {
   align-items: start;
 }
 
-/* Live feed column */
+/* Live feed column. The plugin sits flush inside the card — no inner padding —
+   so Facebook's own white chrome reads as the card itself. */
 .fb-feed-embed {
   border-radius: var(--radius-lg);
   background: var(--white);
   box-shadow: var(--shadow-md);
-  padding: 0.75rem;
   min-height: 480px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
   overflow: hidden;
+  /* Facebook renders at most 500px wide; cap the card so the plugin always
+     fills it edge-to-edge (matters in the stacked single-column layout). */
+  max-width: 500px;
+  margin-inline: auto;
+  width: 100%;
+}
+
+/* The SDK sizes the plugin from its container element's width, so .fb-page
+   must span the full card — a shrink-to-fit width makes Facebook render a
+   narrow iframe with cropped posts and dead space beside it. */
+.fb-feed-embed .fb-page {
+  display: block;
+  width: 100%;
 }
 
 /* The plugin renders an iframe up to 500px wide; keep it tidy on all screens */
@@ -1055,7 +1065,39 @@ section {
   height: 20px;
 }
 
-@media (max-width: 780px) {
+/* Desktop two-column: blurb cards stretch to the embed's full height with
+   their content vertically centered, and the Google row mirrors the Facebook
+   row (blurb left, embed right). */
+@media (min-width: 901px) {
+  .fb-feed-layout {
+    align-items: stretch;
+  }
+
+  .fb-follow-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .gbp-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 500px);
+  }
+
+  .gbp-layout .gbp-embed {
+    order: 2;
+  }
+
+  /* Fill the stretched card so the map never leaves white space below it */
+  .gbp-embed iframe {
+    height: 100%;
+    min-height: 420px;
+  }
+}
+
+/* Stack before the side card gets squeezed: below ~900px the second column
+   would drop under ~300px, which is too narrow to read comfortably. */
+@media (max-width: 900px) {
   .fb-feed-layout {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -1064,6 +1106,32 @@ section {
   .fb-feed-embed {
     min-height: 0;
   }
+}
+
+/* Google Business Profile section (reuses the fb-feed two-column layout) */
+.gbp-heading {
+  margin-bottom: 0.75rem;
+}
+
+.gbp-embed {
+  min-height: 0;
+  padding: 0.75rem;
+}
+
+.gbp-embed iframe {
+  width: 100%;
+  border-radius: calc(var(--radius-lg) - 0.5rem);
+  display: block;
+}
+
+/* The follow card is mint; on the mint section, flip the Google card to white */
+.gbp-card {
+  background: var(--white);
+}
+
+.gbp-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 /* ---------- Testimonials ---------- */
