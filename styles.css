@@ -1757,27 +1757,11 @@ body.modal-open {
   }
 }
 
-/* Process (left) + testimonials (right) two-column layout — About page */
+/* Process followed by reviews CTA, stacked — About page */
 .process-proof-grid {
   display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 3rem;
-  align-items: start;
-}
-
-.process-proof-grid .steps {
   grid-template-columns: 1fr;
-}
-
-.testimonials-grid--stacked {
-  grid-template-columns: 1fr;
-}
-
-@media (max-width: 900px) {
-  .process-proof-grid {
-    grid-template-columns: 1fr;
-    gap: 3.5rem;
-  }
+  gap: 3.5rem;
 }
 
 .step {
