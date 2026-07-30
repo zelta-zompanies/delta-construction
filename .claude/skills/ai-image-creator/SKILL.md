@@ -27,6 +27,8 @@ When the user mentions a model keyword in their image request, use the correspon
 
 ## Instructions
 
+> **Output location rule:** Personal/standalone images (art, experiments, anything not destined for this website) MUST be saved to `C:\Users\ZachBurgess\Pictures\ai-images\` — never inside this repo. Everything committed to this repo is published to the live Netlify site. Only save into the repo (under `assets/`) when the image is an actual site asset the user wants on 901deltaconstruction.com.
+
 > **Routing check:** If the user asks to **describe, analyze, or explain an existing image** (not generate a new one), skip directly to the **Image Analysis (`--analyze`)** section below. No prompt enhancement or output path needed.
 >
 > **Video routing:** If the user asks to **describe, analyze, or explain a video** (or wants a text description of a clip to seed/extend a video prompt), skip directly to the **Video Analysis (`--analyze-video`)** section below.

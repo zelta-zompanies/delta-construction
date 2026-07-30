@@ -24,3 +24,9 @@ npm-debug.log*
 
 # AI image creator cost/usage tracking (local only)
 .ai-image-creator/
+
+# AI image creator scratch output — personal images belong in
+# C:\Users\ZachBurgess\Pictures\ai-images, never in this repo
+generated-images/
+.claude/skills/ai-image-creator/tmp/*
+!.claude/skills/ai-image-creator/tmp/.gitkeep
