@@ -124,6 +124,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  // Shuffle the before/after carousel tiles so visitors see a different
+  // order on every page load. Runs before slider init; the drag hint
+  // follows whichever slider ends up first.
+  document.querySelectorAll(".ba-carousel").forEach((track) => {
+    const tiles = Array.from(track.children);
+    for (let i = tiles.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+    }
+    tiles.forEach((tile) => track.appendChild(tile));
+    const firstSlider = tiles[0] && tiles[0].querySelector("[data-ba-slider]");
+    if (firstSlider && !firstSlider.hasAttribute("data-ba-hint-target")) {
+      track
+        .querySelectorAll("[data-ba-hint-target]")
+        .forEach((s) => s.removeAttribute("data-ba-hint-target"));
+      firstSlider.setAttribute("data-ba-hint-target", "");
+    }
+  });
+
   initBaSliders();
 
   // Horizontal carousel prev/next controls
