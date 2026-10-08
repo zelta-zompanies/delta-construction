@@ -385,41 +385,97 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Form submission via Netlify Forms.
-  //
-  // Netlify detects forms marked data-netlify="true" at deploy time and
-  // accepts AJAX submissions as a URL-encoded POST to any path on the site
-  // (the hidden form-name field routes it to the right form). Submissions
-  // only work on the deployed Netlify site, not on a local dev server.
+  // Use only fixed event metadata. Never send names, contact details, messages,
+  // form values, or link destinations to analytics. A lead means an accepted
+  // form request, not a qualified lead, completed job, or confirmed notification.
+  const trackEvent = (name, parameters) => {
+    try {
+      if (typeof window.gtag === "function") window.gtag("event", name, parameters);
+    } catch {
+      // Analytics must never interrupt contact or change a submission result.
+    }
+  };
+
+  document.querySelectorAll('a[href^="tel:"], a[href^="mailto:"]').forEach((link) => {
+    link.addEventListener("click", () => {
+      trackEvent("contact_intent", {
+        method: link.getAttribute("href").startsWith("tel:") ? "phone" : "email",
+      });
+    });
+  });
+
+  // Netlify detects these static forms at deploy time. Preserve form names,
+  // form-name fields and honeypots. Live delivery requires separate verification.
   document.querySelectorAll("form[data-delta-form]").forEach((form) => {
+    const status = form.querySelector(".form-status");
+    const button = form.querySelector('button[type="submit"]');
+    const initialButtonText = button.textContent;
+    const fields = Array.from(form.querySelectorAll("input:not([type=hidden]), textarea, select"));
+    const initialDisabled = fields.map((field) => field.disabled);
+    let state = "idle";
+
+    const validateText = (field) => {
+      field.setCustomValidity(field.required && !field.value.trim()
+        ? "Please complete this field." : "");
+    };
+    fields.forEach((field) => {
+      field.addEventListener("input", () => validateText(field));
+    });
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const status = form.querySelector(".form-status");
-      const button = form.querySelector('button[type="submit"]');
+      if (state !== "idle") return;
+      fields.forEach(validateText);
+      if (!form.reportValidity()) return;
+
+      const body = new URLSearchParams(new FormData(form)).toString();
+      state = "sending";
       button.disabled = true;
       button.textContent = "Sending…";
+      fields.forEach((field) => { field.disabled = true; });
+      form.setAttribute("aria-busy", "true");
+      status.className = "form-status";
+      status.textContent = "Sending your message…";
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 20000);
 
       try {
         const res = await fetch("/", {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams(new FormData(form)).toString(),
+          body,
+          signal: controller.signal,
         });
-        if (res.ok) {
-          form.reset();
-          status.className = "form-status success";
-          status.textContent =
-            "Thanks — we received your message and will be in touch soon.";
-        } else {
-          throw new Error("Request failed");
+        if (!res.ok) {
+          state = "idle";
+          status.className = "form-status error";
+          status.textContent = "Your message was not accepted. Your details are still here. Please try again or call 901-568-4128.";
+          return;
+        }
+        state = "sent";
+        form.reset();
+        status.className = "form-status success";
+        status.textContent = "Thanks — your message was submitted. We'll be in touch soon.";
+        button.textContent = "Message sent";
+        const formId = form.getAttribute("name");
+        if (formId === "quote" || formId === "contact") {
+          trackEvent("generate_lead", { form_id: formId, method: "netlify_form" });
         }
       } catch {
+        // A lost response does not prove the POST failed. Do not automatically
+        // retry or invite another submission that could duplicate the request.
+        state = "uncertain";
         status.className = "form-status error";
-        status.textContent =
-          "Something went wrong. Please call us at 901-568-4128 and we'll help right away.";
+        status.textContent = "We couldn't confirm whether your message was received. Your details are still here. Please call 901-568-4128 before submitting again so we can avoid a duplicate.";
+        button.textContent = "Please call to confirm";
       } finally {
-        button.disabled = false;
-        button.textContent = "Submit";
+        window.clearTimeout(timeout);
+        form.removeAttribute("aria-busy");
+        fields.forEach((field, index) => { field.disabled = initialDisabled[index]; });
+        if (state === "idle") {
+          button.disabled = false;
+          button.textContent = initialButtonText;
+        }
       }
     });
   });
@@ -443,3 +499,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+

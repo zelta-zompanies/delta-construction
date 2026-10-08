@@ -71,13 +71,13 @@
         "@type": "OpeningHoursSpecification",
         "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
         "opens": "08:00",
-        "closes": "17:00"
+        "closes": "18:00"
       },
       {
         "@type": "OpeningHoursSpecification",
         "dayOfWeek": ["Saturday", "Sunday"],
         "opens": "08:00",
-        "closes": "14:00"
+        "closes": "16:00"
       }
     ],
     "hasOfferCatalog": {
@@ -373,7 +373,7 @@
             <p class="testimonial-attribution">Zoe A. — Memphis Homeowner</p>
           </article>
         </div>
-        <p class="testimonials-note"><a href="https://g.page/r/CVMflRaIq6wKEAI/review" target="_blank" rel="noopener">Read all our reviews on Google</a></p>
+        <p class="testimonials-note"><a href="https://www.google.com/maps/place/Delta+Construction/@35.1371175,-89.914019,11z/data=!4m8!3m7!1s0x2c0db5463e4344cb:0xaacab8816951f53!8m2!3d35.1371175!4d-89.914019!9m1!1b1!16s%2Fg%2F11zgqff03r?hl=en&amp;entry=ttu&amp;g_ep=EgoyMDI2MTAwNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">Read all our reviews on Google</a></p>
       </div>
     </section>
 
@@ -384,7 +384,7 @@
         <h2>Request a Quote</h2>
         <div class="form-card">
           <!-- Handled by Netlify Forms; submissions appear in the Netlify dashboard. -->
-          <form name="quote" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-delta-form novalidate>
+          <form name="quote" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-delta-form>
             <input type="hidden" name="form-name" value="quote" />
             <p hidden aria-hidden="true">
               <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -426,7 +426,7 @@
                 <button class="btn btn-primary" type="submit">Submit</button>
               </div>
             </div>
-            <p class="form-status" role="status"></p>
+            <p class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
           </form>
         </div>
       </div>
@@ -466,3 +466,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+

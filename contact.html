@@ -62,13 +62,13 @@
         "@type": "OpeningHoursSpecification",
         "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
         "opens": "08:00",
-        "closes": "17:00"
+        "closes": "18:00"
       },
       {
         "@type": "OpeningHoursSpecification",
         "dayOfWeek": ["Saturday", "Sunday"],
         "opens": "08:00",
-        "closes": "14:00"
+        "closes": "16:00"
       }
     ],
     "hasOfferCatalog": {
@@ -154,20 +154,21 @@
             <table class="hours-table">
               <tr>
                 <td>Mon–Fri</td>
-                <td>8:00 am – 5:00 pm</td>
+                <td>8:00 am – 6:00 pm</td>
               </tr>
               <tr>
                 <td>Sat–Sun</td>
-                <td>8:00 am – 2:00 pm</td>
+                <td>8:00 am – 4:00 pm</td>
               </tr>
             </table>
+            <p>All hours are Central Time (Memphis).</p>
           </div>
 
           <!-- Contact form -->
           <div class="form-card" id="quote-form">
             <h3>Send Us a Message</h3>
             <!-- Handled by Netlify Forms; submissions appear in the Netlify dashboard. -->
-            <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-delta-form novalidate>
+            <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-delta-form>
               <input type="hidden" name="form-name" value="contact" />
               <p hidden aria-hidden="true">
                 <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -182,8 +183,8 @@
                   <input id="c-last" name="last_name" type="text" autocomplete="family-name" />
                 </div>
                 <div>
-                  <label for="c-email">Email</label>
-                  <input id="c-email" name="email" type="email" autocomplete="email" />
+                  <label for="c-email">Email <span aria-hidden="true">*</span></label>
+                  <input id="c-email" name="email" type="email" autocomplete="email" required />
                 </div>
                 <div>
                   <label for="c-phone">Phone</label>
@@ -209,7 +210,7 @@
                   <button class="btn btn-primary" type="submit">Submit</button>
                 </div>
               </div>
-              <p class="form-status" role="status"></p>
+              <p class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
             </form>
           </div>
 
@@ -410,3 +411,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
