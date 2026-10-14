@@ -393,7 +393,7 @@ section {
 
 .hero {
   padding: 6.5rem 0 5.5rem;
-  background-image: linear-gradient(rgba(250, 251, 252, 0.86), rgba(250, 251, 252, 0.86)), url("assets/hero/rhodes-ave.webp");
+  background-image: linear-gradient(rgba(250, 251, 252, 0.86), rgba(250, 251, 252, 0.86)), url("assets/interior-renovation/entry-after.jpg");
   background-size: cover;
   background-position: center 65%;
 }
@@ -2682,9 +2682,9 @@ body.modal-open {
 .comparison-gallery-project { margin: 0 0 .2rem; font-size: .8rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
 .comparison-count { white-space: nowrap; color: var(--text-muted); font-weight: 700; }
 .comparison-stage { height: clamp(300px, 48vw, 590px); background: var(--navy); }
-.comparison-stage .ba-slider img, .cedar-story .room-slider-wrap img { object-fit: contain; }
-.comparison-stage .ba-slider-before, .cedar-story .ba-slider-before { background: var(--navy); }
-.comparison-stage .ba-slider-after, .cedar-story .ba-slider-after { background: var(--navy); }
+.comparison-stage .ba-slider img, .renovation-story .room-slider-wrap img { object-fit: contain; }
+.comparison-stage .ba-slider-before, .renovation-story .ba-slider-before { background: var(--navy); }
+.comparison-stage .ba-slider-after, .renovation-story .ba-slider-after { background: var(--navy); }
 .comparison-gallery-footer { padding: 1.25rem 1.5rem; }
 .comparison-controls { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: end; gap: 1rem; }
 .comparison-controls[hidden] { display: none; }
@@ -2697,7 +2697,7 @@ body.modal-open {
 .comparison-status { min-height: 1.5em; font-size: .8rem; color: var(--text-muted); margin: .5rem 0 0; }
 .ba-slider:focus-visible { outline: 3px solid var(--accent); outline-offset: -4px; }
 .ba-slider:focus-visible .ba-slider-handle-btn { outline: 3px solid var(--navy); outline-offset: 3px; }
-.cedar-story .room-slider-wrap { background: var(--navy); }
+.renovation-story .room-slider-wrap { background: var(--navy); }
 .story-preview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; align-items: center; margin-top: 2rem; }
 .story-preview img { width: 100%; max-height: 370px; object-fit: cover; border-radius: var(--radius); }
 @media (max-width: 640px) {

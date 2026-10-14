@@ -20,14 +20,14 @@
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:url" content="https://901deltaconstruction.com/contact.html" />
-  <meta property="og:image" content="https://901deltaconstruction.com/assets/quince-house/kitchen-after.jpg" />
+  <meta property="og:image" content="https://901deltaconstruction.com/assets/interior-renovation/kitchen-after.jpg" />
   <meta property="og:image:width" content="1050" />
   <meta property="og:image:height" content="1400" />
   <meta property="og:image:alt" content="Renovated kitchen interior by Delta Construction" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Contact Delta Construction | Memphis, TN" />
   <meta name="twitter:description" content="Delta means change — and that change starts with a conversation. Call 901-568-4128 to discuss your Memphis construction or renovation project." />
-  <meta name="twitter:image" content="https://901deltaconstruction.com/assets/quince-house/kitchen-after.jpg" />
+  <meta name="twitter:image" content="https://901deltaconstruction.com/assets/interior-renovation/kitchen-after.jpg" />
   <link rel="icon" href="assets/logo/favicon-mark.png" type="image/png" />
   <link rel="shortcut icon" href="assets/logo/favicon-mark.png" type="image/png" />
   <link rel="apple-touch-icon" href="assets/logo/favicon-mark.png" />
@@ -43,7 +43,7 @@
     "@type": "GeneralContractor",
     "name": "Delta Construction",
     "legalName": "901 Delta Consulting, LLC",
-    "image": "https://901deltaconstruction.com/assets/quince-house/kitchen-after.jpg",
+    "image": "https://901deltaconstruction.com/assets/interior-renovation/kitchen-after.jpg",
     "url": "https://901deltaconstruction.com/",
     "telephone": "+1-901-568-4128",
     "priceRange": "$",
@@ -229,7 +229,7 @@
 
           <!-- Real basemap (Leaflet + CartoDB Positron light tiles).
                Kept intentionally quiet: light greyscale tiles, one soft coverage
-               zone, restrained city labels, and small muted project dots. -->
+               zone and restrained city labels. -->
           <div class="service-map-frame">
             <div id="service-map" role="img"
                  aria-label="Map of the Greater Memphis, Tennessee metro area showing Delta Construction's service coverage zone, with Downtown Memphis, Midtown, East Memphis, Bartlett, Cordova, Germantown, and Collierville marked"></div>
@@ -238,8 +238,6 @@
           <p class="service-map-legend">
             <span class="service-map-legend-swatch" aria-hidden="true"></span>
             Highlighted zone shows Delta's typical service coverage.
-            <span class="service-map-legend-dot" aria-hidden="true"></span>
-            Small dots mark completed projects.
           </p>
 
           <!-- ================================================================
@@ -248,9 +246,6 @@
 
                To add a served city: append to SERVICE_CITIES below
                  { name, lat, lng }
-               To add a completed project blip: append to PROJECT_BLIPS below
-                 { lat, lng, label? }   // approximate general positions only —
-                                        // NO exact addresses; label is optional.
                ================================================================ -->
           <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
           <script>
@@ -264,21 +259,6 @@
                 { name: "Cordova",          lat: 35.1560, lng: -89.7770 },
                 { name: "Germantown",       lat: 35.0868, lng: -89.8101 },
                 { name: "Collierville",     lat: 35.0420, lng: -89.6645 }
-              ];
-
-              // --- Completed-project blips (approximate general areas only) ---
-              var PROJECT_BLIPS = [
-                // Documented case studies — general neighbourhood positions only.
-                { lat: 35.1290, lng: -89.9980, label: "Full Interior Transformation" }, // Midtown area
-                { lat: 35.1120, lng: -89.8960, label: "Destroyed Property, Restored!" }, // East Memphis area
-                // Light scatter of representative past work across the metro.
-                { lat: 35.1490, lng: -89.9330 },
-                { lat: 35.0980, lng: -89.8520 },
-                { lat: 35.1720, lng: -89.8300 },
-                { lat: 35.0700, lng: -89.7400 },
-                { lat: 35.1230, lng: -89.7950 },
-                { lat: 35.1830, lng: -89.9100 },
-                { lat: 35.0880, lng: -89.9450 }
               ];
 
               var MAP_CENTER = [35.118, -89.87]; // Greater Memphis / Shelby County
@@ -317,19 +297,6 @@
                   fillColor: "#0d4560",
                   fillOpacity: 0.08
                 }).addTo(map);
-
-                // Small, muted project blips (kept in the background).
-                PROJECT_BLIPS.forEach(function (b) {
-                  var dot = L.circleMarker([b.lat, b.lng], {
-                    radius: 3.5,
-                    color: "#ffffff",
-                    weight: 0.8,
-                    opacity: 0.7,
-                    fillColor: "#0d4560",
-                    fillOpacity: 0.5
-                  }).addTo(map);
-                  if (b.label) dot.bindTooltip(b.label);
-                });
 
                 // Clean city markers with restrained labels.
                 SERVICE_CITIES.forEach(function (c) {
