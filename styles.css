@@ -855,12 +855,13 @@ section {
 .ba-slider-before {
   position: absolute;
   inset: 0;
-  width: var(--pos);
+  width: 100%;
+  clip-path: inset(0 calc(100% - var(--pos)) 0 0);
   overflow: hidden;
 }
 
 .ba-slider-before img {
-  width: var(--slider-w, 100%);
+  width: 100%;
   max-width: none;
 }
 
@@ -2673,3 +2674,47 @@ body.modal-open {
   width: 20px;
   height: 20px;
 }
+
+/* Approved photo comparisons: one selected pair, with persistent controls. */
+.comparison-gallery { margin-top: 2rem; border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow-md); overflow: hidden; }
+.comparison-gallery-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 1.5rem; }
+.comparison-gallery-header h3 { margin: 0; font-size: 1.4rem; }
+.comparison-gallery-project { margin: 0 0 .2rem; font-size: .8rem; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+.comparison-count { white-space: nowrap; color: var(--text-muted); font-weight: 700; }
+.comparison-stage { height: clamp(300px, 48vw, 590px); background: var(--navy); }
+.comparison-stage .ba-slider img, .cedar-story .room-slider-wrap img { object-fit: contain; }
+.comparison-stage .ba-slider-before, .cedar-story .ba-slider-before { background: var(--navy); }
+.comparison-stage .ba-slider-after, .cedar-story .ba-slider-after { background: var(--navy); }
+.comparison-gallery-footer { padding: 1.25rem 1.5rem; }
+.comparison-controls { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: end; gap: 1rem; }
+.comparison-controls[hidden] { display: none; }
+.comparison-choice label { display: block; font-size: .8rem; font-weight: 700; margin-bottom: .35rem; }
+.comparison-choice select { width: 100%; min-height: 48px; border: 1px solid var(--navy); border-radius: 6px; color: var(--navy); background: var(--white); padding: .6rem; font: inherit; }
+.comparison-controls button { min-height: 48px; }
+.comparison-help { margin: 1rem 0 .5rem; font-size: .85rem; color: var(--text-muted); }
+.comparison-story { display: inline-block; font-weight: 700; margin-top: .25rem; }
+.comparison-story[hidden] { display: none; }
+.comparison-status { min-height: 1.5em; font-size: .8rem; color: var(--text-muted); margin: .5rem 0 0; }
+.ba-slider:focus-visible { outline: 3px solid var(--accent); outline-offset: -4px; }
+.ba-slider:focus-visible .ba-slider-handle-btn { outline: 3px solid var(--navy); outline-offset: 3px; }
+.cedar-story .room-slider-wrap { background: var(--navy); }
+.story-preview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; align-items: center; margin-top: 2rem; }
+.story-preview img { width: 100%; max-height: 370px; object-fit: cover; border-radius: var(--radius); }
+@media (max-width: 640px) {
+  .comparison-gallery-header, .comparison-gallery-footer { padding: 1rem; }
+  .comparison-gallery-header h3 { font-size: 1.15rem; }
+  .comparison-controls { grid-template-columns: 1fr 1fr; gap: .75rem; }
+  .comparison-choice { grid-column: 1 / -1; grid-row: 1; }
+  .comparison-controls button { width: 100%; padding-inline: .8rem; }
+  .comparison-stage { height: 380px; max-height: 65vh; }
+  .story-preview { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* Top labels keep clear of labels already present in approved photo renditions. */
+.comparison-gallery .ba-tag { top: .7rem; bottom: auto; }
+
+.portfolio-scope-tag { color: var(--navy); }

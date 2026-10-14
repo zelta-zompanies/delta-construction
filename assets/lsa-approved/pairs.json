@@ -1,0 +1,437 @@
+{
+  "pairs": [
+    {
+      "id": "cedar-view-bathroom-tub",
+      "project": "Cedar View",
+      "title": "Bathroom Tub",
+      "dimensions": {
+        "before": [
+          1500,
+          2000
+        ],
+        "after": [
+          1500,
+          2000
+        ]
+      },
+      "before": "assets/lsa-approved/cedar-view-bathroom-tub-before.webp",
+      "after": "assets/lsa-approved/cedar-view-bathroom-tub-after.webp",
+      "story": "cedar-view-renovation.html"
+    },
+    {
+      "id": "cedar-view-kitchen",
+      "project": "Cedar View",
+      "title": "Kitchen",
+      "dimensions": {
+        "before": [
+          1500,
+          2000
+        ],
+        "after": [
+          1500,
+          2000
+        ]
+      },
+      "before": "assets/lsa-approved/cedar-view-kitchen-before.webp",
+      "after": "assets/lsa-approved/cedar-view-kitchen-after.webp",
+      "story": "cedar-view-renovation.html"
+    },
+    {
+      "id": "cedar-view-dining",
+      "project": "Cedar View",
+      "title": "Dining",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/cedar-view-dining-before.webp",
+      "after": "assets/lsa-approved/cedar-view-dining-after.webp",
+      "story": "cedar-view-renovation.html"
+    },
+    {
+      "id": "cedar-view-vaulted-living-room",
+      "project": "Cedar View",
+      "title": "Vaulted Living Room",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/cedar-view-vaulted-living-room-before.webp",
+      "after": "assets/lsa-approved/cedar-view-vaulted-living-room-after.webp",
+      "story": "cedar-view-renovation.html"
+    },
+    {
+      "id": "cedar-view-front-room",
+      "project": "Cedar View",
+      "title": "Front Room",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/cedar-view-front-room-before.webp",
+      "after": "assets/lsa-approved/cedar-view-front-room-after.webp",
+      "story": "cedar-view-renovation.html"
+    },
+    {
+      "id": "cedar-view-hallway",
+      "project": "Cedar View",
+      "title": "Hallway",
+      "dimensions": {
+        "before": [
+          1500,
+          2000
+        ],
+        "after": [
+          1500,
+          2000
+        ]
+      },
+      "before": "assets/lsa-approved/cedar-view-hallway-before.webp",
+      "after": "assets/lsa-approved/cedar-view-hallway-after.webp",
+      "story": "cedar-view-renovation.html"
+    },
+    {
+      "id": "alta-vista-living-room-flooring",
+      "project": "Alta Vista",
+      "title": "Living Room Flooring",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/alta-vista-living-room-flooring-before.webp",
+      "after": "assets/lsa-approved/alta-vista-living-room-flooring-after.webp"
+    },
+    {
+      "id": "debby-chair-rail-bedroom-refresh",
+      "project": "Debby",
+      "title": "Chair Rail Bedroom Refresh",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/debby-chair-rail-bedroom-refresh-before.webp",
+      "after": "assets/lsa-approved/debby-chair-rail-bedroom-refresh-after.webp"
+    },
+    {
+      "id": "debby-living-room-refresh",
+      "project": "Debby",
+      "title": "Living Room Refresh",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/debby-living-room-refresh-before.webp",
+      "after": "assets/lsa-approved/debby-living-room-refresh-after.webp"
+    },
+    {
+      "id": "deerland-kitchen",
+      "project": "Deerland",
+      "title": "Kitchen",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/deerland-kitchen-before.webp",
+      "after": "assets/lsa-approved/deerland-kitchen-after.webp"
+    },
+    {
+      "id": "deerland-living-kitchen",
+      "project": "Deerland",
+      "title": "Living Kitchen",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/deerland-living-kitchen-before.webp",
+      "after": "assets/lsa-approved/deerland-living-kitchen-after.webp"
+    },
+    {
+      "id": "marlene-bathroom",
+      "project": "Marlene",
+      "title": "Bathroom",
+      "dimensions": {
+        "before": [
+          896,
+          1200
+        ],
+        "after": [
+          896,
+          1200
+        ]
+      },
+      "before": "assets/lsa-approved/marlene-bathroom-before.webp",
+      "after": "assets/lsa-approved/marlene-bathroom-after.webp"
+    },
+    {
+      "id": "pathway-bedroom-flooring",
+      "project": "Pathway",
+      "title": "Bedroom Flooring",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/pathway-bedroom-flooring-before.webp",
+      "after": "assets/lsa-approved/pathway-bedroom-flooring-after.webp"
+    },
+    {
+      "id": "pathway-kitchen-flooring",
+      "project": "Pathway",
+      "title": "Kitchen Flooring",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/pathway-kitchen-flooring-before.webp",
+      "after": "assets/lsa-approved/pathway-kitchen-flooring-after.webp"
+    },
+    {
+      "id": "pathway-living-room-flooring",
+      "project": "Pathway",
+      "title": "Living Room Flooring",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/pathway-living-room-flooring-before.webp",
+      "after": "assets/lsa-approved/pathway-living-room-flooring-after.webp"
+    },
+    {
+      "id": "quince-bathroom",
+      "project": "Quince",
+      "title": "Bathroom",
+      "dimensions": {
+        "before": [
+          1500,
+          2000
+        ],
+        "after": [
+          1500,
+          2000
+        ]
+      },
+      "before": "assets/lsa-approved/quince-bathroom-before.webp",
+      "after": "assets/lsa-approved/quince-bathroom-after.webp",
+      "story": "full-interior-transformation.html"
+    },
+    {
+      "id": "quince-ceiling-and-flooring",
+      "project": "Quince",
+      "title": "Ceiling and Flooring",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/quince-ceiling-and-flooring-before.webp",
+      "after": "assets/lsa-approved/quince-ceiling-and-flooring-after.webp",
+      "story": "full-interior-transformation.html"
+    },
+    {
+      "id": "warfield-front-room",
+      "project": "Warfield",
+      "title": "Front Room",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/warfield-front-room-before.webp",
+      "after": "assets/lsa-approved/warfield-front-room-after.webp"
+    },
+    {
+      "id": "warfield-kitchen-layout",
+      "project": "Warfield",
+      "title": "Kitchen Layout",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/warfield-kitchen-layout-before.webp",
+      "after": "assets/lsa-approved/warfield-kitchen-layout-after.webp"
+    },
+    {
+      "id": "warfield-kitchen-sink-wall",
+      "project": "Warfield",
+      "title": "Kitchen Sink Wall",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/warfield-kitchen-sink-wall-before.webp",
+      "after": "assets/lsa-approved/warfield-kitchen-sink-wall-after.webp"
+    },
+    {
+      "id": "warfield-living-room",
+      "project": "Warfield",
+      "title": "Living Room",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/warfield-living-room-before.webp",
+      "after": "assets/lsa-approved/warfield-living-room-after.webp"
+    },
+    {
+      "id": "warfield-clerestory-bedroom",
+      "project": "Warfield",
+      "title": "Clerestory Bedroom",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/warfield-clerestory-bedroom-before.webp",
+      "after": "assets/lsa-approved/warfield-clerestory-bedroom-after.webp"
+    },
+    {
+      "id": "warfield-ensuite-bathroom",
+      "project": "Warfield",
+      "title": "Ensuite Bathroom",
+      "dimensions": {
+        "before": [
+          1500,
+          2000
+        ],
+        "after": [
+          1500,
+          2000
+        ]
+      },
+      "before": "assets/lsa-approved/warfield-ensuite-bathroom-before.webp",
+      "after": "assets/lsa-approved/warfield-ensuite-bathroom-after.webp"
+    },
+    {
+      "id": "warfield-exterior-brickwork",
+      "project": "Warfield",
+      "title": "Exterior Brickwork",
+      "dimensions": {
+        "before": [
+          2000,
+          1500
+        ],
+        "after": [
+          2000,
+          1500
+        ]
+      },
+      "before": "assets/lsa-approved/warfield-exterior-brickwork-before.webp",
+      "after": "assets/lsa-approved/warfield-exterior-brickwork-after.webp"
+    },
+    {
+      "id": "warfield-hall-bathroom",
+      "project": "Warfield",
+      "title": "Hall Bathroom",
+      "dimensions": {
+        "before": [
+          1500,
+          2000
+        ],
+        "after": [
+          1500,
+          2000
+        ]
+      },
+      "before": "assets/lsa-approved/warfield-hall-bathroom-before.webp",
+      "after": "assets/lsa-approved/warfield-hall-bathroom-after.webp"
+    }
+  ]
+}

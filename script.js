@@ -43,189 +43,170 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("scroll", updateNavScrollState, { passive: true });
   }
 
-  // Before/after drag sliders — initializes any [data-ba-slider] found
-  // within `root` (defaults to the whole document). Re-callable so
-  // dynamically-injected sliders (e.g. inside the project detail modal)
-  // get wired up too.
+  // One focusable slider owns its value; clipping preserves image alignment at
+  // every width. Horizontal dragging leaves normal vertical touch scrolling intact.
   const initBaSliders = (root = document) => {
     root.querySelectorAll("[data-ba-slider]:not([data-ba-ready])").forEach((slider) => {
       slider.setAttribute("data-ba-ready", "true");
-      const beforeImg = slider.querySelector(".ba-slider-before img");
-      const handle = slider.querySelector(".ba-slider-handle");
-
-      const setSliderWidth = () => {
-        slider.style.setProperty("--slider-w", `${slider.offsetWidth}px`);
+      slider.setAttribute("aria-orientation", "horizontal");
+      const setPosition = (value) => {
+        const pct = Math.min(100, Math.max(0, value));
+        slider.style.setProperty("--pos", `${pct}%`);
+        slider.setAttribute("aria-valuenow", Math.round(pct));
+        slider.setAttribute("aria-valuetext", `${Math.round(pct)}% before, ${100 - Math.round(pct)}% after`);
       };
-
-      const setPosition = (pct) => {
-        const clamped = Math.min(96, Math.max(4, pct));
-        slider.style.setProperty("--pos", `${clamped}%`);
-        handle.setAttribute("aria-valuenow", Math.round(clamped));
-      };
-
-      const positionFromClientX = (clientX) => {
+      const fromPointer = (e) => {
         const rect = slider.getBoundingClientRect();
-        return ((clientX - rect.left) / rect.width) * 100;
+        if (rect.width) setPosition(((e.clientX - rect.left) / rect.width) * 100);
       };
-
-      let dragging = false;
-
-      // Prevent the browser's native image drag (ghost thumbnail) from
-      // hijacking the interaction — this is what makes the handle "stick".
+      let pointer = null;
       slider.addEventListener("dragstart", (e) => e.preventDefault());
-      slider.addEventListener("mousedown", (e) => e.preventDefault());
-      slider.addEventListener("touchstart", (e) => e.preventDefault(), { passive: false });
-
       slider.addEventListener("pointerdown", (e) => {
-        e.preventDefault();
-        dragging = true;
-        try {
-          slider.setPointerCapture(e.pointerId);
-        } catch {
-          // Ignore — some input types/environments don't support capture;
-          // pointermove still works via normal event bubbling.
-        }
-        setPosition(positionFromClientX(e.clientX));
+        if (!e.isPrimary || (e.pointerType === "mouse" && e.button !== 0)) return;
+        pointer = e.pointerId;
+        slider.focus({ preventScroll: true });
+        slider.setPointerCapture(e.pointerId);
+        fromPointer(e);
       });
-
       slider.addEventListener("pointermove", (e) => {
-        if (!dragging) return;
-        setPosition(positionFromClientX(e.clientX));
+        if (pointer === e.pointerId) fromPointer(e);
       });
-
-      const stopDrag = (e) => {
-        dragging = false;
-        if (slider.hasPointerCapture && e && slider.hasPointerCapture(e.pointerId)) {
-          slider.releasePointerCapture(e.pointerId);
-        }
+      const stop = (e) => {
+        if (pointer !== e.pointerId) return;
+        pointer = null;
+        if (slider.hasPointerCapture(e.pointerId)) slider.releasePointerCapture(e.pointerId);
       };
-      slider.addEventListener("pointerup", stopDrag);
-      slider.addEventListener("pointercancel", stopDrag);
-
+      slider.addEventListener("pointerup", stop);
+      slider.addEventListener("pointercancel", stop);
+      slider.addEventListener("lostpointercapture", () => { pointer = null; });
       slider.addEventListener("keydown", (e) => {
-        const current = parseFloat(slider.style.getPropertyValue("--pos")) || 50;
-        if (e.key === "ArrowLeft") {
-          setPosition(current - 4);
+        const current = Number(slider.getAttribute("aria-valuenow"));
+        const values = {
+          ArrowLeft: current - 5, ArrowDown: current - 5,
+          ArrowRight: current + 5, ArrowUp: current + 5,
+          PageDown: current - 10, PageUp: current + 10, Home: 0, End: 100,
+        };
+        if (Object.prototype.hasOwnProperty.call(values, e.key)) {
           e.preventDefault();
-        } else if (e.key === "ArrowRight") {
-          setPosition(current + 4);
-          e.preventDefault();
+          setPosition(values[e.key]);
         }
       });
-
-      window.addEventListener("resize", setSliderWidth);
-      if (beforeImg.complete) {
-        setSliderWidth();
-      } else {
-        beforeImg.addEventListener("load", setSliderWidth);
-      }
-      setSliderWidth();
       setPosition(50);
     });
   };
-
-  // Shuffle the before/after carousel tiles so visitors see a different
-  // order on every page load. Runs before slider init; the drag hint
-  // follows whichever slider ends up first.
-  document.querySelectorAll(".ba-carousel").forEach((track) => {
-    const tiles = Array.from(track.children);
-    for (let i = tiles.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
-    }
-    tiles.forEach((tile) => track.appendChild(tile));
-    const firstSlider = tiles[0] && tiles[0].querySelector("[data-ba-slider]");
-    if (firstSlider && !firstSlider.hasAttribute("data-ba-hint-target")) {
-      track
-        .querySelectorAll("[data-ba-hint-target]")
-        .forEach((s) => s.removeAttribute("data-ba-hint-target"));
-      firstSlider.setAttribute("data-ba-hint-target", "");
-    }
-  });
-
   initBaSliders();
 
-  // Horizontal carousel prev/next controls
-  document.querySelectorAll("[data-carousel]").forEach((wrap) => {
-    const track = wrap.querySelector(".ba-carousel");
-    const prev = wrap.querySelector("[data-carousel-prev]");
-    const next = wrap.querySelector("[data-carousel-next]");
-    if (!track || !prev || !next) return;
-    const scrollAmount = () => track.clientWidth * 0.8;
-    prev.addEventListener("click", () => {
-      track.scrollBy({ left: -scrollAmount(), behavior: "smooth" });
+  // A single comparison stays on screen while the next two images load.
+  // Requests are serialized and rapid browsing coalesces to the latest choice:
+  // at most the displayed pair plus one pending pair, with no bulk preloading.
+  document.querySelectorAll("[data-comparison-gallery]").forEach(async (gallery) => {
+    const slider = gallery.querySelector("[data-ba-slider]");
+    const select = gallery.querySelector("[data-comparison-select]");
+    const controls = gallery.querySelector("[data-comparison-controls]");
+    const status = gallery.querySelector("[data-comparison-status]");
+    const title = gallery.querySelector("[data-comparison-title]");
+    const project = gallery.querySelector("[data-comparison-project]");
+    const count = gallery.querySelector("[data-comparison-count]");
+    const story = gallery.querySelector("[data-comparison-story]");
+    let pairs;
+    try {
+      const response = await fetch("assets/lsa-approved/pairs.json");
+      if (!response.ok) throw new Error("Gallery unavailable");
+      const data = await response.json();
+      pairs = Array.isArray(data) ? data : data.pairs;
+      if (!Array.isArray(pairs) || !pairs.length) throw new Error("No comparisons");
+    } catch {
+      status.textContent = "More comparisons could not load. You can still explore our project stories below.";
+      return;
+    }
+    pairs.forEach((pair, index) => {
+      const option = document.createElement("option");
+      option.value = index;
+      option.textContent = `${pair.project} — ${pair.title}`;
+      select.appendChild(option);
     });
-    next.addEventListener("click", () => {
-      track.scrollBy({ left: scrollAmount(), behavior: "smooth" });
+    let active = Math.max(0, pairs.findIndex((pair) => pair.id === gallery.dataset.initialPair));
+    let requested = active;
+    let loading = false;
+    const updateDetails = (pair, index) => {
+      title.textContent = pair.title;
+      project.textContent = pair.project;
+      count.textContent = `${index + 1} / ${pairs.length}`;
+      select.value = index;
+      slider.setAttribute("aria-label", `${pair.project}, ${pair.title}: before and after comparison`);
+      slider.style.setProperty("--pos", "50%");
+      slider.setAttribute("aria-valuenow", "50");
+      slider.setAttribute("aria-valuetext", "50% before, 50% after");
+      story.hidden = !pair.story;
+      if (pair.story) story.setAttribute("href", pair.story);
+    };
+    const loadImage = (source, alt) => new Promise((resolve, reject) => {
+      const img = new Image();
+      img.alt = alt;
+      img.draggable = false;
+      img.decoding = "async";
+      const timer = window.setTimeout(() => { img.src = ""; reject(new Error("Image timeout")); }, 15000);
+      img.onload = async () => {
+        try {
+          await img.decode();
+          window.clearTimeout(timer);
+          resolve(img);
+        } catch {
+          window.clearTimeout(timer);
+          reject(new Error("Image decoding failed"));
+        }
+      };
+      img.onerror = () => { window.clearTimeout(timer); reject(new Error("Image unavailable")); };
+      img.src = source;
+    });
+    const showRequested = async () => {
+      if (loading) return;
+      loading = true;
+      gallery.setAttribute("aria-busy", "true");
+      let failed = false;
+      while (requested !== active) {
+        const next = requested;
+        const pair = pairs[next];
+        status.textContent = `Loading ${pair.project}, ${pair.title}…`;
+        // allSettled waits for both requests even if one fails, keeping the bound.
+        const images = await Promise.allSettled([
+          loadImage(pair.before, `${pair.project}, ${pair.title} before renovation`),
+          loadImage(pair.after, `${pair.project}, ${pair.title} after renovation`),
+        ]);
+        if (requested !== next) continue;
+        if (images.some((result) => result.status === "rejected")) {
+          failed = true;
+          requested = active;
+          select.value = active;
+          status.textContent = "This comparison could not load. Your previous view is still here. Choose another or try again.";
+          break;
+        }
+        slider.querySelector(".ba-slider-before").replaceChildren(images[0].value);
+        slider.querySelector(".ba-slider-after").replaceChildren(images[1].value);
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        active = next;
+        updateDetails(pair, active);
+        status.textContent = `${active + 1} of ${pairs.length}: ${pair.project}, ${pair.title}.`;
+      }
+      if (!failed) status.textContent = `${active + 1} of ${pairs.length}: ${pairs[active].project}, ${pairs[active].title}.`;
+      loading = false;
+      gallery.removeAttribute("aria-busy");
+    };
+    updateDetails(pairs[active], active);
+    controls.hidden = false;
+    gallery.querySelector("[data-comparison-prev]").addEventListener("click", () => {
+      requested = (requested - 1 + pairs.length) % pairs.length;
+      showRequested();
+    });
+    gallery.querySelector("[data-comparison-next]").addEventListener("click", () => {
+      requested = (requested + 1) % pairs.length;
+      showRequested();
+    });
+    select.addEventListener("change", () => {
+      requested = Number(select.value);
+      showRequested();
     });
   });
-
-  // First-slider drag hint (home page only) — nudges the handle once when
-  // it first scrolls into view, to cue that it's draggable. Cancels the
-  // instant the user actually interacts, and never plays a second time.
-  const hintSlider = document.querySelector("[data-ba-slider][data-ba-hint-target]");
-  if (hintSlider) {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const hintLabel = hintSlider.querySelector(".ba-slider-hint");
-    const hintHandle = hintSlider.querySelector(".ba-slider-handle");
-    let hintPlayed = false;
-    let hintCancelled = false;
-
-    const cancelHint = () => {
-      hintCancelled = true;
-      hintSlider.classList.remove("is-hinting");
-      if (hintLabel) hintLabel.classList.add("is-hidden");
-    };
-
-    ["pointerdown", "touchstart", "keydown"].forEach((evt) => {
-      hintSlider.addEventListener(evt, cancelHint, { once: true, passive: true });
-    });
-
-    const playHint = () => {
-      if (hintPlayed || hintCancelled) return;
-      hintPlayed = true;
-
-      if (prefersReducedMotion) {
-        // Minimal cue only — no motion, just a brief label.
-        if (hintLabel) {
-          hintLabel.classList.add("is-visible");
-          setTimeout(() => hintLabel.classList.add("is-hidden"), 2200);
-        }
-        return;
-      }
-
-      hintSlider.classList.add("is-hinting");
-      if (hintLabel) hintLabel.classList.add("is-visible");
-
-      const steps = [38, 62, 46, 54, 50];
-      let i = 0;
-      const runStep = () => {
-        if (hintCancelled || i >= steps.length) {
-          hintSlider.classList.remove("is-hinting");
-          if (hintLabel) hintLabel.classList.add("is-hidden");
-          return;
-        }
-        hintSlider.style.setProperty("--pos", `${steps[i]}%`);
-        if (hintHandle) hintHandle.setAttribute("aria-valuenow", steps[i]);
-        i++;
-        setTimeout(runStep, 420);
-      };
-      runStep();
-    };
-
-    const hintObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setTimeout(playHint, 500);
-            hintObserver.disconnect();
-          }
-        });
-      },
-      { threshold: 0.6 }
-    );
-    hintObserver.observe(hintSlider);
-  }
 
   // Cards that link out to a dedicated case-study page instead of the
   // modal — the whole card is clickable, except the drag slider and any
