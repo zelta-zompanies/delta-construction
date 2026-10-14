@@ -101,6 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // at most the displayed pair plus one pending pair, with no bulk preloading.
   document.querySelectorAll("[data-comparison-gallery]").forEach(async (gallery) => {
     const slider = gallery.querySelector("[data-ba-slider]");
+    const detail = gallery.querySelector("[data-comparison-detail]");
+    const back = gallery.querySelector("[data-comparison-back]");
     const select = gallery.querySelector("[data-comparison-select]");
     const controls = gallery.querySelector("[data-comparison-controls]");
     const status = gallery.querySelector("[data-comparison-status]");
@@ -108,17 +110,120 @@ document.addEventListener("DOMContentLoaded", () => {
     const project = gallery.querySelector("[data-comparison-project]");
     const count = gallery.querySelector("[data-comparison-count]");
     const story = gallery.querySelector("[data-comparison-story]");
+    const categories = ["Kitchens", "Bathrooms", "Living Areas", "Bedrooms", "Hallways and Floors", "Exterior"];
     let pairs;
     try {
-      const response = await fetch("assets/lsa-approved/pairs.json");
+      const response = await fetch("assets/lsa-approved/pairs.json?v=room-overview-1");
       if (!response.ok) throw new Error("Gallery unavailable");
       const data = await response.json();
       pairs = Array.isArray(data) ? data : data.pairs;
-      if (!Array.isArray(pairs) || !pairs.length) throw new Error("No comparisons");
+      const validImage = (value) => typeof value === "string" && /^assets\/lsa-approved\/(thumbs\/)?comparison-\d{2}-(before|after)\.webp$/.test(value);
+      if (!Array.isArray(pairs) || !pairs.length || !pairs.every((pair) =>
+        pair && typeof pair.id === "string" && typeof pair.project === "string" &&
+        typeof pair.title === "string" && categories.includes(pair.category) &&
+        ["before", "after"].every((side) => validImage(pair[side]) &&
+          pair.thumbnails && pair.thumbnails[side] && validImage(pair.thumbnails[side].src) &&
+          pair.thumbnails[side].src.includes("/thumbs/") &&
+          Number.isFinite(pair.thumbnails[side].width) && pair.thumbnails[side].width > 0 &&
+          Number.isFinite(pair.thumbnails[side].height) && pair.thumbnails[side].height > 0)
+      )) throw new Error("Comparison data unavailable");
     } catch {
       status.textContent = "More comparisons could not load. You can still explore our project stories below.";
       return;
     }
+    // Small previews are grouped by room type. Full-size sources stay in the
+    // selected detail view; the overview never uses them as thumbnails.
+    const overview = document.createElement("div");
+    overview.className = "comparison-overview";
+    overview.setAttribute("data-comparison-overview", "");
+    const intro = document.createElement("p");
+    intro.className = "comparison-overview-intro";
+    intro.textContent = "Choose a photo pair below to open the larger slider.";
+    overview.appendChild(intro);
+    const jumps = document.createElement("nav");
+    jumps.className = "comparison-category-nav";
+    jumps.setAttribute("aria-label", "Browse comparisons by room");
+    overview.appendChild(jumps);
+    let returnTo = null;
+    const openComparison = (index, button) => {
+      returnTo = button;
+      overview.hidden = true;
+      detail.hidden = false;
+      gallery.dataset.view = "detail";
+      slider.querySelectorAll("img").forEach((img) => { img.loading = "eager"; });
+      requested = index;
+      showRequested();
+      gallery.scrollIntoView({ block: "start", behavior: "instant" });
+      slider.focus({ preventScroll: true });
+    };
+    categories.forEach((category, categoryIndex) => {
+      const matching = pairs.map((pair, index) => ({ pair, index })).filter(({ pair }) => pair.category === category);
+      if (!matching.length) return;
+      const section = document.createElement("div");
+      section.className = "comparison-category";
+      section.id = `comparison-category-${categoryIndex + 1}`;
+      const heading = document.createElement("h3");
+      heading.textContent = category;
+      section.appendChild(heading);
+      const jump = document.createElement("a");
+      jump.href = `#${section.id}`;
+      jump.textContent = `${category} (${matching.length})`;
+      jumps.appendChild(jump);
+      const grid = document.createElement("div");
+      grid.className = "comparison-preview-grid";
+      matching.forEach(({ pair, index }) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "comparison-preview";
+        button.dataset.comparisonIndex = index;
+        button.setAttribute("aria-label", `Open before and after comparison: ${pair.title}, ${pair.project}`);
+        const photos = document.createElement("span");
+        photos.className = "comparison-preview-photos";
+        ["before", "after"].forEach((side) => {
+          const pane = document.createElement("span");
+          pane.className = "comparison-preview-pane";
+          const img = document.createElement("img");
+          img.src = pair.thumbnails[side].src;
+          img.width = pair.thumbnails[side].width;
+          img.height = pair.thumbnails[side].height;
+          img.alt = "";
+          img.loading = "lazy";
+          img.decoding = "async";
+          const label = document.createElement("span");
+          label.className = `comparison-preview-label comparison-preview-label--${side}`;
+          label.textContent = side;
+          pane.append(img, label);
+          photos.appendChild(pane);
+        });
+        const caption = document.createElement("span");
+        caption.className = "comparison-preview-caption";
+        const room = document.createElement("strong");
+        room.textContent = pair.title;
+        const projectLabel = document.createElement("span");
+        projectLabel.textContent = pair.project;
+        const compactProject = document.createElement("span");
+        compactProject.className = "comparison-preview-project-number";
+        compactProject.textContent = pair.project.match(/Project \d+/)?.[0] || "Project";
+        caption.append(room, projectLabel, compactProject);
+        button.append(photos, caption);
+        button.addEventListener("click", () => openComparison(index, button));
+        grid.appendChild(button);
+      });
+      section.appendChild(grid);
+      overview.appendChild(section);
+    });
+    gallery.prepend(overview);
+    detail.hidden = true;
+    gallery.dataset.view = "overview";
+    back.hidden = false;
+    back.addEventListener("click", () => {
+      requested = active;
+      detail.hidden = true;
+      overview.hidden = false;
+      gallery.dataset.view = "overview";
+      if (returnTo) returnTo.focus();
+    });
+
     pairs.forEach((pair, index) => {
       const option = document.createElement("option");
       option.value = index;
@@ -128,6 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let active = Math.max(0, pairs.findIndex((pair) => pair.id === gallery.dataset.initialPair));
     let requested = active;
     let loading = false;
+    let hasDecodedPair = false;
     const updateDetails = (pair, index) => {
       title.textContent = pair.title;
       project.textContent = pair.project;
@@ -164,7 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
       loading = true;
       gallery.setAttribute("aria-busy", "true");
       let failed = false;
-      while (requested !== active) {
+      while (!detail.hidden && (requested !== active || !hasDecodedPair)) {
         const next = requested;
         const pair = pairs[next];
         status.textContent = `Loading ${pair.project}, ${pair.title}…`;
@@ -173,6 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
           loadImage(pair.before, `${pair.project}, ${pair.title} before renovation`),
           loadImage(pair.after, `${pair.project}, ${pair.title} after renovation`),
         ]);
+        if (detail.hidden) break;
         if (requested !== next) continue;
         if (images.some((result) => result.status === "rejected")) {
           failed = true;
@@ -185,6 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
         slider.querySelector(".ba-slider-after").replaceChildren(images[1].value);
         await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
         active = next;
+        hasDecodedPair = true;
         updateDetails(pair, active);
         status.textContent = `${active + 1} of ${pairs.length}: ${pair.project}, ${pair.title}.`;
       }

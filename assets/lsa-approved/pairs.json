@@ -16,7 +16,20 @@
       },
       "before": "assets/lsa-approved/comparison-01-before.webp",
       "after": "assets/lsa-approved/comparison-01-after.webp",
-      "story": "six-room-home-renovation.html"
+      "story": "six-room-home-renovation.html",
+      "category": "Bathrooms",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-01-before.webp",
+          "width": 270,
+          "height": 360
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-01-after.webp",
+          "width": 270,
+          "height": 360
+        }
+      }
     },
     {
       "id": "comparison-02",
@@ -34,7 +47,20 @@
       },
       "before": "assets/lsa-approved/comparison-02-before.webp",
       "after": "assets/lsa-approved/comparison-02-after.webp",
-      "story": "six-room-home-renovation.html"
+      "story": "six-room-home-renovation.html",
+      "category": "Kitchens",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-02-before.webp",
+          "width": 270,
+          "height": 360
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-02-after.webp",
+          "width": 270,
+          "height": 360
+        }
+      }
     },
     {
       "id": "comparison-03",
@@ -52,7 +78,20 @@
       },
       "before": "assets/lsa-approved/comparison-03-before.webp",
       "after": "assets/lsa-approved/comparison-03-after.webp",
-      "story": "six-room-home-renovation.html"
+      "story": "six-room-home-renovation.html",
+      "category": "Living Areas",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-03-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-03-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-04",
@@ -70,7 +109,20 @@
       },
       "before": "assets/lsa-approved/comparison-04-before.webp",
       "after": "assets/lsa-approved/comparison-04-after.webp",
-      "story": "six-room-home-renovation.html"
+      "story": "six-room-home-renovation.html",
+      "category": "Living Areas",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-04-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-04-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-05",
@@ -88,7 +140,20 @@
       },
       "before": "assets/lsa-approved/comparison-05-before.webp",
       "after": "assets/lsa-approved/comparison-05-after.webp",
-      "story": "six-room-home-renovation.html"
+      "story": "six-room-home-renovation.html",
+      "category": "Living Areas",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-05-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-05-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-06",
@@ -106,7 +171,20 @@
       },
       "before": "assets/lsa-approved/comparison-06-before.webp",
       "after": "assets/lsa-approved/comparison-06-after.webp",
-      "story": "six-room-home-renovation.html"
+      "story": "six-room-home-renovation.html",
+      "category": "Hallways and Floors",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-06-before.webp",
+          "width": 270,
+          "height": 360
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-06-after.webp",
+          "width": 270,
+          "height": 360
+        }
+      }
     },
     {
       "id": "comparison-07",
@@ -123,7 +201,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-07-before.webp",
-      "after": "assets/lsa-approved/comparison-07-after.webp"
+      "after": "assets/lsa-approved/comparison-07-after.webp",
+      "category": "Living Areas",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-07-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-07-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-08",
@@ -140,7 +231,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-08-before.webp",
-      "after": "assets/lsa-approved/comparison-08-after.webp"
+      "after": "assets/lsa-approved/comparison-08-after.webp",
+      "category": "Bedrooms",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-08-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-08-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-09",
@@ -157,7 +261,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-09-before.webp",
-      "after": "assets/lsa-approved/comparison-09-after.webp"
+      "after": "assets/lsa-approved/comparison-09-after.webp",
+      "category": "Living Areas",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-09-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-09-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-10",
@@ -174,7 +291,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-10-before.webp",
-      "after": "assets/lsa-approved/comparison-10-after.webp"
+      "after": "assets/lsa-approved/comparison-10-after.webp",
+      "category": "Kitchens",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-10-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-10-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-11",
@@ -191,7 +321,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-11-before.webp",
-      "after": "assets/lsa-approved/comparison-11-after.webp"
+      "after": "assets/lsa-approved/comparison-11-after.webp",
+      "category": "Kitchens",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-11-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-11-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-12",
@@ -208,7 +351,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-12-before.webp",
-      "after": "assets/lsa-approved/comparison-12-after.webp"
+      "after": "assets/lsa-approved/comparison-12-after.webp",
+      "category": "Bathrooms",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-12-before.webp",
+          "width": 269,
+          "height": 360
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-12-after.webp",
+          "width": 269,
+          "height": 360
+        }
+      }
     },
     {
       "id": "comparison-13",
@@ -225,7 +381,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-13-before.webp",
-      "after": "assets/lsa-approved/comparison-13-after.webp"
+      "after": "assets/lsa-approved/comparison-13-after.webp",
+      "category": "Bedrooms",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-13-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-13-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-14",
@@ -242,7 +411,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-14-before.webp",
-      "after": "assets/lsa-approved/comparison-14-after.webp"
+      "after": "assets/lsa-approved/comparison-14-after.webp",
+      "category": "Kitchens",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-14-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-14-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-15",
@@ -259,7 +441,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-15-before.webp",
-      "after": "assets/lsa-approved/comparison-15-after.webp"
+      "after": "assets/lsa-approved/comparison-15-after.webp",
+      "category": "Living Areas",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-15-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-15-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-16",
@@ -277,7 +472,20 @@
       },
       "before": "assets/lsa-approved/comparison-16-before.webp",
       "after": "assets/lsa-approved/comparison-16-after.webp",
-      "story": "full-interior-transformation.html"
+      "story": "full-interior-transformation.html",
+      "category": "Bathrooms",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-16-before.webp",
+          "width": 270,
+          "height": 360
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-16-after.webp",
+          "width": 270,
+          "height": 360
+        }
+      }
     },
     {
       "id": "comparison-17",
@@ -295,7 +503,20 @@
       },
       "before": "assets/lsa-approved/comparison-17-before.webp",
       "after": "assets/lsa-approved/comparison-17-after.webp",
-      "story": "full-interior-transformation.html"
+      "story": "full-interior-transformation.html",
+      "category": "Hallways and Floors",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-17-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-17-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-18",
@@ -312,7 +533,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-18-before.webp",
-      "after": "assets/lsa-approved/comparison-18-after.webp"
+      "after": "assets/lsa-approved/comparison-18-after.webp",
+      "category": "Living Areas",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-18-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-18-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-19",
@@ -329,7 +563,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-19-before.webp",
-      "after": "assets/lsa-approved/comparison-19-after.webp"
+      "after": "assets/lsa-approved/comparison-19-after.webp",
+      "category": "Kitchens",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-19-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-19-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-20",
@@ -346,7 +593,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-20-before.webp",
-      "after": "assets/lsa-approved/comparison-20-after.webp"
+      "after": "assets/lsa-approved/comparison-20-after.webp",
+      "category": "Kitchens",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-20-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-20-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-21",
@@ -363,7 +623,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-21-before.webp",
-      "after": "assets/lsa-approved/comparison-21-after.webp"
+      "after": "assets/lsa-approved/comparison-21-after.webp",
+      "category": "Living Areas",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-21-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-21-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-22",
@@ -380,7 +653,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-22-before.webp",
-      "after": "assets/lsa-approved/comparison-22-after.webp"
+      "after": "assets/lsa-approved/comparison-22-after.webp",
+      "category": "Bedrooms",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-22-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-22-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-23",
@@ -397,7 +683,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-23-before.webp",
-      "after": "assets/lsa-approved/comparison-23-after.webp"
+      "after": "assets/lsa-approved/comparison-23-after.webp",
+      "category": "Bathrooms",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-23-before.webp",
+          "width": 270,
+          "height": 360
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-23-after.webp",
+          "width": 270,
+          "height": 360
+        }
+      }
     },
     {
       "id": "comparison-24",
@@ -414,7 +713,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-24-before.webp",
-      "after": "assets/lsa-approved/comparison-24-after.webp"
+      "after": "assets/lsa-approved/comparison-24-after.webp",
+      "category": "Exterior",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-24-before.webp",
+          "width": 360,
+          "height": 270
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-24-after.webp",
+          "width": 360,
+          "height": 270
+        }
+      }
     },
     {
       "id": "comparison-25",
@@ -431,7 +743,20 @@
         ]
       },
       "before": "assets/lsa-approved/comparison-25-before.webp",
-      "after": "assets/lsa-approved/comparison-25-after.webp"
+      "after": "assets/lsa-approved/comparison-25-after.webp",
+      "category": "Bathrooms",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-25-before.webp",
+          "width": 270,
+          "height": 360
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-25-after.webp",
+          "width": 270,
+          "height": 360
+        }
+      }
     }
   ]
 }
