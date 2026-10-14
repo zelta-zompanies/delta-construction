@@ -96,6 +96,30 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   initBaSliders();
 
+  // A small, manually browsed feature. No timer, autoplay or random reordering.
+  const feature = document.querySelector("[data-work-feature]");
+  if (feature) {
+    const stories = [
+      { title: "Six rooms, one home", project: "Whole-home Refresh - Project 01", projectId: "project-01", url: "six-room-home-renovation.html" },
+      { title: "A full interior transformation", project: "Interior Renovation - Project 07", projectId: "project-07", url: "full-interior-transformation.html" },
+      { title: "Destroyed property, restored", project: "Interior Restoration - Project 09", projectId: "project-09", url: "destroyed-property-restored.html" },
+    ];
+    let current = 0;
+    const showFeature = (direction) => {
+      current = (current + direction + stories.length) % stories.length;
+      const story = stories[current];
+      const link = feature.querySelector("[data-feature-story]");
+      link.href = story.url;
+      link.dataset.projectId = story.projectId;
+      feature.querySelector("[data-feature-title]").textContent = story.title;
+      feature.querySelector("[data-feature-project]").textContent = story.project;
+      feature.querySelector("[data-feature-count]").textContent = `${current + 1} / ${stories.length}: ${story.title}`;
+    };
+    feature.querySelector("[data-feature-controls]").hidden = false;
+    feature.querySelector("[data-feature-prev]").addEventListener("click", () => showFeature(-1));
+    feature.querySelector("[data-feature-next]").addEventListener("click", () => showFeature(1));
+  }
+
   // A single comparison stays on screen while the next two images load.
   // Requests are serialized and rapid browsing coalesces to the latest choice:
   // at most the displayed pair plus one pending pair, with no bulk preloading.
@@ -110,23 +134,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const project = gallery.querySelector("[data-comparison-project]");
     const count = gallery.querySelector("[data-comparison-count]");
     const story = gallery.querySelector("[data-comparison-story]");
+    const costStory = gallery.querySelector("[data-comparison-cost-story]");
+    const featuredIds = (gallery.dataset.featuredPairs || "").split(",").filter(Boolean);
+    let projects = [];
     const categories = ["Kitchens", "Bathrooms", "Living Areas", "Bedrooms", "Hallways and Floors", "Exterior"];
     let pairs;
     try {
-      const response = await fetch("assets/lsa-approved/pairs.json?v=room-overview-1");
+      const response = await fetch("assets/lsa-approved/pairs.json?v=work-gallery-2");
       if (!response.ok) throw new Error("Gallery unavailable");
       const data = await response.json();
       pairs = Array.isArray(data) ? data : data.pairs;
+      projects = Array.isArray(data.projects) ? data.projects : [];
       const validImage = (value) => typeof value === "string" && /^assets\/lsa-approved\/(thumbs\/)?comparison-\d{2}-(before|after)\.webp$/.test(value);
       if (!Array.isArray(pairs) || !pairs.length || !pairs.every((pair) =>
         pair && typeof pair.id === "string" && typeof pair.project === "string" &&
+        projects.some((project) => project.id === pair.projectId && project.name === pair.project) &&
         typeof pair.title === "string" && categories.includes(pair.category) &&
         ["before", "after"].every((side) => validImage(pair[side]) &&
+          pair.dimensions && Array.isArray(pair.dimensions[side]) && pair.dimensions[side].length === 2 &&
+          pair.dimensions[side].every((dimension) => Number.isFinite(dimension) && dimension > 0) &&
           pair.thumbnails && pair.thumbnails[side] && validImage(pair.thumbnails[side].src) &&
           pair.thumbnails[side].src.includes("/thumbs/") &&
           Number.isFinite(pair.thumbnails[side].width) && pair.thumbnails[side].width > 0 &&
           Number.isFinite(pair.thumbnails[side].height) && pair.thumbnails[side].height > 0)
       )) throw new Error("Comparison data unavailable");
+      if (featuredIds.length) {
+        pairs = featuredIds.map((id) => pairs.find((pair) => pair.id === id));
+        if (pairs.some((pair) => !pair)) throw new Error("Featured comparisons unavailable");
+      }
     } catch {
       status.textContent = "More comparisons could not load. You can still explore our project stories below.";
       return;
@@ -136,14 +171,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const overview = document.createElement("div");
     overview.className = "comparison-overview";
     overview.setAttribute("data-comparison-overview", "");
-    const intro = document.createElement("p");
-    intro.className = "comparison-overview-intro";
-    intro.textContent = "Choose a photo pair below to open the larger slider.";
-    overview.appendChild(intro);
     const jumps = document.createElement("nav");
     jumps.className = "comparison-category-nav";
     jumps.setAttribute("aria-label", "Browse comparisons by room");
-    overview.appendChild(jumps);
+    if (!featuredIds.length) overview.appendChild(jumps);
     let returnTo = null;
     const openComparison = (index, button) => {
       returnTo = button;
@@ -156,15 +187,15 @@ document.addEventListener("DOMContentLoaded", () => {
       gallery.scrollIntoView({ block: "start", behavior: "instant" });
       slider.focus({ preventScroll: true });
     };
-    categories.forEach((category, categoryIndex) => {
-      const matching = pairs.map((pair, index) => ({ pair, index })).filter(({ pair }) => pair.category === category);
+    (featuredIds.length ? ["Highlights"] : categories).forEach((category, categoryIndex) => {
+      const matching = pairs.map((pair, index) => ({ pair, index })).filter(({ pair }) => featuredIds.length || pair.category === category);
       if (!matching.length) return;
       const section = document.createElement("div");
       section.className = "comparison-category";
       section.id = `comparison-category-${categoryIndex + 1}`;
       const heading = document.createElement("h3");
       heading.textContent = category;
-      section.appendChild(heading);
+      if (!featuredIds.length) section.appendChild(heading);
       const jump = document.createElement("a");
       jump.href = `#${section.id}`;
       jump.textContent = `${category} (${matching.length})`;
@@ -176,12 +207,15 @@ document.addEventListener("DOMContentLoaded", () => {
         button.type = "button";
         button.className = "comparison-preview";
         button.dataset.comparisonIndex = index;
+        button.dataset.pairId = pair.id;
+        button.dataset.projectId = pair.projectId;
         button.setAttribute("aria-label", `Open before and after comparison: ${pair.title}, ${pair.project}`);
         const photos = document.createElement("span");
         photos.className = "comparison-preview-photos";
         ["before", "after"].forEach((side) => {
           const pane = document.createElement("span");
           pane.className = "comparison-preview-pane";
+          pane.style.setProperty("--photo-ratio", pair.thumbnails[side].width / pair.thumbnails[side].height);
           const img = document.createElement("img");
           img.src = pair.thumbnails[side].src;
           img.width = pair.thumbnails[side].width;
@@ -203,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
         projectLabel.textContent = pair.project;
         const compactProject = document.createElement("span");
         compactProject.className = "comparison-preview-project-number";
-        compactProject.textContent = pair.project.match(/Project \d+/)?.[0] || "Project";
+        compactProject.textContent = pair.project.match(/Project \d+/)?.[0] || pair.project;
         caption.append(room, projectLabel, compactProject);
         button.append(photos, caption);
         button.addEventListener("click", () => openComparison(index, button));
@@ -234,10 +268,21 @@ document.addEventListener("DOMContentLoaded", () => {
     let requested = active;
     let loading = false;
     let hasDecodedPair = false;
+    // Only a deliberately published cost story for this exact anonymous project
+    // may appear here. Draft/preview paths and external URLs are never linkable.
+    const publishedCostUrl = (pair) => {
+      const projectRecord = projects.find((entry) => entry.id === pair.projectId);
+      const entry = projectRecord && projectRecord.publishedCostStory;
+      if (!entry || entry.published !== true || entry.projectId !== pair.projectId ||
+          typeof entry.url !== "string" || !/^[a-z0-9]+(?:-[a-z0-9]+)*\.html$/.test(entry.url) ||
+          /draft|preview|unpublished/i.test(entry.url)) return null;
+      return entry.url;
+    };
     const updateDetails = (pair, index) => {
       title.textContent = pair.title;
       project.textContent = pair.project;
       count.textContent = `${index + 1} / ${pairs.length}`;
+      detail.dataset.projectId = pair.projectId;
       select.value = index;
       slider.setAttribute("aria-label", `${pair.project}, ${pair.title}: before and after comparison`);
       slider.style.setProperty("--pos", "50%");
@@ -245,6 +290,13 @@ document.addEventListener("DOMContentLoaded", () => {
       slider.setAttribute("aria-valuetext", "50% before, 50% after");
       story.hidden = !pair.story;
       if (pair.story) story.setAttribute("href", pair.story);
+      else story.removeAttribute("href");
+      const costUrl = publishedCostUrl(pair);
+      costStory.hidden = !costUrl;
+      if (costUrl) costStory.setAttribute("href", costUrl);
+      else costStory.removeAttribute("href");
+      const ratio = Math.max(...["before", "after"].map((side) => pair.dimensions[side][0] / pair.dimensions[side][1]));
+      gallery.querySelector(".comparison-stage").style.setProperty("--photo-ratio", ratio);
     };
     const loadImage = (source, alt) => new Promise((resolve, reject) => {
       const img = new Image();

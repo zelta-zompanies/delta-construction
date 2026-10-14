@@ -29,7 +29,8 @@
           "width": 270,
           "height": 360
         }
-      }
+      },
+      "projectId": "project-01"
     },
     {
       "id": "comparison-02",
@@ -60,7 +61,8 @@
           "width": 270,
           "height": 360
         }
-      }
+      },
+      "projectId": "project-01"
     },
     {
       "id": "comparison-03",
@@ -91,7 +93,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-01"
     },
     {
       "id": "comparison-04",
@@ -122,7 +125,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-01"
     },
     {
       "id": "comparison-05",
@@ -153,7 +157,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-01"
     },
     {
       "id": "comparison-06",
@@ -184,7 +189,8 @@
           "width": 270,
           "height": 360
         }
-      }
+      },
+      "projectId": "project-01"
     },
     {
       "id": "comparison-07",
@@ -214,7 +220,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-02"
     },
     {
       "id": "comparison-08",
@@ -244,7 +251,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-03"
     },
     {
       "id": "comparison-09",
@@ -274,7 +282,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-03"
     },
     {
       "id": "comparison-10",
@@ -304,7 +313,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-04"
     },
     {
       "id": "comparison-11",
@@ -334,7 +344,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-04"
     },
     {
       "id": "comparison-12",
@@ -364,7 +375,8 @@
           "width": 269,
           "height": 360
         }
-      }
+      },
+      "projectId": "project-05"
     },
     {
       "id": "comparison-13",
@@ -394,7 +406,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-06"
     },
     {
       "id": "comparison-14",
@@ -424,7 +437,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-06"
     },
     {
       "id": "comparison-15",
@@ -454,7 +468,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-06"
     },
     {
       "id": "comparison-16",
@@ -485,7 +500,8 @@
           "width": 270,
           "height": 360
         }
-      }
+      },
+      "projectId": "project-07"
     },
     {
       "id": "comparison-17",
@@ -516,7 +532,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-07"
     },
     {
       "id": "comparison-18",
@@ -546,7 +563,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-08"
     },
     {
       "id": "comparison-19",
@@ -576,7 +594,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-08"
     },
     {
       "id": "comparison-20",
@@ -606,7 +625,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-08"
     },
     {
       "id": "comparison-21",
@@ -636,7 +656,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-08"
     },
     {
       "id": "comparison-22",
@@ -666,7 +687,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-08"
     },
     {
       "id": "comparison-23",
@@ -696,7 +718,8 @@
           "width": 270,
           "height": 360
         }
-      }
+      },
+      "projectId": "project-08"
     },
     {
       "id": "comparison-24",
@@ -726,7 +749,8 @@
           "width": 360,
           "height": 270
         }
-      }
+      },
+      "projectId": "project-08"
     },
     {
       "id": "comparison-25",
@@ -756,7 +780,64 @@
           "width": 270,
           "height": 360
         }
-      }
+      },
+      "projectId": "project-08"
+    }
+  ],
+  "projects": [
+    {
+      "id": "project-01",
+      "name": "Whole-home Refresh - Project 01",
+      "publishedStory": "six-room-home-renovation.html",
+      "publishedCostStory": null
+    },
+    {
+      "id": "project-02",
+      "name": "Flooring Refresh - Project 02",
+      "publishedStory": null,
+      "publishedCostStory": null
+    },
+    {
+      "id": "project-03",
+      "name": "Room Refresh - Project 03",
+      "publishedStory": null,
+      "publishedCostStory": null
+    },
+    {
+      "id": "project-04",
+      "name": "Kitchen and Living Refresh - Project 04",
+      "publishedStory": null,
+      "publishedCostStory": null
+    },
+    {
+      "id": "project-05",
+      "name": "Bathroom Refresh - Project 05",
+      "publishedStory": null,
+      "publishedCostStory": null
+    },
+    {
+      "id": "project-06",
+      "name": "Flooring Refresh - Project 06",
+      "publishedStory": null,
+      "publishedCostStory": null
+    },
+    {
+      "id": "project-07",
+      "name": "Interior Renovation - Project 07",
+      "publishedStory": "full-interior-transformation.html",
+      "publishedCostStory": null
+    },
+    {
+      "id": "project-08",
+      "name": "Interior and Exterior Renovation - Project 08",
+      "publishedStory": null,
+      "publishedCostStory": null
+    },
+    {
+      "id": "project-09",
+      "name": "Interior Restoration - Project 09",
+      "publishedStory": "destroyed-property-restored.html",
+      "publishedCostStory": null
     }
   ]
 }

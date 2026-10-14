@@ -13,6 +13,12 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Cover the draft's .html URL and Netlify clean-URL variants.
+[[headers]]
+  for = "/draft-bathroom-renovation-cost*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+
 [[redirects]]
   from = "https://901deltacompanies.com/*"
   to = "https://901deltaconstruction.com/:splat"
