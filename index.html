@@ -135,47 +135,49 @@
       </div>
     </section>
 
-    <!-- Selected work: a compact introduction to the full room gallery. -->
+    <!-- One rotating selection introduces project stories and the photo gallery. -->
     <section class="section-white work-section" id="our-work">
       <div class="container">
-        <div class="work-heading"><div><span class="eyebrow">Before &amp; After</span><h2>Our Work</h2></div><a class="work-all-link" href="gallery.html">Explore all 25 comparisons &rarr;</a></div>
-        <p class="work-intro">Real rooms. Visible changes. Open a photo pair for a closer look.</p>
-        <div class="work-feature" data-work-feature>
-          <span class="work-feature-label">Featured project story</span>
-          <a class="work-feature-story" href="six-room-home-renovation.html" data-feature-story data-project-id="project-01"><strong data-feature-title>Six rooms, one home</strong><span data-feature-project>Whole-home Refresh - Project 01</span></a>
-          <div class="work-feature-controls" data-feature-controls hidden><button type="button" data-feature-prev aria-label="Previous featured project story">&larr;</button><span data-feature-count aria-live="polite" aria-atomic="true">1 / 3</span><button type="button" data-feature-next aria-label="Next featured project story">&rarr;</button></div>
+        <div class="work-heading"><div><span class="eyebrow">See the Difference</span><h2>Our Work</h2></div></div>
+        <div class="work-carousel" data-work-carousel role="region" aria-roledescription="carousel" aria-label="Featured projects and comparisons">
+          <div class="feature-toolbar" data-feature-controls hidden>
+            <button class="feature-control" type="button" data-feature-prev aria-label="Previous feature"><span aria-hidden="true">&larr;</span></button>
+            <span class="feature-count" data-feature-count>1 / 5</span>
+            <button class="feature-control" type="button" data-feature-next aria-label="Next feature"><span aria-hidden="true">&rarr;</span></button>
+            <button class="feature-control feature-pause" type="button" data-feature-pause aria-label="Pause rotation">Pause</button>
+          </div>
+          <article class="feature-slide" data-feature-slide role="group" aria-roledescription="slide" aria-label="1 of 5">
+            <a class="feature-slide-link" href="projects.html" data-project-id="project-01">
+              <div class="feature-media"><img src="assets/lsa-approved/comparison-04-after.webp" width="2000" height="1500" alt="Finished vaulted living room after a whole-home refresh" loading="lazy" decoding="async" /></div>
+              <div class="feature-copy"><span class="feature-kicker">Featured project</span><h3>Six rooms, one home</h3><p>A room-by-room look at the Delta difference.</p><span class="feature-cta">Explore our projects &rarr;</span></div>
+            </a>
+          </article>
+          <article class="feature-slide" data-feature-slide data-pair-id="comparison-10" role="group" aria-roledescription="slide" aria-label="2 of 5" hidden>
+            <a class="feature-slide-link" href="gallery.html#comparison-10">
+              <div class="feature-media feature-media-pair"><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-10-before.webp" width="2000" height="1500" alt="Kitchen, before renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--before">Before</span></span><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-10-after.webp" width="2000" height="1500" alt="Kitchen, after renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--after">After</span></span></div>
+              <div class="feature-copy"><span class="feature-kicker">Before &amp; after</span><h3>A kitchen, refreshed</h3><p>Two photos. One real transformation.</p><span class="feature-cta">Compare in the gallery &rarr;</span></div>
+            </a>
+          </article>
+          <article class="feature-slide" data-feature-slide data-pair-id="comparison-01" role="group" aria-roledescription="slide" aria-label="3 of 5" hidden>
+            <a class="feature-slide-link" href="gallery.html#comparison-01">
+              <div class="feature-media feature-media-pair"><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-01-before.webp" width="1500" height="2000" alt="Bathroom Tub, before renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--before">Before</span></span><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-01-after.webp" width="1500" height="2000" alt="Bathroom Tub, after renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--after">After</span></span></div>
+              <div class="feature-copy"><span class="feature-kicker">Before &amp; after</span><h3>A fresh start for the bath</h3><p>Two photos. One real transformation.</p><span class="feature-cta">Compare in the gallery &rarr;</span></div>
+            </a>
+          </article>
+          <article class="feature-slide" data-feature-slide data-pair-id="comparison-24" role="group" aria-roledescription="slide" aria-label="4 of 5" hidden>
+            <a class="feature-slide-link" href="gallery.html#comparison-24">
+              <div class="feature-media feature-media-pair"><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-24-before.webp" width="2000" height="1500" alt="Exterior Brickwork, before renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--before">Before</span></span><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-24-after.webp" width="2000" height="1500" alt="Exterior Brickwork, after renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--after">After</span></span></div>
+              <div class="feature-copy"><span class="feature-kicker">Before &amp; after</span><h3>The difference outside</h3><p>Two photos. One real transformation.</p><span class="feature-cta">Compare in the gallery &rarr;</span></div>
+            </a>
+          </article>
+          <article class="feature-slide" data-feature-slide data-pair-id="comparison-13" role="group" aria-roledescription="slide" aria-label="5 of 5" hidden>
+            <a class="feature-slide-link" href="gallery.html#comparison-13">
+              <div class="feature-media feature-media-pair"><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-13-before.webp" width="2000" height="1500" alt="Bedroom Flooring, before renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--before">Before</span></span><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-13-after.webp" width="2000" height="1500" alt="Bedroom Flooring, after renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--after">After</span></span></div>
+              <div class="feature-copy"><span class="feature-kicker">Before &amp; after</span><h3>A new look underfoot</h3><p>Two photos. One real transformation.</p><span class="feature-cta">Compare in the gallery &rarr;</span></div>
+            </a>
+          </article>
+          <p class="visually-hidden" role="status" aria-live="polite" data-feature-status></p>
         </div>
-        <div class="comparison-gallery" data-comparison-gallery data-featured-pairs="comparison-10,comparison-04,comparison-13,comparison-24,comparison-02,comparison-16,comparison-12,comparison-25">
-          <p class="gallery-status" data-gallery-status role="status" aria-live="polite"></p>
-          <dialog class="comparison-dialog" data-comparison-dialog aria-labelledby="comparison-title">
-            <div class="comparison-dialog-top">
-              <span class="comparison-count" data-comparison-count></span>
-              <button class="comparison-close" type="button" data-comparison-close aria-label="Close comparison">Close <span aria-hidden="true">&times;</span></button>
-            </div>
-            <header class="comparison-gallery-header">
-              <div><p class="comparison-gallery-project" data-comparison-project></p><h2 id="comparison-title" data-comparison-title>Before &amp; after</h2><a class="comparison-cost-story" data-comparison-cost-story hidden>Read the cost breakdown &rarr;</a></div>
-            </header>
-            <div class="comparison-stage" hidden>
-              <div class="ba-slider" data-ba-slider role="slider" tabindex="0" aria-label="Before and after comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-describedby="comparison-help">
-                <div class="ba-slider-after"></div><div class="ba-slider-before"></div>
-                <div class="ba-slider-handle" aria-hidden="true"><span class="ba-slider-handle-btn">&#8596;</span></div>
-                <span class="ba-tag ba-tag-before">Before</span><span class="ba-tag ba-tag-after">After</span>
-              </div>
-            </div>
-            <div class="comparison-gallery-footer">
-              <div class="comparison-controls">
-                <button class="btn btn-outline" type="button" data-comparison-prev aria-label="Previous comparison">&larr; Previous</button>
-                <button class="btn btn-outline" type="button" data-comparison-next aria-label="Next comparison">Next &rarr;</button>
-              </div>
-              <p class="comparison-help" id="comparison-help">Drag to compare, or use the arrow keys. Home shows After; End shows Before.</p>
-              <a class="comparison-story" data-comparison-story hidden>Read the project story &rarr;</a>
-              <p class="comparison-status" data-comparison-status role="status" aria-live="polite" aria-atomic="true"></p>
-              <button class="btn btn-outline comparison-retry" type="button" data-comparison-retry hidden>Try loading photos again</button>
-            </div>
-          </dialog>
-          <noscript><p>Browse the <a href="projects.html">project stories</a> for more before-and-after photos.</p></noscript>
-        </div>
-        <div class="work-gallery-link"><a class="btn btn-outline" href="gallery.html">View the Full Gallery &rarr;</a></div>
       </div>
     </section>
 

@@ -108,28 +108,86 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   initBaSliders();
 
-  // A small, manually browsed feature. No timer, autoplay or random reordering.
-  const feature = document.querySelector("[data-work-feature]");
+  // One feature rotates slowly only while visible and untouched. Manual input,
+  // hover, focus, hidden tabs and reduced-motion preference suspend rotation.
+  const feature = document.querySelector("[data-work-carousel]");
   if (feature) {
-    const stories = [
-      { title: "Six rooms, one home", project: "Whole-home Refresh - Project 01", projectId: "project-01", url: "six-room-home-renovation.html" },
-      { title: "A full interior transformation", project: "Interior Renovation - Project 07", projectId: "project-07", url: "full-interior-transformation.html" },
-      { title: "Destroyed property, restored", project: "Interior Restoration - Project 09", projectId: "project-09", url: "destroyed-property-restored.html" },
-    ];
-    let current = 0;
-    const showFeature = (direction) => {
-      current = (current + direction + stories.length) % stories.length;
-      const story = stories[current];
-      const link = feature.querySelector("[data-feature-story]");
-      link.href = story.url;
-      link.dataset.projectId = story.projectId;
-      feature.querySelector("[data-feature-title]").textContent = story.title;
-      feature.querySelector("[data-feature-project]").textContent = story.project;
-      feature.querySelector("[data-feature-count]").textContent = `${current + 1} / ${stories.length}: ${story.title}`;
+    const slides = [...feature.querySelectorAll("[data-feature-slide]")];
+    const pause = feature.querySelector("[data-feature-pause]");
+    const count = feature.querySelector("[data-feature-count]");
+    const status = feature.querySelector("[data-feature-status]");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let current = 0, requested = 0, loading = false, timer = null, automaticRequest = false;
+    let paused = reduced.matches, hovered = false, focused = false, inView = false;
+    const updateRotation = () => {
+      window.clearTimeout(timer);
+      if (automaticRequest && (paused || reduced.matches || hovered || focused || !inView || document.hidden)) {
+        requested = current;
+        automaticRequest = false;
+      }
+      pause.hidden = reduced.matches;
+      pause.textContent = paused ? "Play" : "Pause";
+      pause.setAttribute("aria-label", paused ? "Play rotation" : "Pause rotation");
+      const running = !paused && !reduced.matches && !hovered && !focused && inView && !document.hidden && !loading;
+      feature.dataset.rotation = running ? "running" : "paused";
+      if (running) timer = window.setTimeout(() => advance(1, false), 8000);
+    };
+    const loadPhoto = (img) => new Promise((resolve, reject) => {
+      if (img.complete && img.naturalWidth) return resolve();
+      const timeout = window.setTimeout(() => { img.removeAttribute("src"); reject(new Error("Feature image timeout")); }, 15000);
+      img.onload = async () => {
+        try { await img.decode(); window.clearTimeout(timeout); resolve(); }
+        catch { window.clearTimeout(timeout); reject(new Error("Feature image unavailable")); }
+      };
+      img.onerror = () => { window.clearTimeout(timeout); reject(new Error("Feature image unavailable")); };
+      if (img.dataset.src) img.src = img.dataset.src;
+    });
+    const showRequested = async () => {
+      if (loading) return;
+      loading = true;
+      updateRotation();
+      while (requested !== current) {
+        const next = requested;
+        // Keep the current feature visible until its replacement is decoded.
+        const photos = await Promise.allSettled([...slides[next].querySelectorAll("img")].map(loadPhoto));
+        if (next !== requested) continue;
+        if (photos.some((photo) => photo.status === "rejected")) {
+          paused = true;
+          status.textContent = "That feature could not load. Use Previous or Next to choose another.";
+          break;
+        }
+        slides[current].hidden = true;
+        slides[next].hidden = false;
+        current = next;
+        count.textContent = `${current + 1} / ${slides.length}`;
+        if (paused) status.textContent = `Feature ${current + 1} of ${slides.length}: ${slides[current].querySelector("h3").textContent}.`;
+      }
+      loading = false;
+      updateRotation();
+    };
+    const advance = (direction, manual = true) => {
+      const from = manual && automaticRequest ? current : requested;
+      if (manual) paused = true;
+      automaticRequest = !manual;
+      requested = (from + direction + slides.length) % slides.length;
+      updateRotation();
+      showRequested();
     };
     feature.querySelector("[data-feature-controls]").hidden = false;
-    feature.querySelector("[data-feature-prev]").addEventListener("click", () => showFeature(-1));
-    feature.querySelector("[data-feature-next]").addEventListener("click", () => showFeature(1));
+    feature.querySelector("[data-feature-prev]").addEventListener("click", () => advance(-1));
+    feature.querySelector("[data-feature-next]").addEventListener("click", () => advance(1));
+    pause.addEventListener("click", () => { paused = !paused; updateRotation(); });
+    feature.addEventListener("pointerenter", (event) => { if (event.pointerType === "mouse") { hovered = true; updateRotation(); } });
+    feature.addEventListener("pointerleave", () => { hovered = false; updateRotation(); });
+    feature.addEventListener("pointerdown", (event) => {
+      if (!event.target.closest("[data-feature-pause]")) { paused = true; updateRotation(); }
+    });
+    feature.addEventListener("focusin", () => { focused = true; updateRotation(); });
+    feature.addEventListener("focusout", (event) => { focused = feature.contains(event.relatedTarget); updateRotation(); });
+    reduced.addEventListener("change", () => { if (reduced.matches) paused = true; updateRotation(); });
+    document.addEventListener("visibilitychange", updateRotation);
+    new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; updateRotation(); }, { threshold: .25 }).observe(feature);
+    updateRotation();
   }
 
   // Small previews share one filtered grid. Full photos load only in the dialog,
@@ -138,6 +196,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const dialog = gallery.querySelector("[data-comparison-dialog]");
     const slider = dialog.querySelector("[data-ba-slider]");
     const stage = dialog.querySelector(".comparison-stage");
+    const placeholder = stage.querySelector("[data-comparison-placeholder]");
+    const placeholderText = stage.querySelector("[data-comparison-placeholder-text]");
     const title = dialog.querySelector("[data-comparison-title]");
     const project = dialog.querySelector("[data-comparison-project]");
     const count = dialog.querySelector("[data-comparison-count]");
@@ -179,6 +239,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let visible = pairs.map((_, index) => index), active = null, requested = 0, loading = false;
     let returnTo = null, returnScroll = { x: 0, y: 0 };
+    const setStageState = (state) => {
+      stage.dataset.state = state;
+      slider.hidden = state !== "ready";
+      placeholder.hidden = state === "ready";
+      retry.hidden = state !== "error";
+      placeholderText.textContent = state === "error"
+        ? "These photos couldn't load. Try again or choose another comparison."
+        : "Loading photos…";
+    };
     const overview = document.createElement("div");
     overview.className = "comparison-overview";
     overview.setAttribute("data-comparison-overview", "");
@@ -190,8 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
       returnScroll = { x: window.scrollX, y: window.scrollY };
       requested = index;
       updateDetails(pairs[index], index);
-      stage.hidden = active !== index;
-      retry.hidden = true;
+      setStageState(active === index ? "ready" : "loading");
       status.textContent = "";
       document.body.classList.add("comparison-open");
       dialog.showModal();
@@ -202,6 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "comparison-preview";
+      button.id = pair.id;
       button.dataset.comparisonIndex = index;
       button.dataset.pairId = pair.id;
       button.dataset.projectId = pair.projectId;
@@ -210,9 +279,6 @@ document.addEventListener("DOMContentLoaded", () => {
       button.setAttribute("aria-label", `Compare ${pair.title}, ${projectName(pair)}`);
       const photos = document.createElement("span");
       photos.className = "comparison-preview-photos";
-      const orientations = ["before", "after"].map((side) => pair.dimensions[side][0] >= pair.dimensions[side][1] ? "landscape" : "portrait");
-      photos.dataset.previewLayout = orientations.every((value) => value === "landscape")
-        ? "stacked" : orientations.every((value) => value === "portrait") ? "side-by-side" : "mixed";
       ["before", "after"].forEach((side) => {
         const pane = document.createElement("span");
         pane.className = "comparison-preview-pane";
@@ -312,8 +378,9 @@ document.addEventListener("DOMContentLoaded", () => {
       loading = true;
       dialog.setAttribute("aria-busy", "true");
       retry.hidden = true;
-      while (dialog.open && (requested !== active || stage.hidden)) {
+      while (dialog.open && (requested !== active || stage.dataset.state !== "ready")) {
         const next = requested, pair = pairs[next];
+        setStageState("loading");
         status.textContent = `Loading ${pair.title}.`;
         const images = await Promise.allSettled([
           loadImage(pair.before, `${pair.title}, ${projectName(pair)}, before renovation`),
@@ -323,28 +390,34 @@ document.addEventListener("DOMContentLoaded", () => {
         if (requested !== next) continue;
         if (images.some((result) => result.status === "rejected")) {
           status.textContent = "These photos could not load. Try again, choose another comparison, or close this dialog.";
-          retry.hidden = false;
+          setStageState("error");
           break;
         }
         slider.querySelector(".ba-slider-before").replaceChildren(images[0].value);
         slider.querySelector(".ba-slider-after").replaceChildren(images[1].value);
         active = next;
         updateDetails(pair, next);
-        stage.hidden = false;
+        setStageState("ready");
         status.textContent = `${pair.title}, comparison ${visible.indexOf(next) + 1} of ${visible.length}.`;
+      }
+      if (dialog.open && requested === active && stage.dataset.state === "ready") {
+        status.textContent = `${pairs[active].title}, comparison ${visible.indexOf(active) + 1} of ${visible.length}.`;
       }
       loading = false;
       dialog.removeAttribute("aria-busy");
     };
     const browse = (direction) => {
       requested = visible[(visible.indexOf(requested) + direction + visible.length) % visible.length];
-      stage.hidden = true;
+      setStageState(requested === active ? "ready" : "loading");
       updateDetails(pairs[requested], requested);
       showRequested();
     };
     dialog.querySelector("[data-comparison-prev]").addEventListener("click", () => browse(-1));
     dialog.querySelector("[data-comparison-next]").addEventListener("click", () => browse(1));
-    retry.addEventListener("click", showRequested);
+    retry.addEventListener("click", () => {
+      dialog.querySelector("[data-comparison-close]").focus();
+      showRequested();
+    });
     dialog.querySelector("[data-comparison-close]").addEventListener("click", () => dialog.close());
     dialog.addEventListener("keydown", (event) => {
       if (event.key !== "Tab") return;
@@ -368,6 +441,23 @@ document.addEventListener("DOMContentLoaded", () => {
       window.scrollTo({ left: returnScroll.x, top: returnScroll.y, behavior: "instant" });
       if (returnTo?.isConnected) returnTo.focus({ preventScroll: true });
     });
+    // Homepage highlights link directly to their exact approved comparison.
+    const openLinkedComparison = () => {
+      const linkedIndex = pairs.findIndex((pair) => location.hash === `#${pair.id}`);
+      if (linkedIndex < 0) return;
+      if (buttons[linkedIndex].hidden) overview.querySelector('[data-category="All"]').click();
+      if (dialog.open) {
+        requested = linkedIndex;
+        updateDetails(pairs[linkedIndex], linkedIndex);
+        setStageState(active === linkedIndex ? "ready" : "loading");
+        showRequested();
+        return;
+      }
+      buttons[linkedIndex].scrollIntoView({ block: "center", behavior: "instant" });
+      openComparison(linkedIndex, buttons[linkedIndex]);
+    };
+    window.addEventListener("hashchange", openLinkedComparison);
+    openLinkedComparison();
   });
 
   // Cards that link out to a dedicated case-study page instead of the

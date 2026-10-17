@@ -125,13 +125,18 @@
           <dialog class="comparison-dialog" data-comparison-dialog aria-labelledby="comparison-title">
             <div class="comparison-dialog-top">
               <span class="comparison-count" data-comparison-count></span>
-              <button class="comparison-close" type="button" data-comparison-close aria-label="Close comparison">Close <span aria-hidden="true">&times;</span></button>
+              <button class="comparison-close" type="button" data-comparison-close aria-label="Close comparison"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
             </div>
             <header class="comparison-gallery-header">
               <div><p class="comparison-gallery-project" data-comparison-project></p><h2 id="comparison-title" data-comparison-title>Before &amp; after</h2><a class="comparison-cost-story" data-comparison-cost-story hidden>Read the cost breakdown &rarr;</a></div>
             </header>
-            <div class="comparison-stage" hidden>
-              <div class="ba-slider" data-ba-slider role="slider" tabindex="0" aria-label="Before and after comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-describedby="comparison-help">
+            <div class="comparison-stage" data-state="loading">
+              <div class="comparison-placeholder" data-comparison-placeholder>
+                <span class="comparison-loading-mark" aria-hidden="true"></span>
+                <p data-comparison-placeholder-text aria-hidden="true">Loading photos&hellip;</p>
+                <button class="comparison-nav-button comparison-retry" type="button" data-comparison-retry hidden>Try again</button>
+              </div>
+              <div class="ba-slider" hidden data-ba-slider role="slider" tabindex="0" aria-label="Before and after comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-describedby="comparison-help">
                 <div class="ba-slider-after"></div><div class="ba-slider-before"></div>
                 <div class="ba-slider-handle" aria-hidden="true"><span class="ba-slider-handle-btn">&#8596;</span></div>
                 <span class="ba-tag ba-tag-before">Before</span><span class="ba-tag ba-tag-after">After</span>
@@ -139,13 +144,12 @@
             </div>
             <div class="comparison-gallery-footer">
               <div class="comparison-controls">
-                <button class="btn btn-outline" type="button" data-comparison-prev aria-label="Previous comparison">&larr; Previous</button>
-                <button class="btn btn-outline" type="button" data-comparison-next aria-label="Next comparison">Next &rarr;</button>
+                <button class="comparison-nav-button" type="button" data-comparison-prev aria-label="Previous comparison">&larr; Previous</button>
+                <button class="comparison-nav-button" type="button" data-comparison-next aria-label="Next comparison">Next &rarr;</button>
               </div>
-              <p class="comparison-help" id="comparison-help">Drag to compare, or use the arrow keys. Home shows After; End shows Before.</p>
-              <a class="comparison-story" data-comparison-story hidden>Read the project story &rarr;</a>
-              <p class="comparison-status" data-comparison-status role="status" aria-live="polite" aria-atomic="true"></p>
-              <button class="btn btn-outline comparison-retry" type="button" data-comparison-retry hidden>Try loading photos again</button>
+              <p class="visually-hidden" id="comparison-help">Drag to compare, or use the arrow keys. Home shows After; End shows Before.</p>
+              <div class="comparison-related"><a class="comparison-story" data-comparison-story hidden>Read the project story &rarr;</a></div>
+              <p class="visually-hidden" data-comparison-status role="status" aria-live="polite" aria-atomic="true"></p>
             </div>
           </dialog>
           <noscript><p>Browse the <a href="projects.html">project stories</a> for more before-and-after photos.</p></noscript>
