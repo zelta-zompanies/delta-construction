@@ -111,6 +111,7 @@
         <ul class="nav-links">
           <li><a href="about.html">About Us</a></li>
           <li><a href="projects.html">Projects</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
           <li><a href="keep-up.html">Keep Up with Delta</a></li>
         </ul>
         <a class="btn btn-primary nav-cta" href="contact.html">Get a Quote</a>
@@ -137,35 +138,44 @@
     <!-- Selected work: a compact introduction to the full room gallery. -->
     <section class="section-white work-section" id="our-work">
       <div class="container">
-        <div class="work-heading"><div><span class="eyebrow">Before &amp; After</span><h2>Our Work</h2></div><a class="work-all-link" href="projects.html">Explore all 25 comparisons &rarr;</a></div>
+        <div class="work-heading"><div><span class="eyebrow">Before &amp; After</span><h2>Our Work</h2></div><a class="work-all-link" href="gallery.html">Explore all 25 comparisons &rarr;</a></div>
         <p class="work-intro">Real rooms. Visible changes. Open a photo pair for a closer look.</p>
         <div class="work-feature" data-work-feature>
           <span class="work-feature-label">Featured project story</span>
           <a class="work-feature-story" href="six-room-home-renovation.html" data-feature-story data-project-id="project-01"><strong data-feature-title>Six rooms, one home</strong><span data-feature-project>Whole-home Refresh - Project 01</span></a>
           <div class="work-feature-controls" data-feature-controls hidden><button type="button" data-feature-prev aria-label="Previous featured project story">&larr;</button><span data-feature-count aria-live="polite" aria-atomic="true">1 / 3</span><button type="button" data-feature-next aria-label="Next featured project story">&rarr;</button></div>
         </div>
-<div class="comparison-gallery" data-comparison-gallery data-featured-pairs="comparison-10,comparison-04,comparison-13,comparison-24,comparison-02,comparison-16,comparison-12,comparison-25" data-initial-pair="comparison-10">
- <div data-comparison-detail>
- <button class="comparison-back" type="button" data-comparison-back hidden>&larr; Back to highlights</button>
- <div class="comparison-gallery-header"><div><p class="comparison-gallery-project" data-comparison-project>Whole-home Refresh - Project 01</p><h3 data-comparison-title>Bathroom Tub</h3><a class="comparison-cost-story" data-comparison-cost-story hidden>Read the cost breakdown &rarr;</a></div><span class="comparison-count" data-comparison-count>1 / 25</span></div>
- <div class="comparison-stage" style="--photo-ratio: .75"><div class="ba-slider" data-ba-slider role="slider" tabindex="0" aria-label="Whole-home Refresh - Project 01, Bathroom Tub: before and after comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-describedby="comparison-help">
- <div class="ba-slider-after"><img src="assets/lsa-approved/comparison-01-after.webp" alt="Whole-home Refresh - Project 01, Bathroom Tub after renovation" width="1500" height="2000" loading="lazy" decoding="async" draggable="false" /></div>
- <div class="ba-slider-before"><img src="assets/lsa-approved/comparison-01-before.webp" alt="Whole-home Refresh - Project 01, Bathroom Tub before renovation" width="1500" height="2000" loading="lazy" decoding="async" draggable="false" /></div>
- <div class="ba-slider-handle" aria-hidden="true"><span class="ba-slider-handle-btn">&#8596;</span></div>
- <span class="ba-tag ba-tag-before">Before</span><span class="ba-tag ba-tag-after">After</span>
- </div></div>
- <div class="comparison-gallery-footer">
- <div class="comparison-controls" data-comparison-controls hidden>
- <button class="btn btn-outline" type="button" data-comparison-prev aria-label="Previous comparison">&larr; Previous</button>
- <div class="comparison-choice"><label for="comparison-select">Choose a comparison</label><select id="comparison-select" data-comparison-select></select></div>
- <button class="btn btn-outline" type="button" data-comparison-next aria-label="Next comparison">Next &rarr;</button>
- </div>
- <p class="comparison-help" id="comparison-help">Drag left or right to compare. On a keyboard, use the arrow keys; Home shows the after photo and End shows the before photo.</p>
- <a class="comparison-story" data-comparison-story href="six-room-home-renovation.html">Read the project story &rarr;</a>
- <p class="comparison-status" data-comparison-status role="status" aria-live="polite" aria-atomic="true"></p>
- <noscript><p>Browse our project stories below for more before-and-after photos.</p></noscript>
- </div></div></div>
-        <div class="work-gallery-link"><a class="btn btn-outline" href="projects.html">View the Full Gallery &rarr;</a></div>
+        <div class="comparison-gallery" data-comparison-gallery data-featured-pairs="comparison-10,comparison-04,comparison-13,comparison-24,comparison-02,comparison-16,comparison-12,comparison-25">
+          <p class="gallery-status" data-gallery-status role="status" aria-live="polite"></p>
+          <dialog class="comparison-dialog" data-comparison-dialog aria-labelledby="comparison-title">
+            <div class="comparison-dialog-top">
+              <span class="comparison-count" data-comparison-count></span>
+              <button class="comparison-close" type="button" data-comparison-close aria-label="Close comparison">Close <span aria-hidden="true">&times;</span></button>
+            </div>
+            <header class="comparison-gallery-header">
+              <div><p class="comparison-gallery-project" data-comparison-project></p><h2 id="comparison-title" data-comparison-title>Before &amp; after</h2><a class="comparison-cost-story" data-comparison-cost-story hidden>Read the cost breakdown &rarr;</a></div>
+            </header>
+            <div class="comparison-stage" hidden>
+              <div class="ba-slider" data-ba-slider role="slider" tabindex="0" aria-label="Before and after comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-describedby="comparison-help">
+                <div class="ba-slider-after"></div><div class="ba-slider-before"></div>
+                <div class="ba-slider-handle" aria-hidden="true"><span class="ba-slider-handle-btn">&#8596;</span></div>
+                <span class="ba-tag ba-tag-before">Before</span><span class="ba-tag ba-tag-after">After</span>
+              </div>
+            </div>
+            <div class="comparison-gallery-footer">
+              <div class="comparison-controls">
+                <button class="btn btn-outline" type="button" data-comparison-prev aria-label="Previous comparison">&larr; Previous</button>
+                <button class="btn btn-outline" type="button" data-comparison-next aria-label="Next comparison">Next &rarr;</button>
+              </div>
+              <p class="comparison-help" id="comparison-help">Drag to compare, or use the arrow keys. Home shows After; End shows Before.</p>
+              <a class="comparison-story" data-comparison-story hidden>Read the project story &rarr;</a>
+              <p class="comparison-status" data-comparison-status role="status" aria-live="polite" aria-atomic="true"></p>
+              <button class="btn btn-outline comparison-retry" type="button" data-comparison-retry hidden>Try loading photos again</button>
+            </div>
+          </dialog>
+          <noscript><p>Browse the <a href="projects.html">project stories</a> for more before-and-after photos.</p></noscript>
+        </div>
+        <div class="work-gallery-link"><a class="btn btn-outline" href="gallery.html">View the Full Gallery &rarr;</a></div>
       </div>
     </section>
 
