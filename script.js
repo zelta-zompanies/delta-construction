@@ -623,7 +623,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // form request, not a qualified lead, completed job, or confirmed notification.
   const trackEvent = (name, parameters) => {
     try {
-      if (typeof window.gtag === "function") window.gtag("event", name, parameters);
+      window.deltaMeasurement?.track(name, parameters);
     } catch {
       // Analytics must never interrupt contact or change a submission result.
     }
@@ -640,6 +640,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Netlify detects these static forms at deploy time. Preserve form names,
   // form-name fields and honeypots. Live delivery requires separate verification.
   document.querySelectorAll("form[data-delta-form]").forEach((form) => {
+    if (form.dataset.deltaFormBound === "true") return;
+    form.dataset.deltaFormBound = "true";
     const status = form.querySelector(".form-status");
     const button = form.querySelector('button[type="submit"]');
     const initialButtonText = button.textContent;
@@ -682,7 +684,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!res.ok) {
           state = "idle";
           status.className = "form-status error";
-          status.textContent = "Your message was not accepted. Your details are still here. Please try again or call 901-568-4128.";
+          status.textContent = `Your message was not accepted. Your details are still here. Please try again or call ${window.deltaAds?.phoneNumber() || "901-568-4128"}.`;
           return;
         }
         state = "sent";
@@ -693,13 +695,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const formId = form.getAttribute("name");
         if (formId === "quote" || formId === "contact") {
           trackEvent("generate_lead", { form_id: formId, method: "netlify_form" });
+          try { window.deltaMeasurement?.conversion(formId); } catch { /* Keep the accepted result. */ }
         }
       } catch {
         // A lost response does not prove the POST failed. Do not automatically
         // retry or invite another submission that could duplicate the request.
         state = "uncertain";
         status.className = "form-status error";
-        status.textContent = "We couldn't confirm whether your message was received. Your details are still here. Please call 901-568-4128 before submitting again so we can avoid a duplicate.";
+        status.textContent = `We couldn't confirm whether your message was received. Your details are still here. Please call ${window.deltaAds?.phoneNumber() || "901-568-4128"} before submitting again so we can avoid a duplicate.`;
         button.textContent = "Please call to confirm";
       } finally {
         window.clearTimeout(timeout);

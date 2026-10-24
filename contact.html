@@ -1,16 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SHRRZRKLZN"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-SHRRZRKLZN');
-  </script>
-  <meta charset="UTF-8" />
+<meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact | Delta Construction — Memphis Construction Company</title>
   <meta name="description" content="Contact Delta Construction, a Memphis construction company, for home renovation, remodeling, and commercial construction in Memphis, TN. Call 901-568-4128." />
@@ -31,9 +22,6 @@
   <link rel="icon" href="assets/logo/favicon-mark.png" type="image/png" />
   <link rel="shortcut icon" href="assets/logo/favicon-mark.png" type="image/png" />
   <link rel="apple-touch-icon" href="assets/logo/favicon-mark.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <!-- Leaflet (service-area map on the Contact page) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <link rel="stylesheet" href="styles.css" />
@@ -85,6 +73,7 @@
     }
   }
   </script>
+  <script src="measurement.js" defer></script>
 </head>
 <body>
 
@@ -169,7 +158,7 @@
           <div class="form-card" id="quote-form">
             <h3>Send Us a Message</h3>
             <!-- Handled by Netlify Forms; submissions appear in the Netlify dashboard. -->
-            <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" data-delta-form>
+            <form name="contact" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" data-delta-form>
               <input type="hidden" name="form-name" value="contact" />
               <p hidden aria-hidden="true">
                 <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -365,6 +354,8 @@
         </div>
       </div>
       <div class="footer-meta">
+        <a href="privacy.html">Privacy &amp; measurement choices</a>
+        <button class="measurement-choice" type="button" data-measurement-choice hidden>Turn off measurement</button>
         <span>&copy; <span class="js-year">2026</span> Delta Construction</span>
         <span>Memphis, TN</span>
       </div>
