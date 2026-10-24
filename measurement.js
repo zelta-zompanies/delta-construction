@@ -106,6 +106,18 @@
   });
   const start = async () => {
     if (started || draft || hasGpc() || savedOff()) return;
+    // Enhanced measurement can inspect the browser URL independently of
+    // page_location (for example, a ?q= value becomes a search event). This
+    // static site has no query-driven UI. Keep only ad-click identifiers;
+    // preserve anchors used by the gallery and existing navigation.
+    try {
+      const url = new URL(location.href);
+      const clickKeys = new Set(["gclid", "gclsrc", "dclid", "gbraid", "wbraid"]);
+      for (const name of [...url.searchParams.keys()]) {
+        if (!clickKeys.has(name)) url.searchParams.delete(name);
+      }
+      if (url.href !== location.href) history.replaceState(history.state, "", url.href);
+    } catch { stop(); return; }
     started = true; active = true;
     window[`ga-disable-${ga}`] = false;
     window.dataLayer = window.dataLayer || [];
