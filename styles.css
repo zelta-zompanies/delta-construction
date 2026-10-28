@@ -2950,6 +2950,9 @@ body.modal-open {
 .ba-slider:focus-visible { outline: 3px solid var(--accent); outline-offset: -4px; }
 .ba-slider:focus-visible .ba-slider-handle-btn { outline: 3px solid var(--navy); outline-offset: 3px; }
 .comparison-gallery .ba-tag { top: .7rem; bottom: auto; }
+.comparison-gallery .ba-tag-before { left: calc(var(--label-inset, 0%) + .7rem); }
+.comparison-gallery .ba-tag-after { right: calc(var(--label-inset, 0%) + .7rem); }
+.comparison-gallery [data-mixed-orientation="true"] .ba-tag { padding-inline: .35rem; letter-spacing: .03em; }
 .comparison-category-nav { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
 .comparison-category-nav button { display: inline-flex; align-items: center; min-height: 44px; padding: .4rem .8rem; border: 1px solid #cad6da; border-radius: var(--radius-pill); background: var(--white); color: var(--navy); font: inherit; font-weight: 700; font-size: .8rem; cursor: pointer; }
 .comparison-category-nav button:hover, .comparison-category-nav button[aria-pressed="true"] { color: white; background: var(--navy); }

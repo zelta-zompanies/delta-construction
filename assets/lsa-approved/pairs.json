@@ -782,6 +782,68 @@
         }
       },
       "projectId": "project-08"
+    },
+    {
+      "id": "comparison-26",
+      "project": "Rear Exterior Refresh - Project 10",
+      "title": "Rear Exterior",
+      "dimensions": {
+        "before": [
+          1112,
+          834
+        ],
+        "after": [
+          1112,
+          834
+        ]
+      },
+      "category": "Exterior",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-26-before.webp",
+          "width": 480,
+          "height": 360
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-26-after.webp",
+          "width": 480,
+          "height": 360
+        }
+      },
+      "projectId": "project-10",
+      "before": "assets/lsa-approved/comparison-26-before.jpg",
+      "after": "assets/lsa-approved/comparison-26-after.jpg"
+    },
+    {
+      "id": "comparison-27",
+      "project": "Kitchen Refresh - Project 11",
+      "title": "Kitchen Opening",
+      "dimensions": {
+        "before": [
+          626,
+          834
+        ],
+        "after": [
+          1112,
+          834
+        ]
+      },
+      "category": "Kitchens",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-27-before.webp",
+          "width": 270,
+          "height": 360
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-27-after.webp",
+          "width": 480,
+          "height": 360
+        }
+      },
+      "projectId": "project-11",
+      "before": "assets/lsa-approved/comparison-27-before.jpg",
+      "after": "assets/lsa-approved/comparison-27-after.jpg"
     }
   ],
   "projects": [
@@ -837,6 +899,18 @@
       "id": "project-09",
       "name": "Interior Restoration - Project 09",
       "publishedStory": "destroyed-property-restored.html",
+      "publishedCostStory": null
+    },
+    {
+      "id": "project-10",
+      "name": "Rear Exterior Refresh - Project 10",
+      "publishedStory": null,
+      "publishedCostStory": null
+    },
+    {
+      "id": "project-11",
+      "name": "Kitchen Refresh - Project 11",
+      "publishedStory": null,
       "publishedCostStory": null
     }
   ]

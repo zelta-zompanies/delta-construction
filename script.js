@@ -269,12 +269,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const projectName = (pair) => pair.project.replace(/\s*-\s*Project\s+\d+$/i, "");
     let projects = [], pairs;
     try {
-      const response = await fetch("assets/lsa-approved/pairs.json?v=work-gallery-2");
+      const response = await fetch("assets/lsa-approved/pairs.json?v=work-gallery-3");
       if (!response.ok) throw new Error("Gallery unavailable");
       const data = await response.json();
       pairs = data.pairs;
       projects = Array.isArray(data.projects) ? data.projects : [];
-      const validImage = (value) => typeof value === "string" && /^assets\/lsa-approved\/(thumbs\/)?comparison-\d{2}-(before|after)\.webp$/.test(value);
+      const validImage = (value) => typeof value === "string" && /^assets\/lsa-approved\/(thumbs\/)?comparison-\d{2}-(before|after)\.(?:webp|jpg)$/.test(value);
       if (!Array.isArray(pairs) || !pairs.length || !pairs.every((pair) =>
         pair && typeof pair.id === "string" && typeof pair.project === "string" &&
         projects.some((entry) => entry.id === pair.projectId && entry.name === pair.project) &&
@@ -339,6 +339,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const photos = document.createElement("span");
       photos.className = "comparison-preview-photos";
       photos.dataset.pairLayout = ["before", "after"].every((side) => pair.dimensions[side][0] > pair.dimensions[side][1]) ? "stack" : "side";
+      // Different orientations share one natural-height row without letterboxing.
+      if (photos.dataset.pairLayout === "side") {
+        photos.style.gridTemplateColumns = ["before", "after"].map((side) =>
+          `minmax(0, ${pair.dimensions[side][0] / pair.dimensions[side][1]}fr)`).join(" ");
+      }
       ["before", "after"].forEach((side) => {
         const pane = document.createElement("span");
         pane.className = "comparison-preview-pane";
@@ -424,6 +429,10 @@ document.addEventListener("DOMContentLoaded", () => {
       else costStory.removeAttribute("href");
       const ratio = Math.max(...["before", "after"].map((side) => pair.dimensions[side][0] / pair.dimensions[side][1]));
       stage.style.setProperty("--photo-ratio", ratio);
+      // Keep both labels inside the common photo area when aspect ratios differ.
+      const narrowestRatio = Math.min(...["before", "after"].map((side) => pair.dimensions[side][0] / pair.dimensions[side][1]));
+      slider.style.setProperty("--label-inset", `${(1 - narrowestRatio / ratio) * 50}%`);
+      slider.dataset.mixedOrientation = String(narrowestRatio / ratio < .99);
     };
     const loadImage = (source, alt) => new Promise((resolve, reject) => {
       const img = new Image();
