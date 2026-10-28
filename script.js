@@ -126,10 +126,34 @@ document.addEventListener("DOMContentLoaded", () => {
     let current = 0, requested = 0, loading = false, timer = null, automaticRequest = false;
     let direction = 1, animations = [];
     const cancelTransition = () => animations.forEach((animation) => animation.cancel());
-    let paused = reduced.matches, hovered = false, focused = false, inView = false;
+    let paused = reduced.matches, hovered = false, focused = false, inView = false, playFromControl = false;
+    // Reserve the tallest feature at this width without fetching hidden photos.
+    // The image dimensions already describe each photo's natural aspect ratio.
+    const sizeViewport = () => {
+      viewport.dataset.measuring = "true";
+      const hidden = slides.map((slide) => slide.hidden);
+      slides.forEach((slide) => { slide.hidden = false; });
+      const height = Math.ceil(Math.max(...slides.map((slide) => slide.getBoundingClientRect().height)));
+      slides.forEach((slide, index) => { slide.hidden = hidden[index]; });
+      delete viewport.dataset.measuring;
+      viewport.style.setProperty("--feature-height", `${height}px`);
+      viewport.dataset.sized = "true";
+    };
+    sizeViewport();
+    document.fonts.ready.then(sizeViewport);
+    let viewportWidth = viewport.clientWidth;
+    new ResizeObserver(() => {
+      if (viewport.clientWidth !== viewportWidth) {
+        viewportWidth = viewport.clientWidth;
+        sizeViewport();
+      }
+    }).observe(viewport);
     const updateRotation = () => {
       window.clearTimeout(timer);
-      if (automaticRequest && (paused || reduced.matches || hovered || focused || !inView || document.hidden)) {
+      // Explicit Play may keep keyboard/touch focus on the control. Other focus
+      // still pauses rotation, without blurring a control or moving focus.
+      const focusPaused = focused && !(playFromControl && document.activeElement === pause);
+      if (automaticRequest && (paused || reduced.matches || hovered || focusPaused || !inView || document.hidden)) {
         requested = current;
         automaticRequest = false;
         cancelTransition();
@@ -137,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
       pause.hidden = reduced.matches;
       pause.textContent = paused ? "Play" : "Pause";
       pause.setAttribute("aria-label", paused ? "Play rotation" : "Pause rotation");
-      const running = !paused && !reduced.matches && !hovered && !focused && inView && !document.hidden && !loading;
+      const running = !paused && !reduced.matches && !hovered && !focusPaused && inView && !document.hidden && !loading;
       feature.dataset.rotation = running ? "running" : "paused";
       if (running) timer = window.setTimeout(() => advance(1, false), 8000);
     };
@@ -153,19 +177,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     const transitionTo = async (next) => {
       const outgoing = slides[current], incoming = slides[next];
-      const oldHeight = viewport.getBoundingClientRect().height;
       outgoing.classList.add("is-leaving");
       outgoing.inert = true;
       outgoing.setAttribute("aria-hidden", "true");
       incoming.hidden = false;
       incoming.inert = true;
-      const newHeight = incoming.getBoundingClientRect().height;
       if (!reduced.matches && viewport.animate) {
         const timing = { duration: 360, easing: "cubic-bezier(.22,.61,.36,1)", fill: "both" };
         animations = [
           outgoing.animate([{ transform: "translateX(0)" }, { transform: `translateX(${-direction * 100}%)` }], timing),
           incoming.animate([{ transform: `translateX(${direction * 100}%)` }, { transform: "translateX(0)" }], timing),
-          viewport.animate([{ height: `${oldHeight}px` }, { height: `${newHeight}px` }], timing),
         ];
         await Promise.allSettled(animations.map((animation) => animation.finished));
       }
@@ -204,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     const advance = (step, manual = true) => {
       const from = manual && automaticRequest ? current : requested;
-      if (manual) paused = true;
+      if (manual) { paused = true; playFromControl = false; }
       automaticRequest = !manual;
       direction = step;
       requested = (from + step + slides.length) % slides.length;
@@ -215,13 +236,13 @@ document.addEventListener("DOMContentLoaded", () => {
     feature.querySelector("[data-feature-controls]").hidden = false;
     feature.querySelector("[data-feature-prev]").addEventListener("click", () => advance(-1));
     feature.querySelector("[data-feature-next]").addEventListener("click", () => advance(1));
-    pause.addEventListener("click", () => { paused = !paused; updateRotation(); });
+    pause.addEventListener("click", () => { paused = !paused; playFromControl = !paused; updateRotation(); });
     feature.addEventListener("pointerenter", (event) => { if (event.pointerType === "mouse") { hovered = true; updateRotation(); } });
     feature.addEventListener("pointerleave", () => { hovered = false; updateRotation(); });
     feature.addEventListener("pointerdown", (event) => {
-      if (!event.target.closest("[data-feature-pause]")) { paused = true; updateRotation(); }
+      if (!event.target.closest("[data-feature-pause]")) { paused = true; playFromControl = false; updateRotation(); }
     });
-    feature.addEventListener("focusin", () => { focused = true; updateRotation(); });
+    feature.addEventListener("focusin", (event) => { focused = true; if (event.target !== pause) playFromControl = false; updateRotation(); });
     feature.addEventListener("focusout", (event) => { focused = feature.contains(event.relatedTarget); updateRotation(); });
     reduced.addEventListener("change", () => { if (reduced.matches) { paused = true; cancelTransition(); } updateRotation(); });
     document.addEventListener("visibilitychange", updateRotation);
@@ -238,7 +259,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const placeholder = stage.querySelector("[data-comparison-placeholder]");
     const placeholderText = stage.querySelector("[data-comparison-placeholder-text]");
     const title = dialog.querySelector("[data-comparison-title]");
-    const project = dialog.querySelector("[data-comparison-project]");
     const count = dialog.querySelector("[data-comparison-count]");
     const story = dialog.querySelector("[data-comparison-story]");
     const costStory = dialog.querySelector("[data-comparison-cost-story]");
@@ -335,12 +355,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pane.append(img, label);
         photos.appendChild(pane);
       });
-      const caption = document.createElement("span");
-      caption.className = "comparison-preview-caption";
-      const room = document.createElement("strong");
-      room.textContent = pair.title;
-      caption.appendChild(room);
-      button.append(photos, caption);
+      button.appendChild(photos);
       button.addEventListener("click", () => openComparison(index, button));
       buttons.push(button);
       grid.appendChild(button);
@@ -381,18 +396,28 @@ document.addEventListener("DOMContentLoaded", () => {
           /draft|preview|unpublished/i.test(entry.url)) return null;
       return entry.url;
     };
+    const storyTitles = {
+      "six-room-home-renovation.html": "Six Rooms, One Home",
+      "full-interior-transformation.html": "Eight Rooms, One Standard",
+    };
     const updateDetails = (pair, index) => {
-      title.textContent = pair.title;
-      project.textContent = projectName(pair);
+      title.textContent = `${pair.title}, ${projectName(pair)}: before and after`;
       count.textContent = `${visible.indexOf(index) + 1} / ${visible.length}`;
       dialog.dataset.projectId = pair.projectId;
       slider.setAttribute("aria-label", `${pair.title}, ${projectName(pair)}: before and after comparison`);
       slider.style.setProperty("--pos", "50%");
       slider.setAttribute("aria-valuenow", "50");
       slider.setAttribute("aria-valuetext", "50% before, 50% after");
-      story.hidden = !pair.story;
-      if (pair.story) story.setAttribute("href", pair.story);
-      else story.removeAttribute("href");
+      const projectStory = projects.find((entry) => entry.id === pair.projectId)?.publishedStory;
+      const storyTitle = pair.story === projectStory && storyTitles[projectStory];
+      story.hidden = !storyTitle;
+      if (storyTitle) {
+        story.setAttribute("href", projectStory);
+        story.textContent = `Explore ${storyTitle} →`;
+      } else {
+        story.removeAttribute("href");
+        story.textContent = "";
+      }
       const costUrl = publishedCostUrl(pair);
       costStory.hidden = !costUrl;
       if (costUrl) costStory.setAttribute("href", costUrl);

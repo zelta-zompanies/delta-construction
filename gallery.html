@@ -116,9 +116,7 @@
               <span class="comparison-count" data-comparison-count></span>
               <button class="comparison-close" type="button" data-comparison-close aria-label="Close comparison"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
             </div>
-            <header class="comparison-gallery-header">
-              <div><p class="comparison-gallery-project" data-comparison-project></p><h2 id="comparison-title" data-comparison-title>Before &amp; after</h2><a class="comparison-cost-story" data-comparison-cost-story hidden>Read the cost breakdown &rarr;</a></div>
-            </header>
+            <h2 class="visually-hidden" id="comparison-title" data-comparison-title>Before &amp; after</h2>
             <div class="comparison-stage" data-state="loading">
               <div class="comparison-placeholder" data-comparison-placeholder>
                 <span class="comparison-loading-mark" aria-hidden="true"></span>
@@ -137,7 +135,7 @@
                 <button class="comparison-nav-button" type="button" data-comparison-next aria-label="Next comparison">Next &rarr;</button>
               </div>
               <p class="visually-hidden" id="comparison-help">Drag to compare, or use the arrow keys. Home shows After; End shows Before.</p>
-              <div class="comparison-related"><a class="comparison-story" data-comparison-story hidden>Read the project story &rarr;</a></div>
+              <div class="comparison-related"><a class="comparison-story" data-comparison-story hidden></a><a class="comparison-cost-story" data-comparison-cost-story hidden>Read the cost breakdown &rarr;</a></div>
               <p class="visually-hidden" data-comparison-status role="status" aria-live="polite" aria-atomic="true"></p>
             </div>
           </dialog>
