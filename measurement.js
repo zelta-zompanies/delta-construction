@@ -166,7 +166,7 @@
     notice.className = "measurement-notice";
     notice.setAttribute("aria-label", "Privacy notice");
     notice.hidden = true;
-    notice.innerHTML = '<p>We use basic Google measurement for US visits to understand site use and which ads bring inquiries. No personalized ads or customer-data uploads. <a href="privacy.html">Privacy &amp; choices</a></p><div><button type="button" data-measurement-choice>Turn off measurement</button><button type="button" data-dismiss-notice aria-label="Dismiss privacy notice">Dismiss</button></div>';
+    notice.innerHTML = '<p>Basic Google measurement is on for US visits. No personalized ads or customer-data uploads. <a href="privacy.html">Privacy &amp; choices</a></p><div><button type="button" data-measurement-choice>Turn off measurement</button><button type="button" data-dismiss-notice aria-label="Dismiss privacy notice">Dismiss</button></div>';
     document.body.append(notice);
     document.querySelectorAll("[data-measurement-choice]").forEach((button) => button.addEventListener("click", () => {
       if (!savedOff()) off();

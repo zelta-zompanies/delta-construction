@@ -113,17 +113,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const feature = document.querySelector("[data-work-carousel]");
   if (feature) {
     const slides = [...feature.querySelectorAll("[data-feature-slide]")];
+    const viewport = feature.querySelector("[data-feature-viewport]");
+    slides.forEach((slide) => {
+      const pair = slide.querySelector(".feature-media-pair");
+      if (pair) pair.dataset.pairLayout = [...pair.querySelectorAll("img")]
+        .every((img) => Number(img.getAttribute("width")) > Number(img.getAttribute("height"))) ? "stack" : "side";
+    });
     const pause = feature.querySelector("[data-feature-pause]");
     const count = feature.querySelector("[data-feature-count]");
     const status = feature.querySelector("[data-feature-status]");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     let current = 0, requested = 0, loading = false, timer = null, automaticRequest = false;
+    let direction = 1, animations = [];
+    const cancelTransition = () => animations.forEach((animation) => animation.cancel());
     let paused = reduced.matches, hovered = false, focused = false, inView = false;
     const updateRotation = () => {
       window.clearTimeout(timer);
       if (automaticRequest && (paused || reduced.matches || hovered || focused || !inView || document.hidden)) {
         requested = current;
         automaticRequest = false;
+        cancelTransition();
       }
       pause.hidden = reduced.matches;
       pause.textContent = paused ? "Play" : "Pause";
@@ -142,6 +151,35 @@ document.addEventListener("DOMContentLoaded", () => {
       img.onerror = () => { window.clearTimeout(timeout); reject(new Error("Feature image unavailable")); };
       if (img.dataset.src) img.src = img.dataset.src;
     });
+    const transitionTo = async (next) => {
+      const outgoing = slides[current], incoming = slides[next];
+      const oldHeight = viewport.getBoundingClientRect().height;
+      outgoing.classList.add("is-leaving");
+      outgoing.inert = true;
+      outgoing.setAttribute("aria-hidden", "true");
+      incoming.hidden = false;
+      incoming.inert = true;
+      const newHeight = incoming.getBoundingClientRect().height;
+      if (!reduced.matches && viewport.animate) {
+        const timing = { duration: 360, easing: "cubic-bezier(.22,.61,.36,1)", fill: "both" };
+        animations = [
+          outgoing.animate([{ transform: "translateX(0)" }, { transform: `translateX(${-direction * 100}%)` }], timing),
+          incoming.animate([{ transform: `translateX(${direction * 100}%)` }, { transform: "translateX(0)" }], timing),
+          viewport.animate([{ height: `${oldHeight}px` }, { height: `${newHeight}px` }], timing),
+        ];
+        await Promise.allSettled(animations.map((animation) => animation.finished));
+      }
+      const commit = requested === next;
+      outgoing.hidden = commit;
+      incoming.hidden = !commit;
+      outgoing.classList.remove("is-leaving");
+      outgoing.inert = false;
+      incoming.inert = false;
+      outgoing.removeAttribute("aria-hidden");
+      cancelTransition();
+      animations = [];
+      return commit;
+    };
     const showRequested = async () => {
       if (loading) return;
       loading = true;
@@ -156,8 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
           status.textContent = "That feature could not load. Use Previous or Next to choose another.";
           break;
         }
-        slides[current].hidden = true;
-        slides[next].hidden = false;
+        if (!await transitionTo(next)) continue;
         current = next;
         count.textContent = `${current + 1} / ${slides.length}`;
         if (paused) status.textContent = `Feature ${current + 1} of ${slides.length}: ${slides[current].querySelector("h3").textContent}.`;
@@ -165,11 +202,13 @@ document.addEventListener("DOMContentLoaded", () => {
       loading = false;
       updateRotation();
     };
-    const advance = (direction, manual = true) => {
+    const advance = (step, manual = true) => {
       const from = manual && automaticRequest ? current : requested;
       if (manual) paused = true;
       automaticRequest = !manual;
-      requested = (from + direction + slides.length) % slides.length;
+      direction = step;
+      requested = (from + step + slides.length) % slides.length;
+      cancelTransition();
       updateRotation();
       showRequested();
     };
@@ -184,7 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     feature.addEventListener("focusin", () => { focused = true; updateRotation(); });
     feature.addEventListener("focusout", (event) => { focused = feature.contains(event.relatedTarget); updateRotation(); });
-    reduced.addEventListener("change", () => { if (reduced.matches) paused = true; updateRotation(); });
+    reduced.addEventListener("change", () => { if (reduced.matches) { paused = true; cancelTransition(); } updateRotation(); });
     document.addEventListener("visibilitychange", updateRotation);
     new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; updateRotation(); }, { threshold: .25 }).observe(feature);
     updateRotation();
@@ -279,6 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
       button.setAttribute("aria-label", `Compare ${pair.title}, ${projectName(pair)}`);
       const photos = document.createElement("span");
       photos.className = "comparison-preview-photos";
+      photos.dataset.pairLayout = ["before", "after"].every((side) => pair.dimensions[side][0] > pair.dimensions[side][1]) ? "stack" : "side";
       ["before", "after"].forEach((side) => {
         const pane = document.createElement("span");
         pane.className = "comparison-preview-pane";
