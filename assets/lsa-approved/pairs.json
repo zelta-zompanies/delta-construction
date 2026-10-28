@@ -844,6 +844,68 @@
       "projectId": "project-11",
       "before": "assets/lsa-approved/comparison-27-before.jpg",
       "after": "assets/lsa-approved/comparison-27-after.jpg"
+    },
+    {
+      "id": "comparison-28",
+      "project": "Front Exterior Refresh - Project 12",
+      "title": "Front Exterior",
+      "dimensions": {
+        "before": [
+          1112,
+          834
+        ],
+        "after": [
+          1112,
+          834
+        ]
+      },
+      "category": "Exterior",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-28-before.webp",
+          "width": 480,
+          "height": 360
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-28-after.webp",
+          "width": 480,
+          "height": 360
+        }
+      },
+      "projectId": "project-12",
+      "before": "assets/lsa-approved/comparison-28-before.webp",
+      "after": "assets/lsa-approved/comparison-28-after.webp"
+    },
+    {
+      "id": "comparison-29",
+      "project": "Gabled Exterior Refresh - Project 13",
+      "title": "Gabled Brick Exterior",
+      "dimensions": {
+        "before": [
+          1112,
+          834
+        ],
+        "after": [
+          1112,
+          834
+        ]
+      },
+      "category": "Exterior",
+      "thumbnails": {
+        "before": {
+          "src": "assets/lsa-approved/thumbs/comparison-29-before.webp",
+          "width": 480,
+          "height": 360
+        },
+        "after": {
+          "src": "assets/lsa-approved/thumbs/comparison-29-after.webp",
+          "width": 480,
+          "height": 360
+        }
+      },
+      "projectId": "project-13",
+      "before": "assets/lsa-approved/comparison-29-before.webp",
+      "after": "assets/lsa-approved/comparison-29-after.webp"
     }
   ],
   "projects": [
@@ -910,6 +972,18 @@
     {
       "id": "project-11",
       "name": "Kitchen Refresh - Project 11",
+      "publishedStory": null,
+      "publishedCostStory": null
+    },
+    {
+      "id": "project-12",
+      "name": "Front Exterior Refresh - Project 12",
+      "publishedStory": null,
+      "publishedCostStory": null
+    },
+    {
+      "id": "project-13",
+      "name": "Gabled Exterior Refresh - Project 13",
       "publishedStory": null,
       "publishedCostStory": null
     }

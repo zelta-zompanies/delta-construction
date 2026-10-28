@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const projectName = (pair) => pair.project.replace(/\s*-\s*Project\s+\d+$/i, "");
     let projects = [], pairs;
     try {
-      const response = await fetch("assets/lsa-approved/pairs.json?v=work-gallery-3");
+      const response = await fetch("assets/lsa-approved/pairs.json?v=work-gallery-4");
       if (!response.ok) throw new Error("Gallery unavailable");
       const data = await response.json();
       pairs = data.pairs;
