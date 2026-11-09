@@ -1,6 +1,6 @@
-# Delta Construction — robots.txt
+# Creed Construction — robots.txt
 
 User-agent: *
 Allow: /
 
-Sitemap: https://901deltaconstruction.com/sitemap.xml
+Sitemap: https://creedconstructionco.com/sitemap.xml

@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "delta-site",
+      "name": "creed-site",
       "runtimeExecutable": "npx",
       "runtimeArgs": ["--yes", "serve", "."],
       "port": 5500,

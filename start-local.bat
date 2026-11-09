@@ -1,5 +1,5 @@
 @echo off
-REM Launch the Delta site locally.
+REM Launch the Creed site locally.
 cd /d "%~dp0"
 
 where python >nul 2>nul

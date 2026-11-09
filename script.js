@@ -1,4 +1,4 @@
-/* Delta Construction — shared site JS */
+/* Creed Construction — shared site JS */
 
 document.addEventListener("DOMContentLoaded", () => {
   // Preserve bookmarks to the photo collection that previously lived on Projects.
@@ -718,7 +718,8 @@ document.addEventListener("DOMContentLoaded", () => {
     form.dataset.deltaFormBound = "true";
     const status = form.querySelector(".form-status");
     const button = form.querySelector('button[type="submit"]');
-    const initialButtonText = button.textContent;
+    const label = button.querySelector(".btn-label") || button;
+    const initialButtonText = label.textContent;
     const fields = Array.from(form.querySelectorAll("input:not([type=hidden]), textarea, select"));
     const initialDisabled = fields.map((field) => field.disabled);
     let state = "idle";
@@ -740,7 +741,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const body = new URLSearchParams(new FormData(form)).toString();
       state = "sending";
       button.disabled = true;
-      button.textContent = "Sending…";
+      button.classList.add("is-sealing");
+      label.textContent = "Sending…";
       fields.forEach((field) => { field.disabled = true; });
       form.setAttribute("aria-busy", "true");
       status.className = "form-status";
@@ -765,7 +767,8 @@ document.addEventListener("DOMContentLoaded", () => {
         form.reset();
         status.className = "form-status success";
         status.textContent = "Thanks — your message was submitted. We'll be in touch soon.";
-        button.textContent = "Message sent";
+        button.classList.add("is-sealed");
+        label.textContent = "Sealed & Sent";
         const formId = form.getAttribute("name");
         if (formId === "quote" || formId === "contact") {
           trackEvent("generate_lead", { form_id: formId, method: "netlify_form" });
@@ -777,20 +780,22 @@ document.addEventListener("DOMContentLoaded", () => {
         state = "uncertain";
         status.className = "form-status error";
         status.textContent = `We couldn't confirm whether your message was received. Your details are still here. Please call ${window.deltaAds?.phoneNumber() || "901-568-4128"} before submitting again so we can avoid a duplicate.`;
-        button.textContent = "Please call to confirm";
+        button.classList.remove("is-sealing");
+        label.textContent = "Please call to confirm";
       } finally {
         window.clearTimeout(timeout);
         form.removeAttribute("aria-busy");
         fields.forEach((field, index) => { field.disabled = initialDisabled[index]; });
         if (state === "idle") {
           button.disabled = false;
-          button.textContent = initialButtonText;
+          button.classList.remove("is-sealing");
+          label.textContent = initialButtonText;
         }
       }
     });
   });
 
-  // Keep Up with Delta: Facebook Page Plugin fallback.
+  // Keep Up with Creed: Facebook Page Plugin fallback.
   // The plugin renders an <iframe> inside .fb-page. If it's blocked (privacy
   // extensions, no network to facebook.com, etc.) no iframe appears, leaving an
   // empty gap. If nothing renders within the timeout, reveal the in-frame
