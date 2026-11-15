@@ -30,3 +30,6 @@ npm-debug.log*
 generated-images/
 .claude/skills/ai-image-creator/tmp/*
 !.claude/skills/ai-image-creator/tmp/.gitkeep
+
+# Netlify build output (scripts/build_site.py)
+dist/

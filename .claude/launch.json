@@ -4,9 +4,25 @@
     {
       "name": "creed-site",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["--yes", "serve", "."],
+      "runtimeArgs": [
+        "--yes",
+        "serve",
+        "."
+      ],
       "port": 5500,
       "autoPort": true
+    },
+    {
+      "name": "creed-dist",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5510",
+        "-d",
+        "dist"
+      ],
+      "port": 5510
     }
   ]
 }

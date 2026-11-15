@@ -1,5 +1,6 @@
 [build]
-  publish = "."
+  command = "python3 scripts/build_site.py"
+  publish = "dist"
 
 [[headers]]
   for = "/*"
@@ -20,18 +21,6 @@
     X-Robots-Tag = "noindex, nofollow, noarchive"
 
 [[redirects]]
-  from = "https://901deltaconstruction.com/*"
-  to = "https://creedconstructionco.com/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://www.901deltaconstruction.com/*"
-  to = "https://creedconstructionco.com/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "https://901deltacompanies.com/*"
   to = "https://creedconstructionco.com/:splat"
   status = 301
@@ -39,6 +28,18 @@
 
 [[redirects]]
   from = "https://www.901deltacompanies.com/*"
+  to = "https://creedconstructionco.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://901deltaconstruction.com/*"
+  to = "https://creedconstructionco.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.901deltaconstruction.com/*"
   to = "https://creedconstructionco.com/:splat"
   status = 301
   force = true
