@@ -5,6 +5,15 @@ from html.parser import HTMLParser
 ROOT=Path(__file__).resolve().parent.parent
 SITE=ROOT/'dist'
 errors=[]
+# Exact historical quotation blocks and registered legal name are not rebrand copy.
+LEGACY_TEXT = [
+    "\"legalName\": \"901 Delta Consulting, LLC\"",
+    "<p class=\"testimonial-quote\">\"I've worked with Delta Construction on my last 4–5 renovations and they all have very quality work and transparent pricing. Highly recommend!\"</p>",
+    "<p class=\"testimonial-quote\">\"I am an out of state investor who needs good communication, honesty and trust. I have found this in Lawson and his company Delta Construction. They are very responsive and quick — it is nice to know I have them on my side.\"</p>",
+    "<p class=\"testimonial-quote\">\"As an out of state investor, it can be difficult to find a good contractor that follows through AND has good communication. I've been very happy with Delta Construction — Lawson has met my needs and has been GREAT to work with!\"</p>",
+    "<blockquote class=\"cs-quote\">\n          <p>&ldquo;My only go-to. Extremely quick, responsive, professional. Very strongly recommend Delta.&rdquo;</p>\n          <cite>Alex Kernus &mdash; 5-star Google review</cite>\n        </blockquote>"
+]
+
 class Page(HTMLParser):
     def __init__(self):super().__init__();self.refs=[];self.forms=[];self.ids=[]
     def handle_starttag(self,tag,attrs):
@@ -25,6 +34,8 @@ for p in SITE.glob('*.html'):
     # Internal measurement/form identifiers keep the delta name on purpose:
     # renaming the opt-out cookie/storage would reset visitors' opt-outs.
     scrub=re.sub(r'data-delta-form|delta-measurement|delta_measurement|deltaMeasurement|deltaAds','',s)
+    for historical in LEGACY_TEXT:scrub=scrub.replace(historical,'')
+    if 'TODO_LEGAL_NAME' in s:errors.append(f'{p.name}: unresolved legal name')
     if re.search(r'\bdelta\b|901deltaconstruction|901deltacompanies',scrub,re.I):errors.append(f'{p.name}: retired brand remains')
     for form in doc.forms:
         assert form.get('data-netlify')=='true' and form.get('method')=='POST'

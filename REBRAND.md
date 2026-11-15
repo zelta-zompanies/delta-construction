@@ -21,9 +21,14 @@ checks, Netlify config). Where both changed a file, the local version was kept.
   would reset visitors' privacy choices. `scripts/check_site.py` allows
   exactly these identifiers in its retired-brand check.
 
-## Open before launch
-- `legalName` in each page's JSON-LD is still `TODO_LEGAL_NAME`. Replace it
-  with the registered entity name.
+## Preserved historical details
+- JSON-LD `legalName` remains `901 Delta Consulting, LLC`; Creed Construction
+  is the public brand/DBA.
+- Quoted reviews retain their pre-rebrand wording, including Delta references.
+  These were restored from repository history, not independently re-verified
+  against Google reviews.
+
+## Remaining follow-ups
 - Placeholder copy from the literal Delta-to-Creed text swap still needs
   rewriting in the redesign.
 - Confirm the Netlify project, its domains/TLS, and form notification
