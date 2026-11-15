@@ -64,8 +64,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const setPosition = (value) => {
         const pct = Math.min(100, Math.max(0, value));
         slider.style.setProperty("--pos", `${pct}%`);
+        // Round sliders: the divider spans the circle's chord at this position,
+        // so it grows toward the middle and shrinks toward the edges.
+        if (slider.dataset.baRound !== undefined) {
+          const x = pct / 50 - 1;
+          const inset = (1 - Math.sqrt(Math.max(0, 1 - x * x))) * 50;
+          slider.style.setProperty("--chord-inset", `${inset}%`);
+        }
         slider.setAttribute("aria-valuenow", Math.round(pct));
-        slider.setAttribute("aria-valuetext", `${Math.round(pct)}% before, ${100 - Math.round(pct)}% after`);
+        const [first, second] = (slider.dataset.baLabels || "before,after").split(",");
+        slider.setAttribute("aria-valuetext", `${Math.round(pct)}% ${first}, ${100 - Math.round(pct)}% ${second}`);
       };
       const fromPointer = (e) => {
         const rect = slider.getBoundingClientRect();

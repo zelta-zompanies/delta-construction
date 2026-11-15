@@ -39,7 +39,7 @@
     "@context": "https://schema.org",
     "@type": "GeneralContractor",
     "name": "Creed Construction",
-    "legalName": "901 Creed Consulting, LLC",
+    "legalName": "TODO_LEGAL_NAME (replace with the registered Creed entity name before launch)",
     "logo": "https://creedconstructionco.com/assets/logo/creed-logo.png",
     "image": "https://creedconstructionco.com/assets/interior-renovation/kitchen-after.jpg",
     "url": "https://creedconstructionco.com/",
@@ -90,8 +90,11 @@
   <!-- Sticky nav -->
   <header class="site-nav">
     <div class="nav-inner">
-      <a class="nav-brand" href="index.html" aria-label="Creed Construction home">
-        <img src="assets/logo/creed-stamp.png" width="192" height="192" alt="Creed Construction logo" />
+      <a class="nav-brand seal-swap" href="index.html" aria-label="Creed Construction home">
+        <span class="btn-seal-icon" aria-hidden="true">
+          <img class="btn-seal-stamp" src="assets/logo/creed-stamp.png" width="192" height="192" alt="" />
+          <img class="btn-seal-wax" src="assets/logo/creed-seal-ring.png" width="192" height="192" alt="" />
+        </span>
       </a>
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -114,10 +117,10 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <h1>Built to Code. Held to a Higher One.</h1>
+          <h1>Built to Code. Held to a Higher&nbsp;One.</h1>
           <p class="lead">Building code is the minimum. At Creed, it's only the starting line. Our creed is simple: do the job right, communicate clearly, and deliver work you can trust &mdash; on every project, every time.</p>
           <div class="hero-ctas">
-            <a class="btn btn-primary" href="contact.html">Get a Quote</a>
+            <a class="btn btn-primary btn-quote" href="contact.html">Get a Quote</a>
             <a class="btn btn-outline" href="projects.html">View Projects</a>
           </div>
         </div>
@@ -183,7 +186,7 @@
               <path d="M6 42 L6 20 L18 20 L18 42 M18 42 L18 10 L34 10 L34 42 M34 42 L34 26 L42 26 L42 42 M4 42 L44 42" />
             </svg>
             <h3>Investment</h3>
-            <p>We partner with investment owners the same way we build: with precision and accountability. Trusted by investors across the country and around the world, we deliver construction and renovation work engineered to protect and grow your bottom line — on schedule, on budget, and built to hold its value. Whether it's a fix-and-flip, a long-term hold, a resident turn, or a maintenance call, every decision is filtered through one question: does this move the needle on your return? That's our creed.</p>
+            <p>We partner with investors across the country and around the world with the same precision and accountability we bring to every build. Fix-and-flip, long-term hold, resident turn or maintenance call, the work lands on schedule, on budget, and built to hold its value. Every decision answers one question: does it move the needle on your return? That's our creed.</p>
           </article>
           <article class="card">
             <svg viewBox="0 0 48 48" fill="none" stroke="#041A2E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -221,10 +224,17 @@
     <!-- Our Creed -->
     <section class="creed-band">
       <div class="container creed-band-inner">
-        <img class="creed-band-stamp" src="assets/logo/creed-stamp.png" width="192" height="192" alt="" loading="lazy" />
+        <figure class="creed-compare">
+          <div class="ba-slider creed-slider" data-ba-slider data-ba-round data-ba-labels="wax seal,stamp" role="slider" tabindex="0" aria-label="Creed wax seal and stamp comparison slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+            <div class="ba-slider-after"><img src="assets/logo/creed-stamp-lg.webp" width="444" height="444" alt="The Creed Construction stamp" loading="lazy" draggable="false" /></div>
+            <div class="ba-slider-before"><img src="assets/logo/creed-seal-ring-lg.webp" width="600" height="600" alt="The Creed Construction wax seal" loading="lazy" draggable="false" /></div>
+            <div class="ba-slider-handle"><span class="ba-slider-handle-btn">&#8596;</span></div>
+          </div>
+          <figcaption>Stamped at the start. Sealed when it meets the standard.</figcaption>
+        </figure>
         <div>
           <span class="eyebrow">Our Creed</span>
-          <h2>Code Is the Minimum. It's Never the Goal.</h2>
+          <h2>Code Is the Minimum. It's Never the&nbsp;Goal.</h2>
           <p class="lead">Building code tells you the least a job can be. Our creed is the standard we actually hold ourselves to &mdash; on every estimate, every timeline, and every finish.</p>
           <ol class="creed-tenets">
             <li><strong>Do it right the first time.</strong> Fix the cause, not just the symptom.</li>
@@ -270,9 +280,18 @@
 
     <!-- Quote request form -->
     <section class="section-mint" id="quote">
-      <div class="container">
-        <span class="eyebrow">Your Project</span>
-        <h2>Request a Quote</h2>
+      <div class="container quote-grid">
+        <div class="quote-intro">
+          <span class="eyebrow">Your Project</span>
+          <h2>Request a Quote</h2>
+          <p class="lead">Tell us what you're planning and we'll come back with a clear estimate and an honest timeline &mdash; no pressure, no surprises.</p>
+          <ul class="quote-points">
+            <li>Site visit and detailed written estimate</li>
+            <li>One point of contact from start to finish</li>
+            <li>Licensed &amp; insured &mdash; TN License #85666</li>
+          </ul>
+          <p class="quote-call">Prefer to talk? Call <a href="tel:9015684128">901-568-4128</a></p>
+        </div>
         <div class="form-card">
           <!-- Handled by Netlify Forms; submissions appear in the Netlify dashboard. -->
           <form name="quote" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" data-delta-form>
@@ -314,12 +333,12 @@
                 </select>
               </div>
               <div class="full">
-                <button class="btn btn-primary btn-seal" type="submit">
+                <button class="btn btn-outline btn-seal" type="submit">
+                  <span class="btn-label">Submit</span>
                   <span class="btn-seal-icon" aria-hidden="true">
                     <img class="btn-seal-stamp" src="assets/logo/creed-stamp.png" width="192" height="192" alt="" />
-                    <img class="btn-seal-wax" src="assets/logo/creed-seal.png" width="192" height="192" alt="" />
+                    <img class="btn-seal-wax" src="assets/logo/creed-seal-ring.png" width="256" height="256" alt="" />
                   </span>
-                  <span class="btn-label">Submit</span>
                 </button>
               </div>
             </div>
@@ -337,7 +356,7 @@
       <div class="footer-grid">
         <div class="footer-lockup">
           <img src="assets/logo/creed-stamp.png" width="192" height="192" alt="Creed Construction logo" />
-          <span class="footer-wordmark">CREED CONSTRUCTION<span class="footer-slogan">Built to Code. Held to a Higher One.</span></span>
+          <span class="footer-wordmark">CREED CONSTRUCTION<span class="footer-slogan">Built to Code. Held to a Higher&nbsp;One.</span></span>
         </div>
         <div>
           <p>Phone: <a href="tel:9015684128">901-568-4128</a></p>

@@ -305,7 +305,6 @@
   src: url(assets/fonts/roboto-slab-v36-latin.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-
 /* ==========================================================================
    Creed Construction — Site Styles
    Brand: deep navy #041A2E | seal red #8A3B42 | fonts Cinzel / Roboto Slab / Inter
@@ -450,14 +449,56 @@ section {
 
 .creed-band-inner {
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 240px 1fr;
   gap: 3rem;
   align-items: center;
 }
 
-.creed-band-stamp {
-  width: 200px;
-  height: 200px;
+/* Stamp/seal comparison: reuses the before/after slider. The slider box is
+   the seal's box; the stamp sits inside it so its ring meets the seal's rim. */
+.creed-compare {
+  margin: 0;
+  text-align: center;
+}
+
+.ba-slider.creed-slider {
+  width: 240px;
+  height: 240px;
+  margin: 0 auto;
+  overflow: visible;
+  border-radius: 50%;
+}
+
+.creed-slider .ba-slider-after img {
+  top: 7.47%;
+  left: 7.47%;
+  width: 85.06%;
+  height: 85.06%;
+}
+
+.creed-slider .ba-slider-handle {
+  top: var(--chord-inset, 0%);
+  bottom: var(--chord-inset, 0%);
+  box-shadow: none;
+}
+
+.creed-slider .ba-slider-handle-btn {
+  width: 32px;
+  height: 32px;
+  font-size: 0.95rem;
+}
+
+.ba-slider.creed-slider:focus-visible {
+  outline: 2px solid #D9A3A9;
+  outline-offset: 6px;
+}
+
+.creed-compare figcaption {
+  margin-top: 0.9rem;
+  font-family: var(--font-slab);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .creed-band h2 {
@@ -511,9 +552,9 @@ section {
     gap: 1.5rem;
   }
 
-  .creed-band-stamp {
-    width: 120px;
-    height: 120px;
+  .ba-slider.creed-slider {
+    width: 200px;
+    height: 200px;
   }
 
   .creed-tenets {
@@ -556,11 +597,54 @@ section {
   box-shadow: 0 10px 24px rgba(4, 26, 46, 0.28);
 }
 
-/* Submit button: the stamp presses into a wax seal on hover, focus and submit */
+/* Stamp to seal: like the site's before/after sliders, the wax seal wipes
+   across the stamp from left to right on hover, focus, click and submit.
+   Submit is the navy button with the home button's treatment: the stamp sits
+   straight on the navy, and the wax seal that replaces it is 117.6% of the
+   stamp so its well edge lands on the stamp's ring and the wax spills past. */
 .btn-seal {
-  padding-left: 0.6rem;
+  padding-right: 1.1rem;
+  gap: 0.75rem;
 }
 
+/* Keep the filled state while sending and after the form is sealed. */
+.btn-seal:focus-visible,
+.btn-seal.is-sealing,
+.btn-seal.is-sealed {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.btn-seal .btn-seal-icon {
+  width: 32px;
+  height: 32px;
+  margin: -0.4rem 0 -0.4rem;
+  background: none;
+  box-shadow: none;
+}
+
+.btn-seal .btn-seal-icon .btn-seal-wax {
+  top: -8.8%;
+  left: -8.8%;
+  width: 117.6%;
+  height: 117.6%;
+  max-width: none;
+  padding: 0;
+}
+
+.btn-seal .btn-seal-icon .btn-seal-stamp {
+  clip-path: inset(0 0 0 -8.8%);
+}
+
+.btn-seal:hover .btn-seal-icon .btn-seal-stamp,
+.btn-seal:focus-visible .btn-seal-icon .btn-seal-stamp,
+.btn-seal:active .btn-seal-icon .btn-seal-stamp,
+.btn-seal.is-sealing .btn-seal-icon .btn-seal-stamp,
+.btn-seal.is-sealed .btn-seal-icon .btn-seal-stamp {
+  clip-path: inset(0 0 0 108.8%);
+}
+
+/* Home button and other stamp-to-seal image swaps. */
 .btn-seal-icon {
   position: relative;
   width: 38px;
@@ -568,12 +652,6 @@ section {
   margin: -0.45rem 0.15rem -0.45rem 0;
   flex-shrink: 0;
   border-radius: 50%;
-  background: var(--white);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35);
-}
-
-.btn-seal-wax {
-  padding: 1px;
 }
 
 .btn-seal-icon img {
@@ -581,40 +659,43 @@ section {
   inset: 0;
   width: 100%;
   height: 100%;
-  transition: opacity 0.3s var(--ease), transform 0.35s var(--ease);
+  transition: clip-path 0.45s var(--ease);
 }
 
-.btn-seal-wax {
-  opacity: 0;
-  transform: scale(1.35) rotate(-12deg);
+.btn-seal-icon .btn-seal-stamp {
+  clip-path: inset(0 0 0 0);
+}
+
+.btn-seal-icon .btn-seal-wax {
+  padding: 1px;
+  clip-path: inset(0 100% 0 0);
 }
 
 .btn-seal:hover .btn-seal-stamp,
+.seal-swap:hover .btn-seal-stamp,
 .btn-seal:focus-visible .btn-seal-stamp,
+.seal-swap:focus-visible .btn-seal-stamp,
 .btn-seal:active .btn-seal-stamp,
+.seal-swap:active .btn-seal-stamp,
 .btn-seal.is-sealing .btn-seal-stamp,
 .btn-seal.is-sealed .btn-seal-stamp {
-  opacity: 0;
-  transform: scale(0.8) rotate(12deg);
+  clip-path: inset(0 0 0 100%);
 }
 
 .btn-seal:hover .btn-seal-wax,
+.seal-swap:hover .btn-seal-wax,
 .btn-seal:focus-visible .btn-seal-wax,
+.seal-swap:focus-visible .btn-seal-wax,
 .btn-seal:active .btn-seal-wax,
+.seal-swap:active .btn-seal-wax,
 .btn-seal.is-sealing .btn-seal-wax,
 .btn-seal.is-sealed .btn-seal-wax {
-  opacity: 1;
-  transform: scale(1) rotate(0deg);
-}
-
-.btn-seal:active .btn-seal-wax {
-  transform: scale(0.9);
+  clip-path: inset(0 0 0 0);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .btn-seal-icon img {
-    transition: opacity 0.2s linear;
-    transform: none !important;
+    transition: none;
   }
 }
 
@@ -711,6 +792,79 @@ section {
   width: 38px;
   height: 38px;
 }
+
+/* Home button: at rest the stamp's red ring is the button's edge. The wax
+   seal's well edge lands exactly on that ring, so the seal is 117.6% of the
+   stamp and its rim spills past it. Both clips track the same divider line. */
+.site-nav .nav-brand .btn-seal-icon {
+  width: 46px;
+  height: 46px;
+  margin: 0;
+  background: none;
+  box-shadow: none;
+  transition: width 0.35s var(--ease), height 0.35s var(--ease);
+}
+
+.site-nav.is-scrolled .nav-brand .btn-seal-icon {
+  width: 38px;
+  height: 38px;
+}
+
+.site-nav .nav-brand .btn-seal-icon img {
+  width: 100%;
+  height: 100%;
+}
+
+.site-nav .nav-brand .btn-seal-icon .btn-seal-wax {
+  top: -8.8%;
+  left: -8.8%;
+  width: 117.6%;
+  height: 117.6%;
+  max-width: none;
+  padding: 0;
+}
+
+.site-nav .nav-brand .btn-seal-icon .btn-seal-stamp {
+  clip-path: inset(0 0 0 -8.8%);
+}
+
+.site-nav .nav-brand.seal-swap:hover .btn-seal-stamp,
+.site-nav .nav-brand.seal-swap:focus-visible .btn-seal-stamp,
+.site-nav .nav-brand.seal-swap:active .btn-seal-stamp {
+  clip-path: inset(0 0 0 108.8%);
+}
+
+/* The divider line that crosses with the wipe. */
+.site-nav .nav-brand .btn-seal-icon::after {
+  content: "";
+  position: absolute;
+  top: -8.8%;
+  left: -8.8%;
+  width: 2px;
+  height: 117.6%;
+  margin-left: -1px;
+  background: rgba(255, 255, 255, 0.9);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.site-nav .nav-brand.seal-swap:hover .btn-seal-icon::after,
+.site-nav .nav-brand.seal-swap:focus-visible .btn-seal-icon::after {
+  animation: seal-wipe-line 0.45s var(--ease) both;
+}
+
+@keyframes seal-wipe-line {
+  0% { left: -8.8%; opacity: 1; }
+  85% { opacity: 1; }
+  100% { left: 108.8%; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav .nav-brand.seal-swap .btn-seal-icon::after {
+    animation: none;
+  }
+}
+
 
 .nav-links-wrap {
   display: flex;
@@ -1655,6 +1809,64 @@ section {
   max-width: 640px;
 }
 
+/* Home page quote section: pitch on the left, form on the right. */
+.quote-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 3rem;
+  align-items: start;
+}
+
+.quote-grid .form-card {
+  max-width: none;
+}
+
+.quote-intro .lead {
+  margin-bottom: 1.5rem;
+}
+
+.quote-points {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.quote-points li {
+  position: relative;
+  padding-left: 1.6rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.quote-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+}
+
+.quote-call {
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.quote-call a {
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .quote-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1767,18 +1979,6 @@ select {
 
 #quote-form select {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230f7a5c' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");
-}
-
-#quote-form .btn-primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  box-shadow: 0 4px 16px rgba(138, 59, 66, 0.28);
-}
-
-#quote-form .btn-primary:hover {
-  background: var(--accent-dark);
-  border-color: var(--accent-dark);
-  box-shadow: 0 10px 24px rgba(138, 59, 66, 0.32);
 }
 
 /* ---------- Cards ---------- */
@@ -2178,10 +2378,21 @@ body.modal-open {
   width: 100%;
 }
 
+/* The stamp rides along beside the long About copy instead of floating mid-column. */
+.about-split:has(.about-stamp) {
+  align-items: start;
+}
+
+.about-split-media:has(.about-stamp) {
+  position: sticky;
+  top: 110px;
+  padding-top: 1rem;
+}
+
 .about-split-media img.about-stamp {
   border-radius: 50%;
   box-shadow: none;
-  max-width: 420px;
+  max-width: 380px;
   display: block;
   margin: 0 auto;
 }
@@ -2190,6 +2401,15 @@ body.modal-open {
   .about-split {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .about-split-media:has(.about-stamp) {
+    position: static;
+    padding-top: 0;
+  }
+
+  .about-split-media img.about-stamp {
+    max-width: 260px;
   }
 
   .about-split-media {
