@@ -1,4 +1,4 @@
-/* Delta Construction — shared site JS */
+/* Creed Construction — shared site JS */
 
 document.addEventListener("DOMContentLoaded", () => {
   // Preserve bookmarks to the photo collection that previously lived on Projects.
@@ -697,7 +697,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // form request, not a qualified lead, completed job, or confirmed notification.
   const trackEvent = (name, parameters) => {
     try {
-      window.deltaMeasurement?.track(name, parameters);
+      window.creedMeasurement?.track(name, parameters);
     } catch {
       // Analytics must never interrupt contact or change a submission result.
     }
@@ -713,9 +713,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Netlify detects these static forms at deploy time. Preserve form names,
   // form-name fields and honeypots. Live delivery requires separate verification.
-  document.querySelectorAll("form[data-delta-form]").forEach((form) => {
-    if (form.dataset.deltaFormBound === "true") return;
-    form.dataset.deltaFormBound = "true";
+  document.querySelectorAll("form[data-creed-form]").forEach((form) => {
+    if (form.dataset.creedFormBound === "true") return;
+    form.dataset.creedFormBound = "true";
     const status = form.querySelector(".form-status");
     const button = form.querySelector('button[type="submit"]');
     const initialButtonText = button.textContent;
@@ -758,7 +758,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!res.ok) {
           state = "idle";
           status.className = "form-status error";
-          status.textContent = `Your message was not accepted. Your details are still here. Please try again or call ${window.deltaAds?.phoneNumber() || "901-568-4128"}.`;
+          status.textContent = `Your message was not accepted. Your details are still here. Please try again or call ${window.creedAds?.phoneNumber() || "901-568-4128"}.`;
           return;
         }
         state = "sent";
@@ -769,14 +769,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const formId = form.getAttribute("name");
         if (formId === "quote" || formId === "contact") {
           trackEvent("generate_lead", { form_id: formId, method: "netlify_form" });
-          try { window.deltaMeasurement?.conversion(formId); } catch { /* Keep the accepted result. */ }
+          try { window.creedMeasurement?.conversion(formId); } catch { /* Keep the accepted result. */ }
         }
       } catch {
         // A lost response does not prove the POST failed. Do not automatically
         // retry or invite another submission that could duplicate the request.
         state = "uncertain";
         status.className = "form-status error";
-        status.textContent = `We couldn't confirm whether your message was received. Your details are still here. Please call ${window.deltaAds?.phoneNumber() || "901-568-4128"} before submitting again so we can avoid a duplicate.`;
+        status.textContent = `We couldn't confirm whether your message was received. Your details are still here. Please call ${window.creedAds?.phoneNumber() || "901-568-4128"} before submitting again so we can avoid a duplicate.`;
         button.textContent = "Please call to confirm";
       } finally {
         window.clearTimeout(timeout);
@@ -790,7 +790,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Keep Up with Delta: Facebook Page Plugin fallback.
+  // Keep Up with Creed: Facebook Page Plugin fallback.
   // The plugin renders an <iframe> inside .fb-page. If it's blocked (privacy
   // extensions, no network to facebook.com, etc.) no iframe appears, leaving an
   // empty gap. If nothing renders within the timeout, reveal the in-frame

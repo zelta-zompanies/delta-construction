@@ -1,6 +1,6 @@
 /* Basic US-only measurement. Failure, unknown geography and opt-out are closed. */
 (() => {
-  if (window.deltaMeasurement) return;
+  if (window.creedMeasurement) return;
   const ga = "G-SHRRZRKLZN";
   const key = "delta_measurement";
   const convertedForms = new Set();
@@ -19,7 +19,7 @@
     try { return localStorage.getItem(key) === "off" || /(?:^|;\s*)delta_measurement=off(?:;|$)/.test(document.cookie); }
     catch { storageFailed = true; return true; }
   };
-  const draft = document.querySelector('meta[name="delta-measurement"][content="disabled"]');
+  const draft = document.querySelector('meta[name="creed-measurement"][content="disabled"]');
   let active = false, started = false, blocked = false, region = "pending";
   let notice;
   const enabled = () => active && !hasGpc() && !savedOff();
@@ -78,7 +78,7 @@
       raw("consent", "update", { ad_storage: "denied", analytics_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });
     }
     clearMeasurementCookies();
-    window.dispatchEvent(new Event("delta:measurement-off"));
+    window.dispatchEvent(new Event("creed:measurement-off"));
     render();
   };
   const off = () => { persist(true); stop(); };
@@ -91,7 +91,7 @@
       window.gtag("event", name, { send_to: ga, method: parameters.method, ...restrictions });
     }
   };
-  window.deltaMeasurement = Object.freeze({ enabled, track, restrictions, optOut: off,
+  window.creedMeasurement = Object.freeze({ enabled, track, restrictions, optOut: off,
     conversion: (formId) => {
       if (!enabled() || !["quote", "contact"].includes(formId) || convertedForms.has(formId)) return;
       convertedForms.add(formId);
@@ -139,11 +139,11 @@
     raw("config", "AW-18296392613/ax3SCMbpq58dEKWXs5RE", {
       ...restrictions,
       phone_conversion_number: "9015684128",
-      phone_conversion_callback: (formatted, mobile) => window.deltaAds?.replacePhone(formatted, mobile),
+      phone_conversion_callback: (formatted, mobile) => window.creedAds?.replacePhone(formatted, mobile),
     });
     render();
     try {
-      if (!window.deltaAds) await load("/ads-tracking.js");
+      if (!window.creedAds) await load("/ads-tracking.js");
       if (enabled()) await load(`https://www.googletagmanager.com/gtag/js?id=${ga}`);
     } catch { /* Forms and real phone numbers continue when tags are blocked. */ }
   };

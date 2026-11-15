@@ -3,4 +3,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://901deltaconstruction.com/sitemap.xml
+Sitemap: https://creedconstructionco.com/sitemap.xml

@@ -1,6 +1,6 @@
 /* Loaded only after the regional privacy gate allows basic measurement. */
 (() => {
-  if (window.deltaAds) return;
+  if (window.creedAds) return;
 
   const realNumber = "9015684128";
   const realDisplay = "901-568-4128";
@@ -10,15 +10,15 @@
 
   let replacePhone = () => {};
 
-  window.deltaAds = Object.freeze({
+  window.creedAds = Object.freeze({
     phoneNumber: () => phoneDisplay,
     replacePhone: (formatted, mobile) => replacePhone(formatted, mobile),
     trackFormConversion: (formId) => {
       // Each form permits one accepted submission per page. The submit handler
       // calls this only after Netlify returns an accepted response, never on click.
-      if (!window.deltaMeasurement?.enabled() || !["quote", "contact"].includes(formId) || convertedForms.has(formId)) return;
+      if (!window.creedMeasurement?.enabled() || !["quote", "contact"].includes(formId) || convertedForms.has(formId)) return;
       convertedForms.add(formId);
-      window.deltaMeasurement.conversion(formId);
+      window.creedMeasurement.conversion(formId);
     },
   });
 
@@ -40,7 +40,7 @@
     replacePhone = (formattedNumber, mobileNumber) => {
       // Only accept a usable phone result. Text nodes preserve the call icon and
       // surrounding copy, and the original HTML remains a no-JS/network fallback.
-      if (!window.deltaMeasurement?.enabled() || typeof formattedNumber !== "string" || typeof mobileNumber !== "string" ||
+      if (!window.creedMeasurement?.enabled() || typeof formattedNumber !== "string" || typeof mobileNumber !== "string" ||
           !/^[+\d() .-]+$/.test(formattedNumber) || !/^\+?\d{7,15}$/.test(mobileNumber)) return;
       const displayDigits = formattedNumber.replace(/\D/g, "").replace(/^1(?=\d{10}$)/, "");
       const mobileDigits = mobileNumber.replace(/\D/g, "").replace(/^1(?=\d{10}$)/, "");
@@ -54,7 +54,7 @@
     };
 
     // Restore every original phone representation when measurement is withdrawn.
-    window.addEventListener("delta:measurement-off", () => {
+    window.addEventListener("creed:measurement-off", () => {
       phoneDisplay = realDisplay;
       phoneLinks.forEach(({ link, text, label }) => {
         link.setAttribute("href", `tel:${realNumber}`);
