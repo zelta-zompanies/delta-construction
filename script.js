@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
       render();
       schedule();
     };
-    carousel.querySelector("[data-review-controls]").hidden = false;
+    carousel.querySelector("[data-review-controls]").classList.add("is-ready");
     carousel.querySelector("[data-review-prev]").addEventListener("click", () => go(-1));
     carousel.querySelector("[data-review-next]").addEventListener("click", () => go(1));
     carousel.addEventListener("focusin", (e) => { held = Boolean(e.target.closest(".review-slide")); schedule(); });

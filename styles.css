@@ -1973,8 +1973,7 @@ section {
 
 /* Google reviews: a rotating row of cards (3 wide, 2 on tablets, 1 on
    phones) that advances one card at a time. */
-.reviews-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem; }
-.reviews-head .lead { margin-bottom: 0; }
+.reviews-head h2 { margin-bottom: 0; }
 .review-carousel { --per: 3; --gap: 1.5rem; margin-top: 2.25rem; }
 .review-viewport { overflow: hidden; margin: -1rem; padding: 1rem; }
 .review-track {
@@ -1989,10 +1988,15 @@ section {
 .review-slide { flex: 0 0 calc((100% - (var(--per) - 1) * var(--gap)) / var(--per)); min-width: 0; }
 .review-slide:hover { transform: none; }
 .review-slide .testimonial-attribution span { display: block; margin-top: 0.15rem; color: var(--text-muted); font-weight: 500; font-size: 0.78rem; }
-.review-controls { display: flex; align-items: center; justify-content: center; gap: 0.9rem; margin-top: 1.5rem; }
+.review-controls { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.75rem; }
+.review-controls-center { display: flex; flex-direction: column; align-items: center; gap: 0.9rem; }
+.review-controls:not(.is-ready) .feature-control { visibility: hidden; }
 .review-controls .feature-dots { margin: 0; }
 @media (max-width: 960px) { .review-carousel { --per: 2; } }
-@media (max-width: 640px) { .review-carousel { --per: 1; --gap: 1rem; } }
+@media (max-width: 640px) {
+  .review-carousel { --per: 1; --gap: 1rem; }
+  .review-controls .btn-cta { padding: 0.7rem 1.1rem; font-size: 0.85rem; white-space: nowrap; }
+}
 
 /* Closing call to action on project stories: one white card on mint, copy
    on the left and the quote button plus phone on the right. */
