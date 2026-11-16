@@ -116,25 +116,33 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   initBaSliders();
 
-  // One feature rotates slowly only while visible and untouched. Manual input,
-  // hover, focus, hidden tabs and reduced-motion preference suspend rotation.
+  // One feature rotates slowly while visible. Arrows jump and the rotation
+  // carries on; keyboard focus on a slide or a hidden tab holds it.
   const feature = document.querySelector("[data-work-carousel]");
   if (feature) {
     const slides = [...feature.querySelectorAll("[data-feature-slide]")];
     const viewport = feature.querySelector("[data-feature-viewport]");
-    slides.forEach((slide) => {
-      const pair = slide.querySelector(".feature-media-pair");
-      if (pair) pair.dataset.pairLayout = [...pair.querySelectorAll("img")]
-        .every((img) => Number(img.getAttribute("width")) > Number(img.getAttribute("height"))) ? "stack" : "side";
-    });
-    const pause = feature.querySelector("[data-feature-pause]");
     const count = feature.querySelector("[data-feature-count]");
     const status = feature.querySelector("[data-feature-status]");
+    // Decorative position dots; the count and live status carry the meaning.
+    const dots = document.createElement("span");
+    dots.className = "feature-dots";
+    dots.setAttribute("aria-hidden", "true");
+    slides.forEach(() => dots.appendChild(document.createElement("span")));
+    count.after(dots);
+    const markDot = (index) => [...dots.children].forEach((dot, i) => dot.classList.toggle("is-active", i === index));
+    const showPosition = (index) => {
+      count.textContent = `${index + 1} / ${slides.length}`;
+      markDot(index);
+    };
+    markDot(0);
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     let current = 0, requested = 0, loading = false, timer = null, automaticRequest = false;
     let direction = 1, animations = [];
     const cancelTransition = () => animations.forEach((animation) => animation.cancel());
-    let paused = reduced.matches, hovered = false, focused = false, inView = false, playFromControl = false;
+    // Rotates slowly by default for everyone; Pause stays available.
+    // "paused" is only set if a feature fails to load; otherwise it keeps going.
+    let paused = false, focused = false, inView = false;
     // Reserve the tallest feature at this width without fetching hidden photos.
     // The image dimensions already describe each photo's natural aspect ratio.
     const sizeViewport = () => {
@@ -158,20 +166,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }).observe(viewport);
     const updateRotation = () => {
       window.clearTimeout(timer);
-      // Explicit Play may keep keyboard/touch focus on the control. Other focus
-      // still pauses rotation, without blurring a control or moving focus.
-      const focusPaused = focused && !(playFromControl && document.activeElement === pause);
-      if (automaticRequest && (paused || reduced.matches || hovered || focusPaused || !inView || document.hidden)) {
+      // Keyboard focus on a slide link holds the slide being read; the arrow
+      // buttons do not.
+      const focusPaused = focused;
+      if (automaticRequest && (paused || focusPaused || !inView || document.hidden)) {
         requested = current;
         automaticRequest = false;
         cancelTransition();
       }
-      pause.hidden = reduced.matches;
-      pause.textContent = paused ? "Play" : "Pause";
-      pause.setAttribute("aria-label", paused ? "Play rotation" : "Pause rotation");
-      const running = !paused && !reduced.matches && !hovered && !focusPaused && inView && !document.hidden && !loading;
+      const running = !paused && !focusPaused && inView && !document.hidden && !loading;
       feature.dataset.rotation = running ? "running" : "paused";
-      if (running) timer = window.setTimeout(() => advance(1, false), 8000);
+      if (running) timer = window.setTimeout(() => advance(1, false), 6500);
     };
     const loadPhoto = (img) => new Promise((resolve, reject) => {
       if (img.complete && img.naturalWidth) return resolve();
@@ -190,11 +195,16 @@ document.addEventListener("DOMContentLoaded", () => {
       outgoing.setAttribute("aria-hidden", "true");
       incoming.hidden = false;
       incoming.inert = true;
-      if (!reduced.matches && viewport.animate) {
-        const timing = { duration: 360, easing: "cubic-bezier(.22,.61,.36,1)", fill: "both" };
+      // The counter and dots move with the slide, not after it lands.
+      showPosition(next);
+      // A light crossfade with a short drift in the travel direction; with
+      // reduced motion it is a plain crossfade.
+      if (viewport.animate) {
+        const shift = reduced.matches ? 0 : 28;
+        const timing = { duration: 650, easing: "cubic-bezier(.4,0,.2,1)", fill: "both" };
         animations = [
-          outgoing.animate([{ transform: "translateX(0)" }, { transform: `translateX(${-direction * 100}%)` }], timing),
-          incoming.animate([{ transform: `translateX(${direction * 100}%)` }, { transform: "translateX(0)" }], timing),
+          outgoing.animate([{ opacity: 1, transform: "translateX(0)" }, { opacity: 0, transform: `translateX(${-direction * shift}px)` }], timing),
+          incoming.animate([{ opacity: 0, transform: `translateX(${direction * shift}px)` }, { opacity: 1, transform: "translateX(0)" }], timing),
         ];
         await Promise.allSettled(animations.map((animation) => animation.finished));
       }
@@ -225,15 +235,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (!await transitionTo(next)) continue;
         current = next;
-        count.textContent = `${current + 1} / ${slides.length}`;
-        if (paused) status.textContent = `Feature ${current + 1} of ${slides.length}: ${slides[current].querySelector("h3").textContent}.`;
+        if (!automaticRequest) status.textContent = `Feature ${current + 1} of ${slides.length}: ${slides[current].querySelector("h3").textContent}.`;
       }
+      showPosition(current);
       loading = false;
       updateRotation();
     };
     const advance = (step, manual = true) => {
       const from = manual && automaticRequest ? current : requested;
-      if (manual) { paused = true; playFromControl = false; }
+      if (manual) paused = false;
       automaticRequest = !manual;
       direction = step;
       requested = (from + step + slides.length) % slides.length;
@@ -244,19 +254,57 @@ document.addEventListener("DOMContentLoaded", () => {
     feature.querySelector("[data-feature-controls]").hidden = false;
     feature.querySelector("[data-feature-prev]").addEventListener("click", () => advance(-1));
     feature.querySelector("[data-feature-next]").addEventListener("click", () => advance(1));
-    pause.addEventListener("click", () => { paused = !paused; playFromControl = !paused; updateRotation(); });
-    feature.addEventListener("pointerenter", (event) => { if (event.pointerType === "mouse") { hovered = true; updateRotation(); } });
-    feature.addEventListener("pointerleave", () => { hovered = false; updateRotation(); });
-    feature.addEventListener("pointerdown", (event) => {
-      if (!event.target.closest("[data-feature-pause]")) { paused = true; playFromControl = false; updateRotation(); }
-    });
-    feature.addEventListener("focusin", (event) => { focused = true; if (event.target !== pause) playFromControl = false; updateRotation(); });
-    feature.addEventListener("focusout", (event) => { focused = feature.contains(event.relatedTarget); updateRotation(); });
-    reduced.addEventListener("change", () => { if (reduced.matches) { paused = true; cancelTransition(); } updateRotation(); });
+    const holdsSlide = (el) => Boolean(el && el.closest(".feature-slide-link") && el.matches(":focus-visible"));
+    feature.addEventListener("focusin", (event) => { focused = holdsSlide(event.target); updateRotation(); });
+    feature.addEventListener("focusout", (event) => { focused = feature.contains(event.relatedTarget) && holdsSlide(event.relatedTarget); updateRotation(); });
+    reduced.addEventListener("change", updateRotation);
     document.addEventListener("visibilitychange", updateRotation);
     new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; updateRotation(); }, { threshold: .25 }).observe(feature);
     updateRotation();
   }
+
+  // Google reviews rotate one card at a time and loop. Keyboard focus inside
+  // holds the row; arrows jump and the rotation carries on.
+  document.querySelectorAll("[data-review-carousel]").forEach((carousel) => {
+    const track = carousel.querySelector("[data-review-track]");
+    const cards = [...track.children];
+    const dots = carousel.querySelector("[data-review-dots]");
+    let index = 0, timer = null, held = false, inView = false;
+    const perView = () => Number(getComputedStyle(carousel).getPropertyValue("--per")) || 1;
+    const last = () => Math.max(0, cards.length - perView());
+    const render = () => {
+      index = Math.min(index, last());
+      track.style.setProperty("--index", index);
+      cards.forEach((card, i) => {
+        const shown = i >= index && i < index + perView();
+        card.inert = !shown;
+        card.setAttribute("aria-hidden", String(!shown));
+      });
+      if (dots.children.length !== last() + 1) {
+        dots.replaceChildren(...Array.from({ length: last() + 1 }, () => document.createElement("span")));
+      }
+      [...dots.children].forEach((dot, i) => dot.classList.toggle("is-active", i === index));
+    };
+    const schedule = () => {
+      window.clearTimeout(timer);
+      if (!held && inView && !document.hidden && last() > 0) timer = window.setTimeout(() => go(1), 7000);
+    };
+    const go = (step) => {
+      const max = last();
+      index = index + step > max ? 0 : index + step < 0 ? max : index + step;
+      render();
+      schedule();
+    };
+    carousel.querySelector("[data-review-controls]").hidden = false;
+    carousel.querySelector("[data-review-prev]").addEventListener("click", () => go(-1));
+    carousel.querySelector("[data-review-next]").addEventListener("click", () => go(1));
+    carousel.addEventListener("focusin", (e) => { held = Boolean(e.target.closest(".review-slide")); schedule(); });
+    carousel.addEventListener("focusout", () => { held = false; schedule(); });
+    document.addEventListener("visibilitychange", schedule);
+    new IntersectionObserver(([entry]) => { inView = entry.isIntersecting; schedule(); }, { threshold: 0.25 }).observe(carousel);
+    window.addEventListener("resize", render);
+    render();
+  });
 
   // Small previews share one filtered grid. Full photos load only in the dialog,
   // with at most one pending pair; rapid browsing coalesces to the latest choice.
@@ -269,6 +317,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const title = dialog.querySelector("[data-comparison-title]");
     const count = dialog.querySelector("[data-comparison-count]");
     const story = dialog.querySelector("[data-comparison-story]");
+    const roomLabel = dialog.querySelector("[data-comparison-room]");
+    const projectLabel = dialog.querySelector("[data-comparison-project]");
     const costStory = dialog.querySelector("[data-comparison-cost-story]");
     const status = dialog.querySelector("[data-comparison-status]");
     const retry = dialog.querySelector("[data-comparison-retry]");
@@ -346,12 +396,6 @@ document.addEventListener("DOMContentLoaded", () => {
       button.setAttribute("aria-label", `Compare ${pair.title}, ${projectName(pair)}`);
       const photos = document.createElement("span");
       photos.className = "comparison-preview-photos";
-      photos.dataset.pairLayout = ["before", "after"].every((side) => pair.dimensions[side][0] > pair.dimensions[side][1]) ? "stack" : "side";
-      // Different orientations share one natural-height row without letterboxing.
-      if (photos.dataset.pairLayout === "side") {
-        photos.style.gridTemplateColumns = ["before", "after"].map((side) =>
-          `minmax(0, ${pair.dimensions[side][0] / pair.dimensions[side][1]}fr)`).join(" ");
-      }
       ["before", "after"].forEach((side) => {
         const pane = document.createElement("span");
         pane.className = "comparison-preview-pane";
@@ -416,6 +460,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const updateDetails = (pair, index) => {
       title.textContent = `${pair.title}, ${projectName(pair)}: before and after`;
       count.textContent = `${visible.indexOf(index) + 1} / ${visible.length}`;
+      if (roomLabel) roomLabel.textContent = pair.title;
+      if (projectLabel) projectLabel.textContent = projectName(pair);
       dialog.dataset.projectId = pair.projectId;
       slider.setAttribute("aria-label", `${pair.title}, ${projectName(pair)}: before and after comparison`);
       slider.style.setProperty("--pos", "50%");
@@ -426,7 +472,7 @@ document.addEventListener("DOMContentLoaded", () => {
       story.hidden = !storyTitle;
       if (storyTitle) {
         story.setAttribute("href", projectStory);
-        story.textContent = `Explore ${storyTitle} →`;
+        story.textContent = `Read the full story: ${storyTitle} →`;
       } else {
         story.removeAttribute("href");
         story.textContent = "";
@@ -800,6 +846,26 @@ document.addEventListener("DOMContentLoaded", () => {
           label.textContent = initialButtonText;
         }
       }
+    });
+  });
+
+  // Stamp buttons land with a thunk on every press. Links wait a beat so the
+  // landing is felt before the page changes.
+  document.querySelectorAll(".stamp-btn").forEach((button) => {
+    button.addEventListener("click", (e) => {
+      button.classList.remove("is-thunk");
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      void button.offsetWidth;
+      button.classList.add("is-thunk");
+      try { navigator.vibrate?.(12); } catch { /* Not supported. */ }
+      const plainClick = !(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button);
+      if (button.tagName === "A" && plainClick && button.target !== "_blank") {
+        e.preventDefault();
+        window.setTimeout(() => { window.location.href = button.href; }, 260);
+      }
+    });
+    button.addEventListener("animationend", (e) => {
+      if (e.animationName === "stamp-thunk") button.classList.remove("is-thunk");
     });
   });
 

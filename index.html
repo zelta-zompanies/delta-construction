@@ -23,17 +23,6 @@
   <link rel="shortcut icon" href="assets/logo/favicon-mark.png" type="image/png" />
   <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png" />
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    /* Hero "Get a Quote" CTA: accent green to match the nav CTA */
-    .hero-ctas .btn-primary {
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-    .hero-ctas .btn-primary:hover {
-      background: var(--accent-dark);
-      border-color: var(--accent-dark);
-    }
-  </style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -117,59 +106,55 @@
       <div class="container hero-grid">
         <div>
           <h1>Built to Code. Held to a Higher&nbsp;One.</h1>
-          <p class="lead">Building code is the minimum. At Creed, it's only the starting line. Our creed is simple: do the job right, communicate clearly, and deliver work you can trust &mdash; on every project, every time.</p>
+          <p class="lead">Code is where we start, not where we stop. We do the work right the first time, keep you posted while it happens, and put our name on every finish.</p>
           <div class="hero-ctas">
             <a class="btn btn-primary btn-quote" href="contact.html">Get a Quote</a>
             <a class="btn btn-outline" href="projects.html">View Projects</a>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- One rotating selection introduces project stories and the photo gallery. -->
-    <section class="section-white work-section" id="our-work">
-      <div class="container">
-        <div class="work-heading"><div><span class="eyebrow">See the Difference</span><h2>Our Work</h2></div></div>
+        <!-- One rotating selection introduces project stories and the photo gallery. -->
+        <div class="hero-work" id="our-work">
+        <div class="work-heading"><h2 class="work-title">Our Work</h2><a class="work-all-link" href="gallery.html">View the full gallery &rarr;</a></div>
         <div class="work-carousel" data-work-carousel role="region" aria-roledescription="carousel" aria-label="Featured projects and comparisons">
           <div class="feature-toolbar" data-feature-controls hidden>
             <button class="feature-control" type="button" data-feature-prev aria-label="Previous feature"><span aria-hidden="true">&larr;</span></button>
             <span class="feature-count" data-feature-count>1 / 5</span>
             <button class="feature-control" type="button" data-feature-next aria-label="Next feature"><span aria-hidden="true">&rarr;</span></button>
-            <button class="feature-control feature-pause" type="button" data-feature-pause aria-label="Pause rotation">Pause</button>
           </div>
           <div class="feature-viewport" data-feature-viewport>
           <article class="feature-slide" data-feature-slide role="group" aria-roledescription="slide" aria-label="1 of 5">
             <a class="feature-slide-link" href="projects.html" data-project-id="project-01">
-              <div class="feature-media"><img src="assets/lsa-approved/comparison-04-after.webp" width="2000" height="1500" alt="Finished vaulted living room after a whole-home refresh" loading="lazy" decoding="async" /></div>
-              <div class="feature-copy"><span class="feature-kicker">Featured project</span><h3>Six rooms, one home</h3><p>A room-by-room look at the Creed standard.</p><span class="feature-cta">Explore our projects &rarr;</span></div>
+              <div class="feature-media feature-media-pair"><span class="feature-photo"><img src="assets/lsa-approved/comparison-04-before.webp" width="2000" height="1500" alt="Vaulted living room, before a whole-home refresh" decoding="async" /><span class="comparison-preview-label comparison-preview-label--before">Before</span></span><span class="feature-photo"><img src="assets/lsa-approved/comparison-04-after.webp" width="2000" height="1500" alt="Finished vaulted living room after a whole-home refresh" decoding="async" /><span class="comparison-preview-label comparison-preview-label--after">After</span></span></div>
+              <div class="feature-copy"><span class="feature-kicker">Featured project</span><h3>Six rooms, one home</h3></div>
             </a>
           </article>
           <article class="feature-slide" data-feature-slide data-pair-id="comparison-10" role="group" aria-roledescription="slide" aria-label="2 of 5" hidden>
             <a class="feature-slide-link" href="gallery.html#comparison-10">
               <div class="feature-media feature-media-pair"><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-10-before.webp" width="2000" height="1500" alt="Kitchen, before renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--before">Before</span></span><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-10-after.webp" width="2000" height="1500" alt="Kitchen, after renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--after">After</span></span></div>
-              <div class="feature-copy"><span class="feature-kicker">Before &amp; after</span><h3>A kitchen, refreshed</h3><p>Two photos. One real transformation.</p><span class="feature-cta">Compare in the gallery &rarr;</span></div>
+              <div class="feature-copy"><span class="feature-kicker">Before &amp; after</span><h3>A kitchen, refreshed</h3></div>
             </a>
           </article>
           <article class="feature-slide" data-feature-slide data-pair-id="comparison-01" role="group" aria-roledescription="slide" aria-label="3 of 5" hidden>
             <a class="feature-slide-link" href="gallery.html#comparison-01">
               <div class="feature-media feature-media-pair"><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-01-before.webp" width="1500" height="2000" alt="Bathroom Tub, before renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--before">Before</span></span><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-01-after.webp" width="1500" height="2000" alt="Bathroom Tub, after renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--after">After</span></span></div>
-              <div class="feature-copy"><span class="feature-kicker">Before &amp; after</span><h3>A fresh start for the bath</h3><p>Two photos. One real transformation.</p><span class="feature-cta">Compare in the gallery &rarr;</span></div>
+              <div class="feature-copy"><span class="feature-kicker">Before &amp; after</span><h3>A fresh start for the bath</h3></div>
             </a>
           </article>
           <article class="feature-slide" data-feature-slide data-pair-id="comparison-24" role="group" aria-roledescription="slide" aria-label="4 of 5" hidden>
             <a class="feature-slide-link" href="gallery.html#comparison-24">
               <div class="feature-media feature-media-pair"><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-24-before.webp" width="2000" height="1500" alt="Exterior Brickwork, before renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--before">Before</span></span><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-24-after.webp" width="2000" height="1500" alt="Exterior Brickwork, after renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--after">After</span></span></div>
-              <div class="feature-copy"><span class="feature-kicker">Before &amp; after</span><h3>The difference outside</h3><p>Two photos. One real transformation.</p><span class="feature-cta">Compare in the gallery &rarr;</span></div>
+              <div class="feature-copy"><span class="feature-kicker">Before &amp; after</span><h3>The difference outside</h3></div>
             </a>
           </article>
           <article class="feature-slide" data-feature-slide data-pair-id="comparison-13" role="group" aria-roledescription="slide" aria-label="5 of 5" hidden>
             <a class="feature-slide-link" href="gallery.html#comparison-13">
               <div class="feature-media feature-media-pair"><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-13-before.webp" width="2000" height="1500" alt="Bedroom Flooring, before renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--before">Before</span></span><span class="feature-photo"><img data-src="assets/lsa-approved/comparison-13-after.webp" width="2000" height="1500" alt="Bedroom Flooring, after renovation" decoding="async" /><span class="comparison-preview-label comparison-preview-label--after">After</span></span></div>
-              <div class="feature-copy"><span class="feature-kicker">Before &amp; after</span><h3>A new look underfoot</h3><p>Two photos. One real transformation.</p><span class="feature-cta">Compare in the gallery &rarr;</span></div>
+              <div class="feature-copy"><span class="feature-kicker">Before &amp; after</span><h3>A new look underfoot</h3></div>
             </a>
           </article>
           </div>
           <p class="visually-hidden" role="status" aria-live="polite" data-feature-status></p>
+        </div>
         </div>
       </div>
     </section>
@@ -185,7 +170,7 @@
               <path d="M6 42 L6 20 L18 20 L18 42 M18 42 L18 10 L34 10 L34 42 M34 42 L34 26 L42 26 L42 42 M4 42 L44 42" />
             </svg>
             <h3>Investment</h3>
-            <p>We partner with investors across the country and around the world with the same precision and accountability we bring to every build. Fix-and-flip, long-term hold, resident turn or maintenance call, the work lands on schedule, on budget, and built to hold its value. Every decision answers one question: does it move the needle on your return? That's our creed.</p>
+            <p>We work with investors in Memphis and out of state on flips, long-term holds, turns between tenants and maintenance calls. You get a clear bid before you buy, photos while the work moves, and a straight answer when a property isn't worth the rehab.</p>
           </article>
           <article class="card">
             <svg viewBox="0 0 48 48" fill="none" stroke="#041A2E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -194,7 +179,7 @@
               <rect x="20" y="30" width="8" height="10" />
             </svg>
             <h3>Residential</h3>
-            <p>From kitchen and bathroom remodels to whole-home renovations, we help Memphis homeowners love where they live. Clear estimates, honest timelines, and craftsmanship that lasts — we treat every home like it's our own property.</p>
+            <p>Kitchens, bathrooms and whole-home renovations for Memphis homeowners. Clear estimates, honest timelines, and work we'd be happy to have in our own house.</p>
           </article>
           <article class="card">
             <svg viewBox="0 0 48 48" fill="none" stroke="#041A2E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -202,7 +187,7 @@
               <path d="M15 15 L25 15 M15 22 L25 22 M15 29 L25 29" />
             </svg>
             <h3>Commercial</h3>
-            <p>We deliver commercial construction and maintenance that keeps your business running — organized, transparent, and on schedule. From build-outs to large-scale projects, Creed is the partner businesses count on.</p>
+            <p>Build-outs, repairs and ongoing maintenance for Memphis businesses. Organized, on schedule, and clear about cost from the first conversation.</p>
           </article>
         </div>
         <div class="trust-block">
@@ -234,7 +219,7 @@
         <div>
           <span class="eyebrow">Our Creed</span>
           <h2>Code Is the Minimum. It's Never the&nbsp;Goal.</h2>
-          <p class="lead">Building code tells you the least a job can be. Our creed is the standard we actually hold ourselves to &mdash; on every estimate, every timeline, and every finish.</p>
+          <p class="lead">Building code tells you the least a job can be. Our creed is the standard we actually hold ourselves to, on every estimate, timeline and finish.</p>
           <ol class="creed-tenets">
             <li><strong>Do it right the first time.</strong> Fix the cause, not just the symptom.</li>
             <li><strong>Say what we'll do. Do what we say.</strong> Clear estimates, honest timelines.</li>
@@ -245,35 +230,75 @@
       </div>
     </section>
 
-    <!-- Real 5-star Google reviews. Keep in sync with the About page selection. -->
-    <section class="section-white">
+    <!-- Five-star Google reviews, newest first, copied from the Google Business
+         Profile on 2026-11-16. Quotes keep the reviewers' wording (including the
+         company's former name) with small spelling fixes; "…" marks trimmed passages. -->
+    <section class="section-white reviews-section" id="reviews">
       <div class="container">
-        <span class="eyebrow">What Clients Say</span>
-        <h2>Trusted By Homeowners Across Memphis</h2>
-        <p class="lead">A few words from clients we've worked with.</p>
-        <div class="testimonials-grid">
-          <article class="testimonial-card">
-            <div class="testimonial-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p class="testimonial-quote">"I've worked with Delta Construction on my last 4–5 renovations and they all have very quality work and transparent pricing. Highly recommend!"</p>
-            <p class="testimonial-attribution">Wesley C. — Repeat Renovation Client</p>
-          </article>
-          <article class="testimonial-card">
-            <div class="testimonial-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p class="testimonial-quote">"I am an out of state investor who needs good communication, honesty and trust. I have found this in Lawson and his company Delta Construction. They are very responsive and quick — it is nice to know I have them on my side."</p>
-            <p class="testimonial-attribution">Kyle S. — Out-of-State Investor</p>
-          </article>
-          <article class="testimonial-card">
-            <div class="testimonial-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p class="testimonial-quote">"As an out of state investor, it can be difficult to find a good contractor that follows through AND has good communication. I've been very happy with Delta Construction — Lawson has met my needs and has been GREAT to work with!"</p>
-            <p class="testimonial-attribution">Billie H. — Out-of-State Investor</p>
-          </article>
-          <article class="testimonial-card">
-            <div class="testimonial-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p class="testimonial-quote">"They show up when they say they will, explain what's going on, and do solid work without overcharging. At this point they're the first people we call when something comes up."</p>
-            <p class="testimonial-attribution">Zoe A. — Memphis Homeowner</p>
-          </article>
+        <div class="reviews-head">
+          <div>
+            <span class="eyebrow">What Clients Say</span>
+            <h2>Five Stars on Google</h2>
+            <p class="lead">Homeowners, landlords and investors, in their own words.</p>
+          </div>
+          <a class="btn btn-cta" href="https://www.google.com/maps/place/Creed+Construction/@35.1371175,-89.914019,11z/data=!4m8!3m7!1s0x2c0db5463e4344cb:0xaacab8816951f53!8m2!3d35.1371175!4d-89.914019!9m1!1b1!16s%2Fg%2F11zgqff03r?hl=en&amp;entry=ttu&amp;g_ep=EgoyMDI2MTAwNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" aria-label="Read our reviews on Google (opens in a new tab)">Read our reviews on Google</a>
         </div>
-        <p class="testimonials-note"><a href="https://www.google.com/maps/place/Creed+Construction/@35.1371175,-89.914019,11z/data=!4m8!3m7!1s0x2c0db5463e4344cb:0xaacab8816951f53!8m2!3d35.1371175!4d-89.914019!9m1!1b1!16s%2Fg%2F11zgqff03r?hl=en&amp;entry=ttu&amp;g_ep=EgoyMDI2MTAwNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">Read all our reviews on Google</a></p>
+        <div class="review-carousel" data-review-carousel role="region" aria-roledescription="carousel" aria-label="Google reviews">
+          <div class="review-viewport">
+            <ul class="review-track" data-review-track>
+            <li class="testimonial-card review-slide" aria-roledescription="slide" aria-label="1 of 9">
+              <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="testimonial-quote">&ldquo;Lawson completed my last two projects which were full renovations of investment properties. His strongest trait aside from quality of work is his integrity. … He has advised me to walk away from a couple of projects because he didn't think they would be profitable for us. … Neither of mine exceeded 10% of the original quote, so he's pretty straight forward with what a project will cost.&rdquo;</p>
+              <p class="testimonial-attribution">Brian D. <span>Investor, two full renovations &middot; Google review, 3 months ago</span></p>
+            </li>
+            <li class="testimonial-card review-slide" aria-roledescription="slide" aria-label="2 of 9">
+              <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="testimonial-quote">&ldquo;We hired Delta to fix a plumbing leak that was dripping behind our walls. Within the day, the issue was diagnosed and fixed! We also hired them to install a toilet for us, which was completed within 2 hours of making the call. Overall, the service was extremely fast and thorough, and all of the people were very friendly!&rdquo;</p>
+              <p class="testimonial-attribution">Isaiah N. <span>Homeowner, plumbing repair &middot; Google review, 3 months ago</span></p>
+            </li>
+            <li class="testimonial-card review-slide" aria-roledescription="slide" aria-label="3 of 9">
+              <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="testimonial-quote">&ldquo;I had the bathtub lining in my rental home refinished after the old one started peeling. Robert &amp; his assistant did a great job for the overall look. And they were very neat and courteous. Great job! I'd love to have their services again should another issue arise in the future.&rdquo;</p>
+              <p class="testimonial-attribution">K. M. <span>Rental owner, tub refinishing &middot; Google review, 3 months ago</span></p>
+            </li>
+            <li class="testimonial-card review-slide" aria-roledescription="slide" aria-label="4 of 9">
+              <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="testimonial-quote">&ldquo;I have been working with Lawson from Delta Construction and have been pretty happy with him.&rdquo;</p>
+              <p class="testimonial-attribution">Wendy C. <span>Client &middot; Google review, 4 months ago</span></p>
+            </li>
+            <li class="testimonial-card review-slide" aria-roledescription="slide" aria-label="5 of 9">
+              <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="testimonial-quote">&ldquo;I've worked with Delta Construction on my last 4-5 renovations and they all have very quality work and transparent pricing. Highly recommend!&rdquo;</p>
+              <p class="testimonial-attribution">Wesley C. <span>Repeat renovation client &middot; Google review, 4 months ago</span></p>
+            </li>
+            <li class="testimonial-card review-slide" aria-roledescription="slide" aria-label="6 of 9">
+              <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="testimonial-quote">&ldquo;I am an out of state investor who needs good communication, honesty and trust. I have found this in Lawson and his company Delta Construction. They have been very helpful when buying properties, giving me a bid on the rehab that would be needed or just a heads up the amount of work done is not worth the purchase of the property. Saving me thousands of dollars. … It is nice to know I have Lawson and Co. on my side.&rdquo;</p>
+              <p class="testimonial-attribution">Kyle S. <span>Out-of-state investor &middot; Google review, 4 months ago</span></p>
+            </li>
+            <li class="testimonial-card review-slide" aria-roledescription="slide" aria-label="7 of 9">
+              <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="testimonial-quote">&ldquo;As an out of state investor, it can be difficult to find a good contractor that follows through AND has good communication. I've been very happy with Delta Construction. I'm looking at a long term relationship with Lawson, as he has met my needs and has been GREAT to work with!&rdquo;</p>
+              <p class="testimonial-attribution">Billie H. <span>Out-of-state investor &middot; Google review, 4 months ago</span></p>
+            </li>
+            <li class="testimonial-card review-slide" aria-roledescription="slide" aria-label="8 of 9">
+              <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="testimonial-quote">&ldquo;My only go-to. Extremely quick, responsive, professional. Very strongly recommend Delta.&rdquo;</p>
+              <p class="testimonial-attribution">Alex K. <span>Repeat client &middot; Google review, 4 months ago</span></p>
+            </li>
+            <li class="testimonial-card review-slide" aria-roledescription="slide" aria-label="9 of 9">
+              <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <p class="testimonial-quote">&ldquo;We've used Lawson and his team a few times now for smaller jobs around the house, including some electrical work and AC service, and they've been great every time. They show up when they say they will, explain what's going on, and do solid work without overcharging. At this point they're the first people we call when something comes up.&rdquo;</p>
+              <p class="testimonial-attribution">Zoe A. <span>Memphis homeowner &middot; Google review, 4 months ago</span></p>
+            </li>
+            </ul>
+          </div>
+          <div class="review-controls" data-review-controls hidden>
+            <button class="feature-control" type="button" data-review-prev aria-label="Previous review"><span aria-hidden="true">&larr;</span></button>
+            <span class="feature-dots review-dots" data-review-dots aria-hidden="true"></span>
+            <button class="feature-control" type="button" data-review-next aria-label="Next review"><span aria-hidden="true">&rarr;</span></button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -283,7 +308,7 @@
         <div class="quote-intro">
           <span class="eyebrow">Your Project</span>
           <h2>Request a Quote</h2>
-          <p class="lead">Tell us what you're planning and we'll come back with a clear estimate and an honest timeline &mdash; no pressure, no surprises.</p>
+          <p class="lead">Tell us what you're planning. We'll come back with a clear estimate and an honest timeline.</p>
           <ul class="quote-points">
             <li>Site visit and detailed written estimate</li>
             <li>One point of contact from start to finish</li>
@@ -331,13 +356,11 @@
                   <option>Other</option>
                 </select>
               </div>
-              <div class="full">
-                <button class="btn btn-outline btn-seal" type="submit">
-                  <span class="btn-label">Submit</span>
-                  <span class="btn-seal-icon" aria-hidden="true">
-                    <img class="btn-seal-stamp" src="assets/logo/creed-stamp.png" width="192" height="192" alt="" />
-                    <img class="btn-seal-wax" src="assets/logo/creed-seal-ring.png" width="256" height="256" alt="" />
-                  </span>
+              <div class="full form-submit-row">
+                <button class="stamp-btn" type="submit">
+                  <span class="btn-label visually-hidden">Submit</span>
+                  <img class="stamp-face" src="assets/logo/submit-stamp.webp" width="360" height="360" alt="" aria-hidden="true" />
+                  <img class="seal-face" src="assets/logo/submit-seal.webp" width="360" height="360" alt="" aria-hidden="true" />
                 </button>
               </div>
             </div>

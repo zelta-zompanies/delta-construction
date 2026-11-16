@@ -23,11 +23,6 @@
   <link rel="shortcut icon" href="assets/logo/favicon-mark.png" type="image/png" />
   <link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png" />
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    /* "Get a Quote" CTAs: accent green to match the nav/hero CTA */
-    .btn-quote { background: var(--accent); border-color: var(--accent); color: var(--white); }
-    .btn-quote:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: var(--white); }
-  </style>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -115,10 +110,15 @@
           <p class="gallery-status" data-gallery-status role="status" aria-live="polite"></p>
           <dialog class="comparison-dialog" data-comparison-dialog aria-labelledby="comparison-title">
             <div class="comparison-dialog-top">
-              <span class="comparison-count" data-comparison-count></span>
+              <div class="comparison-heading" aria-hidden="true">
+                <span class="comparison-kicker"><span data-comparison-project></span> &middot; <span class="comparison-count" data-comparison-count></span></span>
+                <p class="comparison-room" data-comparison-room></p>
+              </div>
               <button class="comparison-close" type="button" data-comparison-close aria-label="Close comparison"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
             </div>
             <h2 class="visually-hidden" id="comparison-title" data-comparison-title>Before &amp; after</h2>
+            <div class="comparison-body">
+            <button class="comparison-arrow comparison-arrow--prev" type="button" data-comparison-prev aria-label="Previous comparison"><span aria-hidden="true">&larr;</span></button>
             <div class="comparison-stage" data-state="loading">
               <div class="comparison-placeholder" data-comparison-placeholder>
                 <span class="comparison-loading-mark" aria-hidden="true"></span>
@@ -131,11 +131,10 @@
                 <span class="ba-tag ba-tag-before">Before</span><span class="ba-tag ba-tag-after">After</span>
               </div>
             </div>
+            <button class="comparison-arrow comparison-arrow--next" type="button" data-comparison-next aria-label="Next comparison"><span aria-hidden="true">&rarr;</span></button>
+            </div>
             <div class="comparison-gallery-footer">
-              <div class="comparison-controls">
-                <button class="comparison-nav-button" type="button" data-comparison-prev aria-label="Previous comparison">&larr; Previous</button>
-                <button class="comparison-nav-button" type="button" data-comparison-next aria-label="Next comparison">Next &rarr;</button>
-              </div>
+              <p class="comparison-hint" aria-hidden="true">Drag the handle to compare</p>
               <p class="visually-hidden" id="comparison-help">Drag to compare, or use the arrow keys. Home shows After; End shows Before.</p>
               <div class="comparison-related"><a class="comparison-story" data-comparison-story hidden></a><a class="comparison-cost-story" data-comparison-cost-story hidden>Read the cost breakdown &rarr;</a></div>
               <p class="visually-hidden" data-comparison-status role="status" aria-live="polite" aria-atomic="true"></p>
@@ -143,11 +142,6 @@
           </dialog>
           <noscript><p>Browse the <a href="projects.html">project stories</a> for more before-and-after photos.</p></noscript>
         </div>
-        <aside class="project-stories" aria-labelledby="project-stories-title">
-          <h2 id="project-stories-title">Behind the transformations</h2>
-          <p>See how the rooms fit together in our published project walkthroughs.</p>
-          <a class="btn btn-outline" href="projects.html">Explore Project Stories &rarr;</a>
-        </aside>
       </div>
     </section>
 
