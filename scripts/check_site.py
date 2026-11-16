@@ -36,7 +36,7 @@ for p in SITE.glob('*.html'):
     scrub=re.sub(r'data-delta-form|delta-measurement|delta_measurement|deltaMeasurement|deltaAds','',s)
     for historical in LEGACY_TEXT:scrub=scrub.replace(historical,'')
     # Customer review quotes keep the reviewer's wording, including the old name.
-    scrub=re.sub(r'<p class="testimonial-quote">.*?</p>','',scrub,flags=re.S)
+    scrub=re.sub(r'<p class="testimonial-quote">.*?</p>|<blockquote class="cs-quote">.*?</blockquote>','',scrub,flags=re.S)
     if 'TODO_LEGAL_NAME' in s:errors.append(f'{p.name}: unresolved legal name')
     if re.search(r'\bdelta\b|901deltaconstruction|901deltacompanies',scrub,re.I):errors.append(f'{p.name}: retired brand remains')
     for form in doc.forms:
