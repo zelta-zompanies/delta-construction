@@ -268,7 +268,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[data-review-carousel]").forEach((carousel) => {
     const track = carousel.querySelector("[data-review-track]");
     const cards = [...track.children];
-    const dots = carousel.querySelector("[data-review-dots]");
     let index = 0, timer = null, held = false, inView = false;
     const perView = () => Number(getComputedStyle(carousel).getPropertyValue("--per")) || 1;
     const last = () => Math.max(0, cards.length - perView());
@@ -280,19 +279,26 @@ document.addEventListener("DOMContentLoaded", () => {
         card.inert = !shown;
         card.setAttribute("aria-hidden", String(!shown));
       });
-      if (dots.children.length !== last() + 1) {
-        dots.replaceChildren(...Array.from({ length: last() + 1 }, () => document.createElement("span")));
-      }
-      [...dots.children].forEach((dot, i) => dot.classList.toggle("is-active", i === index));
     };
     const schedule = () => {
       window.clearTimeout(timer);
       if (!held && inView && !document.hidden && last() > 0) timer = window.setTimeout(() => go(1), 7000);
     };
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     const go = (step) => {
       const max = last();
+      const from = getComputedStyle(track).transform;
       index = index + step > max ? 0 : index + step < 0 ? max : index + step;
       render();
+      // A short slide to the new position; with reduced motion, a quick fade.
+      if (track.animate) {
+        track.getAnimations().forEach((animation) => animation.cancel());
+        if (reduced.matches) {
+          track.animate([{ opacity: 0.2 }, { opacity: 1 }], { duration: 450, easing: "ease-out" });
+        } else {
+          track.animate([{ transform: from }, { transform: getComputedStyle(track).transform }], { duration: 650, easing: "cubic-bezier(.4,0,.2,1)" });
+        }
+      }
       schedule();
     };
     carousel.querySelector("[data-review-controls]").classList.add("is-ready");

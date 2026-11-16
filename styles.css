@@ -809,13 +809,15 @@ section {
    seal's inner well, so the seal is drawn 118% of the button (its image is
    cut at 1.18x the well, centered) and its rim spills past the stamp. It
    lifts on hover, sinks on press, and lands with a thunk on click. */
-.form-submit-row { display: flex; justify-content: flex-end; }
+/* Submit sits beside the "How did you hear" dropdown instead of on a row of
+   its own, so the form doesn't end in empty space. */
+.form-submit-row { display: flex; align-items: flex-end; justify-content: flex-end; }
 .stamp-btn {
   display: inline-block;
   flex-shrink: 0;
   position: relative;
-  width: 92px;
-  height: 92px;
+  width: 76px;
+  height: 76px;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -878,7 +880,7 @@ section {
   100% { opacity: 0; transform: scale(1.4); }
 }
 @media (max-width: 720px) {
-  .stamp-btn { width: 84px; height: 84px; }
+  .stamp-btn { width: 72px; height: 72px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .stamp-btn, .stamp-btn img { transition: opacity 0.2s; }
@@ -1983,15 +1985,16 @@ section {
   padding: 0;
   list-style: none;
   transform: translateX(calc(var(--index, 0) * -1 * (100% + var(--gap)) / var(--per)));
-  transition: transform 0.7s cubic-bezier(.4, 0, .2, 1);
 }
 .review-slide { flex: 0 0 calc((100% - (var(--per) - 1) * var(--gap)) / var(--per)); min-width: 0; }
 .review-slide:hover { transform: none; }
 .review-slide .testimonial-attribution span { display: block; margin-top: 0.15rem; color: var(--text-muted); font-weight: 500; font-size: 0.78rem; }
 .review-controls { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.75rem; }
-.review-controls-center { display: flex; flex-direction: column; align-items: center; gap: 0.9rem; }
-.review-controls:not(.is-ready) .feature-control { visibility: hidden; }
-.review-controls .feature-dots { margin: 0; }
+.review-controls-center { display: flex; align-items: center; }
+.review-arrow { display: inline-grid; place-items: center; width: 52px; height: 52px; padding: 0; border: 2px solid var(--accent); border-radius: 999px; background: transparent; color: var(--accent); font: inherit; font-size: 1.15rem; font-weight: 700; cursor: pointer; transition: background 0.25s var(--ease), color 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease); }
+.review-arrow:hover, .review-arrow:focus-visible { background: var(--accent); color: var(--white); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(138, 59, 66, 0.28); }
+.review-arrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.review-controls:not(.is-ready) .review-arrow { visibility: hidden; }
 @media (max-width: 960px) { .review-carousel { --per: 2; } }
 @media (max-width: 640px) {
   .review-carousel { --per: 1; --gap: 1rem; }
@@ -3631,23 +3634,22 @@ body.modal-open {
 .projects-gallery-link a { font-weight: 700; text-underline-offset: .2em; }
 /* Project stories: three cards, each opening with the same square
    before/after pair used on the home page. */
-.project-story-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.75rem; margin-top: 2rem; }
+.project-story-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem; max-width: 780px; margin: 2rem auto 0; }
 .project-story-card { min-width: 0; }
-.project-story-card-link { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); align-items: stretch; height: 100%; overflow: hidden; border: 1px solid rgba(4, 26, 46, 0.08); border-radius: 14px; background: var(--white); box-shadow: 0 14px 32px -22px rgba(4, 26, 46, 0.35); color: var(--navy); text-decoration: none; transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+.project-story-card-link { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: stretch; height: 100%; overflow: hidden; border: 1px solid rgba(4, 26, 46, 0.08); border-radius: 14px; background: var(--white); box-shadow: 0 14px 32px -22px rgba(4, 26, 46, 0.35); color: var(--navy); text-decoration: none; transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease); }
 .project-story-card-link:hover { transform: translateY(-4px); box-shadow: 0 22px 40px -22px rgba(4, 26, 46, 0.45); }
 /* Project cards stack the pair: before on top, after below. */
 .project-story-image.feature-media-pair { align-self: stretch; grid-template-columns: minmax(0, 1fr); grid-template-rows: 1fr 1fr; border-radius: 0; }
 .project-story-image .feature-photo { aspect-ratio: 16 / 10; height: 100%; }
 .project-story-image .feature-photo img { transition: transform 0.6s var(--ease); }
 .project-story-card-link:hover .feature-photo img { transform: scale(1.04); }
-.project-story-card-copy { display: flex; flex-direction: column; justify-content: center; padding: 1.25rem 1.4rem; }
+.project-story-card-copy { display: flex; flex-direction: column; justify-content: center; padding: 1.5rem 1.75rem; }
 .project-story-meta { margin-bottom: 0.6rem; color: var(--accent); font-family: var(--font-slab); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
-.project-story-card h2 { margin-bottom: 0.5rem; font-size: clamp(1.2rem, 1.7vw, 1.45rem); line-height: 1.2; }
-.project-story-card-copy > p { margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem; }
+.project-story-card h2 { margin-bottom: 0.6rem; font-size: clamp(1.35rem, 2.2vw, 1.7rem); line-height: 1.2; }
+.project-story-card-copy > p { margin-bottom: 1.1rem; color: var(--text-muted); font-size: 0.95rem; }
 .project-story-card-cta { align-self: flex-start; padding-bottom: 2px; border-bottom: 2px solid var(--accent); color: var(--accent); font-size: 0.9rem; font-weight: 700; }
 .project-story-card-link:hover h2 { color: var(--accent-dark); }
 .project-story-card-link:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
-@media (max-width: 1080px) { .project-story-grid { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 560px) {
   .project-story-card-link { grid-template-columns: minmax(0, 1fr); }
   .project-story-image .feature-photo { aspect-ratio: 16 / 9; }
