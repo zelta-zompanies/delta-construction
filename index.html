@@ -122,8 +122,8 @@
             <button class="feature-control" type="button" data-feature-next aria-label="Next feature"><span aria-hidden="true">&rarr;</span></button>
           </div>
           <div class="feature-viewport" data-feature-viewport>
-          <article class="feature-slide" data-feature-slide role="group" aria-roledescription="slide" aria-label="1 of 5">
-            <a class="feature-slide-link" href="projects.html" data-project-id="project-01">
+          <article class="feature-slide" data-feature-slide data-pair-id="comparison-04" role="group" aria-roledescription="slide" aria-label="1 of 5">
+            <a class="feature-slide-link" href="gallery.html#comparison-04" data-project-id="project-01">
               <div class="feature-media feature-media-pair"><span class="feature-photo"><img src="assets/lsa-approved/comparison-04-before.webp" width="2000" height="1500" alt="Vaulted living room, before a whole-home refresh" decoding="async" /><span class="comparison-preview-label comparison-preview-label--before">Before</span></span><span class="feature-photo"><img src="assets/lsa-approved/comparison-04-after.webp" width="2000" height="1500" alt="Finished vaulted living room after a whole-home refresh" decoding="async" /><span class="comparison-preview-label comparison-preview-label--after">After</span></span></div>
               <div class="feature-copy"><span class="feature-kicker">Featured project</span><h3>Six rooms, one home</h3></div>
             </a>
@@ -368,6 +368,44 @@
         </div>
       </div>
     </section>
+
+    <!-- The gallery viewer, opened in place by the Our Work slides. Its photo
+         grid is hidden; script.js loads the same comparison data. -->
+    <div class="comparison-gallery comparison-gallery--headless" data-comparison-gallery>
+      <p class="gallery-status" data-gallery-status role="status" aria-live="polite"></p>
+      <dialog class="comparison-dialog" data-comparison-dialog aria-labelledby="comparison-title">
+        <div class="comparison-dialog-top">
+          <div class="comparison-heading" aria-hidden="true">
+            <span class="comparison-kicker"><span data-comparison-project></span> &middot; <span class="comparison-count" data-comparison-count></span></span>
+            <p class="comparison-room" data-comparison-room></p>
+          </div>
+          <button class="comparison-close" type="button" data-comparison-close aria-label="Close comparison"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
+        </div>
+        <h2 class="visually-hidden" id="comparison-title" data-comparison-title>Before &amp; after</h2>
+        <div class="comparison-body">
+        <button class="comparison-arrow comparison-arrow--prev" type="button" data-comparison-prev aria-label="Previous comparison"><span aria-hidden="true">&larr;</span></button>
+        <div class="comparison-stage" data-state="loading">
+          <div class="comparison-placeholder" data-comparison-placeholder>
+            <span class="comparison-loading-mark" aria-hidden="true"></span>
+            <p data-comparison-placeholder-text aria-hidden="true">Loading photos&hellip;</p>
+            <button class="comparison-nav-button comparison-retry" type="button" data-comparison-retry hidden>Try again</button>
+          </div>
+          <div class="ba-slider" hidden data-ba-slider role="slider" tabindex="0" aria-label="Before and after comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-describedby="comparison-help">
+            <div class="ba-slider-after"></div><div class="ba-slider-before"></div>
+            <div class="ba-slider-handle" aria-hidden="true"><span class="ba-slider-handle-btn">&#8596;</span></div>
+            <span class="ba-tag ba-tag-before">Before</span><span class="ba-tag ba-tag-after">After</span>
+          </div>
+        </div>
+        <button class="comparison-arrow comparison-arrow--next" type="button" data-comparison-next aria-label="Next comparison"><span aria-hidden="true">&rarr;</span></button>
+        </div>
+        <div class="comparison-gallery-footer">
+          <p class="comparison-hint" aria-hidden="true">Drag the handle to compare</p>
+          <p class="visually-hidden" id="comparison-help">Drag to compare, or use the arrow keys. Home shows After; End shows Before.</p>
+          <div class="comparison-related"><a class="comparison-story" data-comparison-story hidden></a><a class="comparison-cost-story" data-comparison-cost-story hidden>Read the cost breakdown &rarr;</a></div>
+          <p class="visually-hidden" data-comparison-status role="status" aria-live="polite" aria-atomic="true"></p>
+        </div>
+      </dialog>
+    </div>
 
   </main>
 

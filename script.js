@@ -586,6 +586,27 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     window.addEventListener("hashchange", openLinkedComparison);
     openLinkedComparison();
+    // Other parts of the page (the home Our Work slides) open a pair here.
+    gallery.addEventListener("comparison:open", (event) => {
+      const index = pairs.findIndex((pair) => pair.id === event.detail.id);
+      if (index < 0) return;
+      if (buttons[index].hidden) overview.querySelector('[data-category="All"]')?.click();
+      openComparison(index, event.detail.from);
+    });
+    gallery.dataset.comparisonReady = "true";
+  });
+
+  // Our Work slides open the comparison in place when the viewer is on the
+  // page; modified clicks and no-JS visits still follow the gallery link.
+  document.querySelectorAll("[data-work-carousel] .feature-slide-link").forEach((link) => {
+    link.setAttribute("aria-haspopup", "dialog");
+    link.addEventListener("click", (event) => {
+      const viewer = document.querySelector("[data-comparison-gallery][data-comparison-ready]");
+      const id = link.closest("[data-pair-id]")?.dataset.pairId;
+      if (!viewer || !id || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button) return;
+      event.preventDefault();
+      viewer.dispatchEvent(new CustomEvent("comparison:open", { detail: { id, from: link } }));
+    });
   });
 
   // Cards that link out to a dedicated case-study page instead of the

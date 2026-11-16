@@ -3778,6 +3778,11 @@ body.comparison-open { overflow: hidden; }
   .feature-copy p { margin-bottom: 1.1rem; }
   .feature-toolbar { margin-top: .75rem; padding-top: .75rem; }
 }
+/* Home page copy of the viewer: only the dialog is used. */
+.comparison-gallery--headless { margin: 0; }
+.comparison-gallery--headless .comparison-overview,
+.comparison-gallery--headless .gallery-status { display: none; }
+
 /* Gallery viewer: room title up top, a navy stage so letterboxing looks
    intentional, round arrows on either side of the photo, and the story link
    as a red outline pill. */
