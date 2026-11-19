@@ -136,7 +136,7 @@
     raw("set", { page_location: cleanLocation, page_referrer: "" });
     raw("config", ga, { ...restrictions, page_location: cleanLocation, page_referrer: "" });
     raw("config", "AW-18296392613", restrictions);
-    raw("config", "AW-18296392613/ax3SCMbpq58dEKWXs5RE", {
+    raw("config", "AW-18296392613/3oxPCMnd4bsdEKWXs5RE", {
       ...restrictions,
       phone_conversion_number: "9015684128",
       phone_conversion_callback: (formatted, mobile) => window.deltaAds?.replacePhone(formatted, mobile),
